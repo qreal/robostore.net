@@ -1,0 +1,26 @@
+﻿@{
+    var demo_pages = new[]
+    {
+        new {Text = "My Robots", Name = "Demo_MyRobots", Class = ""},
+        new {Text = "My Diagrams", Name = "Demo_MyDiagrams", Class = "" },
+        new {Text = "Map", Name = "Demo_Map", Class = "" },
+        new {Text = "Settings", Name = "Demo_Settings", Class = "" }
+    };
+}
+
+<ul class="nav nav-stacked ">
+
+
+    
+    @*текст / метод (имя страницы) / контроллер *@
+    @foreach (var page in @demo_pages)
+    {
+
+    @Html.ActionLink(page.Text, page.Name, "Home", null,
+            new
+            {
+                @class = page.Class != "" ? page.Class : "btn btn-block btn-default btn-lg;"
+            });
+    }
+
+</ul>
