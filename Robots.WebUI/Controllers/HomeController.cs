@@ -1,7 +1,14 @@
 ﻿using System.Web.Mvc;
 
+/*
+Стартовый контроллер.
+Сейчас отвечает за выдачу демо страниц разделов.
+*/
+
 namespace Robots.WebUI.Controllers
 {
+  // Для простой авторизации используется временная пара в файле web.config
+  [Authorize]
   public class HomeController : Controller
   {
     // GET: Home
