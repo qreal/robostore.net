@@ -10,7 +10,7 @@ namespace Robots.Domain.Concrete
 {
   public class EFUserRepository : IUserRepository
   {
-    private EFDbContextUser context = new EFDbContextUser();
+    private EFDbContextRobots context = new EFDbContextRobots();
 
     public IEnumerable<User> Users
     {

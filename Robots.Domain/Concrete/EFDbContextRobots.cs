@@ -7,7 +7,7 @@ using Robots.Domain.Entities;
 
 namespace Robots.Domain.Concrete
 {
-  public class EFDbContextUser : DbContext
+  public class EFDbContextRobots : DbContext
   {
     public DbSet<User> Users { get; set; }
   }

@@ -78,7 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IUsersRepository.cs" />
-    <Compile Include="Concrete\EFDbContextUser.cs" />
+    <Compile Include="Concrete\EFDbContextRobots.cs" />
     <Compile Include="Concrete\EFUserRepository.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Migrations\201510130824131_InitialCreate.cs" />

@@ -5,7 +5,7 @@ namespace Robots.Domain.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Robots.Domain.Concrete.EFDbContextUser>
+    internal sealed class Configuration : DbMigrationsConfiguration<Robots.Domain.Concrete.EFDbContextRobots>
     {
         public Configuration()
         {
@@ -13,7 +13,7 @@ namespace Robots.Domain.Migrations
             ContextKey = "Robots.Domain.Concrete.EFDbContextUser";
         }
 
-        protected override void Seed(Robots.Domain.Concrete.EFDbContextUser context)
+        protected override void Seed(Robots.Domain.Concrete.EFDbContextRobots context)
         {
             //  This method will be called after migrating to the latest version.
 
