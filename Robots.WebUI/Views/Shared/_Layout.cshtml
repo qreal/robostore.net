@@ -26,8 +26,9 @@
             @Html.ActionLink("Redactor", "Index", "Home", null, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-right">
-            @Html.ActionLink(userName, "Index", "Home", null, new { @class = "navbar-brand" })
-            @Html.ActionLink("Logout", "SignOut", "Account", null, new { @class = "navbar-brand" })
+            @Html.ActionLink("Admin Panel", "Index", "Admin", null, new { @class = "navbar-brand" })
+            @Html.ActionLink(userName, "Index", "Home", null, new {@class = "navbar-brand"})
+            @Html.ActionLink("Logout", "SignOut", "Account", null, new {@class = "navbar-brand"})
         </div>
     </div>
 
