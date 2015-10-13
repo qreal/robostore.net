@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using System.Web.Security;
 using Robots.Domain.Abstract;
 using Robots.WebUI.Infrastructure.Abstract;
 using Robots.WebUI.Models;
@@ -29,6 +30,15 @@ namespace Robots.WebUI.Controllers
     {
       return View();
     }
+
+
+    
+    public ActionResult SignOut()
+    {
+      FormsAuthentication.SignOut();
+      return Redirect(Url.Action("Index", "Home"));
+    }
+
 
     [HttpPost]
     public ActionResult Login(LoginViewModel model, string returnUrl)
