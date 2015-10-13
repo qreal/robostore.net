@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using Robots.Domain.Abstract;
+using Robots.Domain.Entities;
 
 /*
 Стартовый контроллер.
@@ -11,6 +13,7 @@ namespace Robots.WebUI.Controllers
   [Authorize]
   public class HomeController : Controller
   {
+    
     // GET: Home
     public ActionResult Index()
     {
