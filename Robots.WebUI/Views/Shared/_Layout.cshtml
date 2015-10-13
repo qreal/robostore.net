@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using System.ServiceModel.Security
+@{
+  HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+  FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+  string userName = ticket.Name != null ? ticket.Name : "";
+}
+
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -19,7 +26,7 @@
             @Html.ActionLink("Redactor", "Index", "Home", null, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-right">
-            @Html.ActionLink("Admin", "Index", "Home", null, new { @class = "navbar-brand" })
+            @Html.ActionLink(userName, "Index", "Home", null, new { @class = "navbar-brand" })
             @Html.ActionLink("Logout", "SignOut", "Account", null, new { @class = "navbar-brand" })
         </div>
     </div>
