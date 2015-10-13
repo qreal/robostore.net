@@ -81,13 +81,29 @@
     <Compile Include="Concrete\EFDbContextUser.cs" />
     <Compile Include="Concrete\EFUserRepository.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Migrations\201510130824131_InitialCreate.cs" />
+    <Compile Include="Migrations\201510130824131_InitialCreate.Designer.cs">
+      <DependentUpon>201510130824131_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510131648286_FixName.cs" />
+    <Compile Include="Migrations\201510131648286_FixName.Designer.cs">
+      <DependentUpon>201510131648286_FixName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201510130824131_InitialCreate.resx">
+      <DependentUpon>201510130824131_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510131648286_FixName.resx">
+      <DependentUpon>201510131648286_FixName.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

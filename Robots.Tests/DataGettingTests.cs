@@ -11,10 +11,10 @@ using Robots.WebUI.Controllers;
 namespace Robots.Tests
 {
   [TestClass]
-  public class Data
+  public class DataGettingTests
   {
     [TestMethod]
-    public void Can_get_data_from_controller()
+    public void Controller_can_get_data_from_ninject()
     { 
       // Arrange - create the mock repository
       Mock<IUserRepository> mock = new Mock<IUserRepository>();
@@ -32,15 +32,13 @@ namespace Robots.Tests
 
       // Action
 
-      User[] result = ( ( (IUserRepository)privateObject.GetField("users")).Users ).ToArray();
+      User[] result = ( ( (IUserRepository)privateObject.GetField("usersRepository")).Users ).ToArray();
 
       // Assert
       Assert.AreEqual(result.Length, 3);
       Assert.AreEqual("P1", result[0].Name);
       Assert.AreEqual("P2", result[1].Name);
       Assert.AreEqual("P3", result[2].Name);
-
-
     }
   }
 }

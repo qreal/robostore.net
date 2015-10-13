@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Security;
 using Robots.Domain.Abstract;
+using Robots.Domain.Entities;
 using Robots.WebUI.Infrastructure.Abstract;
 using Robots.WebUI.Models;
 
@@ -17,13 +18,13 @@ namespace Robots.WebUI.Controllers
     // способ аутефикации
     private IAuthProvider authProvider;
     // для работы с пользователями
-    private IUserRepository users;
+    private IUserRepository usersRepository;
 
     // получаем от Ninject
     public AccountController(IAuthProvider auth, IUserRepository userRepository)
     {
       authProvider = auth;
-      this.users = userRepository;
+      this.usersRepository = userRepository;
     }
 
     public ViewResult Login()
@@ -31,15 +32,7 @@ namespace Robots.WebUI.Controllers
       return View();
     }
 
-
-    
-    public ActionResult SignOut()
-    {
-      FormsAuthentication.SignOut();
-      return Redirect(Url.Action("Index", "Home"));
-    }
-
-
+    // По сути второй аргумент здесь нужен для тестирования только.
     [HttpPost]
     public ActionResult Login(LoginViewModel model, string returnUrl)
     {
@@ -60,5 +53,34 @@ namespace Robots.WebUI.Controllers
         return View();
       }
     }
+
+    public ActionResult SignOut()
+    {
+      FormsAuthentication.SignOut();
+      return Redirect(Url.Action("Index", "Home"));
+    }
+
+    public ViewResult SignUp()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public ActionResult SignUp(User user)
+    {
+      /*сделать проверку на уникальность*/
+      if (ModelState.IsValid)
+      {
+        usersRepository.SaveUser(user);
+        /* Проверить отображение сообщения */
+        TempData["message"] = string.Format("{0} has been joined", user.Name);
+        return RedirectToAction("Login");
+      }
+      else
+      {
+        return View();
+      }
+    }
+
   }
 }

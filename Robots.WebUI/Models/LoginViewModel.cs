@@ -8,10 +8,10 @@ namespace Robots.WebUI.Models
 {
   public class LoginViewModel
   {
-    [Required]
+    [Required(ErrorMessage = "Please enter a name")]
     public string UserName { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Please enter a password")]
     public string Password { get; set; }
   }
 }
