@@ -4,14 +4,15 @@ using Robots.Domain.Entities;
 /*
 Используем паттерн репозиторий, чтобы скрыть как мы храним и откуда берем данные.
 Реализация интерфейса будет получена от Ninject
+Один  интерфейс репозитори для всех сущностей из БД.
 */
 
 namespace Robots.Domain.Abstract
 {
-  public interface IUserRepository
+  public interface ICommonRepository<T>
   {
-    IEnumerable<User> Users { get; }
-    void SaveUser(User User);
-    User DeleteUser(int UserID);
+    IEnumerable<T> Data { get; }
+    void SaveData(T data);
+    T DeleteData(int ID);
   }
 }

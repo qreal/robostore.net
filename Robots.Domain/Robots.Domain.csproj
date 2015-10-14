@@ -77,9 +77,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IUsersRepository.cs" />
+    <Compile Include="Abstract\ICommonRepository.cs" />
     <Compile Include="Concrete\EFDbContextRobots.cs" />
+    <Compile Include="Concrete\EFRobotRepository.cs" />
     <Compile Include="Concrete\EFUserRepository.cs" />
+    <Compile Include="Entities\Coordinates.cs" />
+    <Compile Include="Entities\Message.cs" />
     <Compile Include="Entities\Robot.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Migrations\201510130824131_InitialCreate.cs" />
@@ -93,6 +96,10 @@
     <Compile Include="Migrations\201510141134071_RemovedEnabledFieldFromUser.cs" />
     <Compile Include="Migrations\201510141134071_RemovedEnabledFieldFromUser.Designer.cs">
       <DependentUpon>201510141134071_RemovedEnabledFieldFromUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510141403463_AddRobotEntity.cs" />
+    <Compile Include="Migrations\201510141403463_AddRobotEntity.Designer.cs">
+      <DependentUpon>201510141403463_AddRobotEntity.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -110,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510141134071_RemovedEnabledFieldFromUser.resx">
       <DependentUpon>201510141134071_RemovedEnabledFieldFromUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510141403463_AddRobotEntity.resx">
+      <DependentUpon>201510141403463_AddRobotEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

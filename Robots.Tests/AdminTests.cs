@@ -17,8 +17,8 @@ namespace Robots.Tests
     public void Index_Contains_All_Users()
     {
       // Arrange - create the mock repository
-      Mock<IUserRepository> mock = new Mock<IUserRepository>();
-      mock.Setup(m => m.Users).Returns(new User[]
+      Mock<ICommonRepository<User>> mock = new Mock<ICommonRepository<User>>();
+      mock.Setup(m => m.Data).Returns(new User[]
       {
         new User {UserID = 1, Name = "P1"},
         new User {UserID = 2, Name = "P2"},
@@ -39,8 +39,8 @@ namespace Robots.Tests
     public void Can_Edit_User()
     {
       // Arrange - create the mock repository
-      Mock<IUserRepository> mock = new Mock<IUserRepository>();
-      mock.Setup(m => m.Users).Returns(new User[]
+      Mock<ICommonRepository<User>> mock = new Mock<ICommonRepository<User>>();
+      mock.Setup(m => m.Data).Returns(new User[]
       {
         new User {UserID = 1, Name = "P1"},
         new User {UserID = 2, Name = "P2"},
@@ -62,8 +62,8 @@ namespace Robots.Tests
     public void Cannot_Edit_Nonexistent_User()
     {
       // Arrange - create the mock repository
-      Mock<IUserRepository> mock = new Mock<IUserRepository>();
-      mock.Setup(m => m.Users).Returns(new User[]
+      Mock<ICommonRepository<User>> mock = new Mock<ICommonRepository<User>>();
+      mock.Setup(m => m.Data).Returns(new User[]
       {
         new User {UserID = 1, Name = "P1"},
         new User {UserID = 2, Name = "P2"},
@@ -81,7 +81,7 @@ namespace Robots.Tests
     public void Can_Save_Valid_Changes()
     {
       // Arrange - create mock repository
-      Mock<IUserRepository> mock = new Mock<IUserRepository>();
+      Mock<ICommonRepository<User>> mock = new Mock<ICommonRepository<User>>();
       // Arrange - create the controller
       AdminController target = new AdminController(mock.Object);
       // Arrange - create a User
@@ -89,7 +89,7 @@ namespace Robots.Tests
       // Act - try to save the User
       ActionResult result = target.Edit(User);
       // Assert - check that the repository was called
-      mock.Verify(m => m.SaveUser(User));
+      mock.Verify(m => m.SaveData(User));
       // Assert - check the method result type
       Assert.IsNotInstanceOfType(result, typeof(ViewResult));
     }
@@ -98,7 +98,7 @@ namespace Robots.Tests
     public void Cannot_Save_Invalid_Changes()
     {
       // Arrange - create mock repository
-      Mock<IUserRepository> mock = new Mock<IUserRepository>();
+      Mock<ICommonRepository<User>> mock = new Mock<ICommonRepository<User>>();
       // Arrange - create the controller
       AdminController target = new AdminController(mock.Object);
       // Arrange - create a User
@@ -108,7 +108,7 @@ namespace Robots.Tests
       // Act - try to save the User
       ActionResult result = target.Edit(User);
       // Assert - check that the repository was not called
-      mock.Verify(m => m.SaveUser(It.IsAny<User>()), Times.Never());
+      mock.Verify(m => m.SaveData(It.IsAny<User>()), Times.Never());
       // Assert - check the method result type
       Assert.IsInstanceOfType(result, typeof(ViewResult));
     }
@@ -119,8 +119,8 @@ namespace Robots.Tests
       // Arrange - create a User
       User prod = new User { UserID = 2, Name = "Test" };
       // Arrange - create the mock repository
-      Mock<IUserRepository> mock = new Mock<IUserRepository>();
-      mock.Setup(m => m.Users).Returns(new User[]
+      Mock<ICommonRepository<User>> mock = new Mock<ICommonRepository<User>>();
+      mock.Setup(m => m.Data).Returns(new User[]
       {
         new User {UserID = 1, Name = "P1"},
         prod,
@@ -132,7 +132,7 @@ namespace Robots.Tests
       target.Delete(prod.UserID);
       // Assert - ensure that the repository delete method was
       // called with the correct User
-      mock.Verify(m => m.DeleteUser(prod.UserID));
+      mock.Verify(m => m.DeleteData(prod.UserID));
     }
   }
 }

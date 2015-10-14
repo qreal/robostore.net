@@ -17,8 +17,8 @@ namespace Robots.Tests
     public void Controller_can_get_data_from_ninject()
     { 
       // Arrange - create the mock repository
-      Mock<IUserRepository> mock = new Mock<IUserRepository>();
-      mock.Setup(m => m.Users).Returns(new User[]
+      Mock<ICommonRepository<User>> mock = new Mock<ICommonRepository<User>>();
+      mock.Setup(m => m.Data).Returns(new User[]
       {
         new User {UserID = 1, Name = "P1"},
         new User {UserID = 2, Name = "P2"},
@@ -32,7 +32,7 @@ namespace Robots.Tests
 
       // Action
 
-      User[] result = ( ( (IUserRepository)privateObject.GetField("usersRepository")).Users ).ToArray();
+      User[] result = ( ( (ICommonRepository<User>)privateObject.GetField("usersRepository")).Data ).ToArray();
 
       // Assert
       Assert.AreEqual(result.Length, 3);

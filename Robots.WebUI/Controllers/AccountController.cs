@@ -18,13 +18,13 @@ namespace Robots.WebUI.Controllers
     // способ аутефикации
     private IAuthProvider authProvider;
     // для работы с пользователями
-    private IUserRepository usersRepository;
+    private ICommonRepository<User> _commonsRepository;
 
     // получаем от Ninject
-    public AccountController(IAuthProvider auth, IUserRepository userRepository)
+    public AccountController(IAuthProvider auth, ICommonRepository<User> commonRepository)
     {
       authProvider = auth;
-      this.usersRepository = userRepository;
+      this._commonsRepository = commonRepository;
     }
 
     public ViewResult Login()
@@ -71,7 +71,7 @@ namespace Robots.WebUI.Controllers
       /*сделать проверку на уникальность*/
       if (ModelState.IsValid)
       {
-        usersRepository.SaveUser(user);
+        _commonsRepository.SaveData(user);
         /* Проверить отображение сообщения */
         TempData["message"] = string.Format("{0} has been joined", user.Name);
         return RedirectToAction("Login");

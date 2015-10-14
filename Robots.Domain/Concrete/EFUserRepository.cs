@@ -8,34 +8,34 @@ using Robots.Domain.Entities;
 
 namespace Robots.Domain.Concrete
 {
-  public class EFUserRepository : IUserRepository
+  public class EFUserRepository : ICommonRepository<User>
   {
     private EFDbContextRobots context = new EFDbContextRobots();
 
-    public IEnumerable<User> Users
+    public IEnumerable<User> Data
     {
       get { return context.Users; }
     }
 
-    public void SaveUser(User User)
+    public void SaveData(User data)
     {
-      if (User.UserID == 0)
+      if (data.UserID == 0)
       {
-        context.Users.Add(User);
+        context.Users.Add(data);
       }
       else
       {
-        User dbEntry = context.Users.Find(User.UserID);
+        User dbEntry = context.Users.Find(data.UserID);
         if (dbEntry != null)
         {
-          dbEntry.Name = User.Name;
-          dbEntry.Password = User.Password;
+          dbEntry.Name = data.Name;
+          dbEntry.Password = data.Password;
         }
       }
       context.SaveChanges();
     }
 
-    public User DeleteUser(int UserID)
+    public User DeleteData(int UserID)
     {
       User dbEntry = context.Users.Find(UserID);
       if (dbEntry != null)

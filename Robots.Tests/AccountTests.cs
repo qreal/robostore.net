@@ -59,8 +59,8 @@ namespace Robots.Tests
     {
 
       // Arrange - create the mock repository
-      Mock<IUserRepository> mock = new Mock<IUserRepository>();
-      mock.Setup(m => m.Users).Returns(new User[]
+      Mock<ICommonRepository<User>> mock = new Mock<ICommonRepository<User>>();
+      mock.Setup(m => m.Data).Returns(new User[]
       {
         new User {UserID = 1, Name = "P1"},
         new User {UserID = 2, Name = "P2"},
@@ -74,7 +74,7 @@ namespace Robots.Tests
       // Act - registration
       ActionResult result = target.SignUp(user);
       // Assert - check that the repository was called
-      mock.Verify(m => m.SaveUser(user));
+      mock.Verify(m => m.SaveData(user));
       // Assert - check the method result type
       Assert.IsNotInstanceOfType(result, typeof(ViewResult));
     }

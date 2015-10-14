@@ -13,21 +13,21 @@ namespace Robots.WebUI.Controllers
 {
   public class AdminController : Controller
   {
-    private IUserRepository repository;
+    private ICommonRepository<User> repository;
 
-    public AdminController(IUserRepository repo)
+    public AdminController(ICommonRepository<User> repo)
     {
       repository = repo;
     }
 
     public ViewResult Index()
     {
-      return View(repository.Users);
+      return View(repository.Data);
     }
 
     public ViewResult Edit(int UserId)
     {
-      User User = repository.Users.FirstOrDefault(p => p.UserID == UserId);
+      User User = repository.Data.FirstOrDefault(p => p.UserID == UserId);
       return View(User);
     }
 
@@ -36,7 +36,7 @@ namespace Robots.WebUI.Controllers
     {
       if (ModelState.IsValid)
       {
-        repository.SaveUser(User);
+        repository.SaveData(User);
         TempData["message"] = string.Format("{0} has been saved", User.Name);
         return RedirectToAction("Index");
       }
@@ -55,7 +55,7 @@ namespace Robots.WebUI.Controllers
     [HttpPost]
     public ActionResult Delete(int UserId)
     {
-      User deletedUser = repository.DeleteUser(UserId);
+      User deletedUser = repository.DeleteData(UserId);
       if (deletedUser != null)
       {
         TempData["message"] = string.Format("{0} was deleted",

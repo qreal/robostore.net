@@ -10,5 +10,6 @@ namespace Robots.Domain.Concrete
   public class EFDbContextRobots : DbContext
   {
     public DbSet<User> Users { get; set; }
+    public DbSet<Robot> Robots { get; set; }
   }
 }

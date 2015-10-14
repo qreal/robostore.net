@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Ninject;
 using Robots.Domain.Abstract;
 using Robots.Domain.Concrete;
+using Robots.Domain.Entities;
 using Robots.WebUI.Infrastructure.Abstract;
 using Robots.WebUI.Infrastructure.Concrete;
 
@@ -29,7 +30,8 @@ namespace Robots.WebUI.Infrastructure
     } 
     private void AddBindings()
     {
-      kernel.Bind<IUserRepository>().To<EFUserRepository>();
+      kernel.Bind<ICommonRepository<User>>().To<EFUserRepository>();
+      kernel.Bind<ICommonRepository<Robot>>().To<EFRobotRepository>();
       kernel.Bind<IAuthProvider>().To<FormsAuthProvider>();
     }
   }

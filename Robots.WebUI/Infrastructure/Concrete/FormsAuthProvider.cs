@@ -9,11 +9,11 @@ namespace Robots.WebUI.Infrastructure.Concrete
   public class FormsAuthProvider : IAuthProvider
   {
     
-    private IUserRepository users;
+    private ICommonRepository<User> _commons;
 
-    public FormsAuthProvider(IUserRepository userRepository)
+    public FormsAuthProvider(ICommonRepository<User> commonRepository)
     {
-      users = userRepository;
+      _commons = commonRepository;
     }
     
 
@@ -23,7 +23,7 @@ namespace Robots.WebUI.Infrastructure.Concrete
       // bool result = FormsAuthentication.Authenticate(username, password);
 
       // ищем такого пользователя в нашей БД. Увы пока пароли хранятся в открытом виде.
-      bool result = users.Users.FirstOrDefault(x => x.Name == username && x.Password == password) != null;
+      bool result = _commons.Data.FirstOrDefault(x => x.Name == username && x.Password == password) != null;
 
       if (result)
       {
