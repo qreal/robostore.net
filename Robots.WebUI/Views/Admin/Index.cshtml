@@ -14,7 +14,6 @@
                 <th class="text-right">ID</th>
                 <th>Name</th>
                 <th class="text-right">Password</th>
-                <th class="text-right">Enabled</th>
                 <th class="text-center">Actions</th>
             </tr>
             @foreach (var item in Model)
@@ -28,7 +27,6 @@
                    })
                 </td>
                 <td class="text-right">@item.Password</td>
-                <td class="text-right">@item.Enabled.ToString()</td>
                 <td class="text-center">
                     @using (Html.BeginForm("Delete", "Admin"))
                     {

@@ -80,6 +80,7 @@
     <Compile Include="Abstract\IUsersRepository.cs" />
     <Compile Include="Concrete\EFDbContextRobots.cs" />
     <Compile Include="Concrete\EFUserRepository.cs" />
+    <Compile Include="Entities\Robot.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Migrations\201510130824131_InitialCreate.cs" />
     <Compile Include="Migrations\201510130824131_InitialCreate.Designer.cs">
@@ -88,6 +89,10 @@
     <Compile Include="Migrations\201510131648286_FixName.cs" />
     <Compile Include="Migrations\201510131648286_FixName.Designer.cs">
       <DependentUpon>201510131648286_FixName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510141134071_RemovedEnabledFieldFromUser.cs" />
+    <Compile Include="Migrations\201510141134071_RemovedEnabledFieldFromUser.Designer.cs">
+      <DependentUpon>201510141134071_RemovedEnabledFieldFromUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510131648286_FixName.resx">
       <DependentUpon>201510131648286_FixName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510141134071_RemovedEnabledFieldFromUser.resx">
+      <DependentUpon>201510141134071_RemovedEnabledFieldFromUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

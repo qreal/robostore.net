@@ -16,7 +16,7 @@
         <div class="panel-body">
             @foreach (var property in ViewData.ModelMetadata.Properties)
             {
-                if (property.PropertyName != "UserID" && property.PropertyName != "Enabled")
+                if (property.PropertyName != "UserID")
                 {
                     <div class="form-group">
                         <label>

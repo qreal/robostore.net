@@ -30,7 +30,6 @@ namespace Robots.Domain.Concrete
         {
           dbEntry.Name = User.Name;
           dbEntry.Password = User.Password;
-          dbEntry.Enabled = User.Enabled;
         }
       }
       context.SaveChanges();
