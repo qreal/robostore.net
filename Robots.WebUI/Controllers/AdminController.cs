@@ -7,6 +7,7 @@ using Robots.Domain.Entities;
 Используется для администраторской работы с данными - CRUD.
 Пока только для User и Robots
 В порядке исключения метод Index() - отображающий пользователей HE называется IndexUser()
+Todo: подумать над упрощением: потому что код один и тот же для сущностей. Ввести хотя бы code regions пока что.
 */
 
 namespace Robots.WebUI.Controllers
@@ -27,25 +28,52 @@ namespace Robots.WebUI.Controllers
       return View(usersRepository.Data);
     }
 
-    public ViewResult EditUser(int UserId)
+    public ViewResult IndexRobot()
     {
-      User User = usersRepository.Data.FirstOrDefault(p => p.UserID == UserId);
-      return View(User);
+      return View(robotsRepository.Data);
+    }
+
+    public ViewResult EditUser(int userId)
+    {
+      User user = usersRepository.Data.FirstOrDefault(p => p.UserID == userId);
+      return View(user);
+    }
+
+    public ViewResult EditRobot(int robotId)
+    {
+      Robot robot = robotsRepository.Data.FirstOrDefault(p => p.RobotID == robotId);
+      return View(robot);
     }
 
     [HttpPost]
-    public ActionResult EditUser(User User)
+    public ActionResult EditUser(User user)
     {
       if (ModelState.IsValid)
       {
-        usersRepository.SaveData(User);
-        TempData["message"] = string.Format("{0} has been saved", User.Name);
+        usersRepository.SaveData(user);
+        TempData["message"] = string.Format("{0} has been saved", user.Name);
         return RedirectToAction("Index");
       }
       else
       {
         // there is something wrong with the data values
-        return View(User);
+        return View(user);
+      }
+    }
+
+    [HttpPost]
+    public ActionResult EditRobot(Robot robot)
+    {
+      if (ModelState.IsValid)
+      {
+        robotsRepository.SaveData(robot);
+        TempData["message"] = string.Format("{0} has been saved", robot.Name);
+        return RedirectToAction("Index");
+      }
+      else
+      {
+        // there is something wrong with the data values
+        return View(robot);
       }
     }
 
@@ -54,16 +82,32 @@ namespace Robots.WebUI.Controllers
       return View("EditUser", new User());
     }
 
-    [HttpPost]
-    public ActionResult DeleteUser(int UserId)
+    public ViewResult CreateRobot()
     {
-      User deletedUser = usersRepository.DeleteData(UserId);
+      return View("EditRobot", new Robot());
+    }
+
+    [HttpPost]
+    public ActionResult DeleteUser(int userId)
+    {
+      User deletedUser = usersRepository.DeleteData(userId);
       if (deletedUser != null)
       {
         TempData["message"] = string.Format("{0} was deleted",
           deletedUser.Name);
       }
       return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public ActionResult DeleteRobot(int robotId)
+    {
+      Robot deletedRobot = robotsRepository.DeleteData(robotId);
+      if (deletedRobot != null)
+      {
+        TempData["message"] = string.Format("{0} was deleted", deletedRobot.Name);
+      }
+      return RedirectToAction("IndexRobot");
     }
   }
 }
