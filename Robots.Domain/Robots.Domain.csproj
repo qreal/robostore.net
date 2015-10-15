@@ -101,6 +101,10 @@
     <Compile Include="Migrations\201510141403463_AddRobotEntity.Designer.cs">
       <DependentUpon>201510141403463_AddRobotEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510151741195_AddedAttributesForRobot.cs" />
+    <Compile Include="Migrations\201510151741195_AddedAttributesForRobot.Designer.cs">
+      <DependentUpon>201510151741195_AddedAttributesForRobot.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -120,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510141403463_AddRobotEntity.resx">
       <DependentUpon>201510141403463_AddRobotEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510151741195_AddedAttributesForRobot.resx">
+      <DependentUpon>201510151741195_AddedAttributesForRobot.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
