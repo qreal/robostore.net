@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Robots.Domain.Abstract;
@@ -77,6 +78,33 @@ namespace Robots.Tests
       mock.Verify(m => m.SaveData(user));
       // Assert - check the method result type
       Assert.IsNotInstanceOfType(result, typeof(ViewResult));
+    }
+
+    [TestMethod]
+    public void AccountController_can_get_data_from_ninject()
+    {
+      // Arrange - create the mock repository of Users
+      Mock<ICommonRepository<User>> mockU = new Mock<ICommonRepository<User>>();
+      mockU.Setup(m => m.Data).Returns(new User[]
+      {
+        new User {UserID = 1, Name = "P1"},
+        new User {UserID = 2, Name = "P2"},
+        new User {UserID = 3, Name = "P3"},
+      });
+      // Arrange - create a controller
+      AccountController target = new AccountController(null, mockU.Object);
+      // потому что хотим обратиться к приватному полю
+      PrivateObject privateObject = new PrivateObject(target);
+
+      // Action
+
+      User[] result = (((ICommonRepository<User>)privateObject.GetField("usersRepository")).Data).ToArray();
+
+      // Assert
+      Assert.AreEqual(result.Length, 3);
+      Assert.AreEqual("P1", result[0].Name);
+      Assert.AreEqual("P2", result[1].Name);
+      Assert.AreEqual("P3", result[2].Name);
     }
   }
 }

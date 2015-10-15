@@ -1,42 +1,44 @@
 ﻿using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Robots.Domain.Abstract;
 using Robots.Domain.Entities;
 
 /*
-Используется для работы с данными - CRUD.
-Пока только для User.
+Используется для администраторской работы с данными - CRUD.
+Пока только для User и Robots
+В порядке исключения метод Index() - отображающий пользователей HE называется IndexUser()
 */
 
 namespace Robots.WebUI.Controllers
 {
   public class AdminController : Controller
   {
-    private ICommonRepository<User> repository;
+    private ICommonRepository<User> usersRepository;
+    private ICommonRepository<Robot> robotsRepository; 
 
-    public AdminController(ICommonRepository<User> repo)
+    public AdminController(ICommonRepository<User> users, ICommonRepository<Robot> robots )
     {
-      repository = repo;
+      usersRepository = users;
+      robotsRepository = robots;
     }
 
     public ViewResult Index()
     {
-      return View(repository.Data);
+      return View(usersRepository.Data);
     }
 
-    public ViewResult Edit(int UserId)
+    public ViewResult EditUser(int UserId)
     {
-      User User = repository.Data.FirstOrDefault(p => p.UserID == UserId);
+      User User = usersRepository.Data.FirstOrDefault(p => p.UserID == UserId);
       return View(User);
     }
 
     [HttpPost]
-    public ActionResult Edit(User User, HttpPostedFileBase image = null)
+    public ActionResult EditUser(User User)
     {
       if (ModelState.IsValid)
       {
-        repository.SaveData(User);
+        usersRepository.SaveData(User);
         TempData["message"] = string.Format("{0} has been saved", User.Name);
         return RedirectToAction("Index");
       }
@@ -47,15 +49,15 @@ namespace Robots.WebUI.Controllers
       }
     }
 
-    public ViewResult Create()
+    public ViewResult CreateUser()
     {
-      return View("Edit", new User());
+      return View("EditUser", new User());
     }
 
     [HttpPost]
-    public ActionResult Delete(int UserId)
+    public ActionResult DeleteUser(int UserId)
     {
-      User deletedUser = repository.DeleteData(UserId);
+      User deletedUser = usersRepository.DeleteData(UserId);
       if (deletedUser != null)
       {
         TempData["message"] = string.Format("{0} was deleted",
