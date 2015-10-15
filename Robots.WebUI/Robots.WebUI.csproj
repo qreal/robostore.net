@@ -198,6 +198,7 @@
     <Content Include="Views\Robot\Index.cshtml" />
     <Content Include="Views\Admin\EditRobot.cshtml" />
     <Content Include="Views\Admin\IndexRobot.cshtml" />
+    <Content Include="Views\Nav\MenuAdmin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

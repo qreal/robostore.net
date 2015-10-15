@@ -16,7 +16,11 @@ namespace Robots.WebUI.Controllers
   public class AdminController : Controller
   {
     private ICommonRepository<User> usersRepository;
-    private ICommonRepository<Robot> robotsRepository; 
+    private ICommonRepository<Robot> robotsRepository;
+
+    // Для того, чтобы передать инфу в Контроллер Nav о том, какую кагорию(User или Robot) мы смотрим
+    public static int categoryState;
+     
 
     public AdminController(ICommonRepository<User> users, ICommonRepository<Robot> robots )
     {
@@ -27,6 +31,8 @@ namespace Robots.WebUI.Controllers
     #region CRUD User
     public ViewResult Index()
     {
+      // для навигации
+      categoryState = 0;
       return View(usersRepository.Data);
     }
 
@@ -75,6 +81,8 @@ namespace Robots.WebUI.Controllers
 
     public ViewResult IndexRobot()
     {
+      // для навигации
+      categoryState = 1;
       return View(robotsRepository.Data);
     }
 

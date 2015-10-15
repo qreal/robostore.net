@@ -13,10 +13,16 @@ namespace Robots.WebUI.Controllers
 {
     public class NavController : Controller
     {
-        // GET: Nav
-        public PartialViewResult MenuPortSide()
-        {
-            return PartialView();
-        }
+      // боковое меню главной страницы.
+      public PartialViewResult MenuPortSide()
+      {
+        return PartialView();
+      }
+
+      // боковое меню в Admin Контроллере
+      public PartialViewResult MenuAdmin()
+      {
+        return PartialView();
+      }
     }
 }
