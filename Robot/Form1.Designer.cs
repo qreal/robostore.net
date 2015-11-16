@@ -54,6 +54,7 @@
       this.buttonStartReceiving.TabIndex = 1;
       this.buttonStartReceiving.Text = "Start Receiving";
       this.buttonStartReceiving.UseVisualStyleBackColor = true;
+      this.buttonStartReceiving.Click += new System.EventHandler(this.buttonStartReceiving_Click);
       // 
       // buttonConfiguration
       // 
@@ -73,6 +74,7 @@
       this.buttonStopReceiving.TabIndex = 4;
       this.buttonStopReceiving.Text = "Stop Receiving";
       this.buttonStopReceiving.UseVisualStyleBackColor = true;
+      this.buttonStopReceiving.Click += new System.EventHandler(this.buttonStopReceiving_Click);
       // 
       // Form1
       // 

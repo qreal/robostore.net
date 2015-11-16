@@ -3,23 +3,23 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Text;
-using Robot;
+using SocketClient;
 
-public class SocketClient
+public class Client
 {
   // The port number for the remote device.
-  private const int port = 11000;
+  private const int port = 11007;
 
   // ManualResetEvent instances signal completion.
-  private ManualResetEvent connectDone =
+  private  ManualResetEvent connectDone =
       new ManualResetEvent(false);
-  private ManualResetEvent sendDone =
+  private  ManualResetEvent sendDone =
       new ManualResetEvent(false);
-  private ManualResetEvent receiveDone =
+  private  ManualResetEvent receiveDone =
       new ManualResetEvent(false);
 
   // The response from the remote device.
-  private String response = String.Empty;
+  private  String response = String.Empty;
 
   public String SendServer(string message)
   {
@@ -44,7 +44,7 @@ public class SocketClient
           SocketType.Stream, ProtocolType.Tcp);
 
       // Connect to the remote endpoint.
-      client.BeginConnect(remoteEP, ConnectCallback, client);
+      client.BeginConnect(remoteEP,ConnectCallback, client);
       connectDone.WaitOne();
 
       // Send test data to the remote device.
@@ -69,7 +69,7 @@ public class SocketClient
     return response;
   }
 
-  private void ConnectCallback(IAsyncResult ar)
+  private  void ConnectCallback(IAsyncResult ar)
   {
     try
     {
@@ -91,7 +91,7 @@ public class SocketClient
     }
   }
 
-  private void Receive(Socket client)
+  private  void Receive(Socket client)
   {
     try
     {
@@ -109,7 +109,7 @@ public class SocketClient
     }
   }
 
-  private void ReceiveCallback(IAsyncResult ar)
+  private  void ReceiveCallback(IAsyncResult ar)
   {
     try
     {
@@ -147,7 +147,7 @@ public class SocketClient
     }
   }
 
-  private void Send(Socket client, String data)
+  private  void Send(Socket client, String data)
   {
     // Convert the string data to byte data using ASCII encoding.
     byte[] byteData = Encoding.ASCII.GetBytes(data);
@@ -157,7 +157,7 @@ public class SocketClient
         new AsyncCallback(SendCallback), client);
   }
 
-  private void SendCallback(IAsyncResult ar)
+  private  void SendCallback(IAsyncResult ar)
   {
     try
     {
