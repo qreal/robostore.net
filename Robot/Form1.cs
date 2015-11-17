@@ -14,11 +14,6 @@ namespace Robot
       InitializeComponent();
     }
 
-    private void listBox_SelectedIndexChanged(object sender, EventArgs e)
-    {
-      listBox.Text = "";
-    }
-
     private void buttonConfiguration_Click(object sender, EventArgs e)
     {
       Client client = new Client();
@@ -36,18 +31,37 @@ namespace Robot
       sendThread.Abort();
     }
 
-    
+    private CancellationTokenSource tcs;
 
     private void buttonStartReceiving_Click(object sender, EventArgs e)
     {
+      tcs = new CancellationTokenSource();
+      CancellationToken ct = tcs.Token;
+
+      // Слушать пока не найдем клиента, после чего конец
       server = new Server();
-      Task.Factory.StartNew(() => server.StartListening());
+      //Task task = Task.Factory.StartNew(() => server.StartListening(), ct);
+
+      Task.Factory.StartNew(() =>
+      {
+        string result = server.StartListening();
+        listBox.Items.Add(string.Format("Server:{0}\n", result));
+        //decimal result = CalculateMeaningOfLife();
+        //ResultTextBlock.Text = result.ToString();
+      });
+
     }
 
     private void buttonStopReceiving_Click(object sender, EventArgs e)
     {
-     Server.works = false;
-      listBox.Items.Add(Server.data);
+     //Server.works = false;
+     //tcs.Cancel();
+     //listBox.Items.Add(server.result);
+    }
+
+    private void listBox_DoubleClick(object sender, EventArgs e)
+    {
+      listBox.Items.Clear();
     }
   }
 }

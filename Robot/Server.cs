@@ -6,11 +6,11 @@ using System.Text;
 public class Server
 {
   // Incoming data from the client.
-  public static string data = null;
+  private string data = null;
 
-  public static bool works = true; 
+  public bool works = true;
 
-  public void StartListening()
+  public string StartListening()
   {
     // Data buffer for incoming data.
     byte[] bytes = new Byte[1024];
@@ -31,38 +31,36 @@ public class Server
     try
     {
       listener.Bind(localEndPoint);
-      listener.Listen(10);
+      listener.Listen(1); // The maximum length of the pending connections queue.
+      Console.WriteLine("Waiting for a connection...");
+      // Program is suspended while waiting for an incoming connection.
+      Socket handler = listener.Accept();
+      data = null;
 
-      // Start listening for connections.
-      while (works)
+      // An incoming connection needs to be processed.
+      while (true)
       {
-        Console.WriteLine("Waiting for a connection...");
-        // Program is suspended while waiting for an incoming connection.
-        Socket handler = listener.Accept();
-        data = null;
-
-        // An incoming connection needs to be processed.
-        while (true)
+        bytes = new byte[1024];
+        int bytesRec = handler.Receive(bytes);
+        data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
+        if (data.IndexOf("<EOF>") > -1)
         {
-          bytes = new byte[1024];
-          int bytesRec = handler.Receive(bytes);
-          data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-          if (data.IndexOf("<EOF>") > -1)
-          {
-            break;
-          }
+          break;
         }
-
-        // Show the data on the console.
-        Console.WriteLine("Text received : {0}", data);
-
-        // Echo the data back to the client.
-        byte[] msg = Encoding.ASCII.GetBytes(data);
-
-        handler.Send(msg);
-        handler.Shutdown(SocketShutdown.Both);
-        handler.Close();
       }
+
+      // Show the data on the console.
+      Console.WriteLine("Text received : {0}", data);
+
+      // Echo the data back to the client.
+      byte[] msg = Encoding.ASCII.GetBytes(data);
+
+      handler.Send(msg);
+      handler.Shutdown(SocketShutdown.Both);
+      handler.Close();
+
+      listener.Close();
+      return data;
     }
     catch (Exception e)
     {
@@ -71,5 +69,6 @@ public class Server
 
     Console.WriteLine("\nPress ENTER to continue...");
     Console.Read();
+    return data;
   }
 }
