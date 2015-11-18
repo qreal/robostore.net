@@ -31,7 +31,7 @@ public class Server
     // host running the application.
     IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
     IPAddress ipAddress = ipHostInfo.AddressList[0];
-    IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11007);
+    IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11012);
 
     // Create a TCP/IP socket.
     listener = new Socket(AddressFamily.InterNetwork,
