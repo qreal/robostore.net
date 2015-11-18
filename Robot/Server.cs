@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 public class Server
 {
@@ -9,6 +10,16 @@ public class Server
   private string data = null;
 
   public bool works = true;
+
+  private Socket listener;
+  private Socket handler;
+
+  public void Cancellation()
+  {
+    handler.Shutdown(SocketShutdown.Both);
+    handler.Close();
+    listener.Close();
+  }
 
   public string StartListening()
   {
@@ -23,7 +34,7 @@ public class Server
     IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11007);
 
     // Create a TCP/IP socket.
-    Socket listener = new Socket(AddressFamily.InterNetwork,
+    listener = new Socket(AddressFamily.InterNetwork,
       SocketType.Stream, ProtocolType.Tcp);
 
     // Bind the socket to the local endpoint and 
@@ -34,7 +45,7 @@ public class Server
       listener.Listen(1); // The maximum length of the pending connections queue.
       Console.WriteLine("Waiting for a connection...");
       // Program is suspended while waiting for an incoming connection.
-      Socket handler = listener.Accept();
+      handler = listener.Accept();
       data = null;
 
       // An incoming connection needs to be processed.
@@ -56,10 +67,7 @@ public class Server
       byte[] msg = Encoding.ASCII.GetBytes(data);
 
       handler.Send(msg);
-      handler.Shutdown(SocketShutdown.Both);
-      handler.Close();
-
-      listener.Close();
+      Cancellation();
       return data;
     }
     catch (Exception e)

@@ -22,7 +22,7 @@ namespace Robot
       if (sendThread.Join(TimeSpan.FromSeconds(5)))
       {
         listBox.Items.Add("\tsuccessfully sent config:\n");
-        listBox.Items.Add(client.result);
+        listBox.Items.Add("server says:"+client.result+"\n");
       }
       else
       {
@@ -33,30 +33,44 @@ namespace Robot
 
     private CancellationTokenSource tcs;
 
+    private Task Listen(CancellationToken ct)
+    { 
+      return Task.Factory.StartNew(() =>
+      {
+        if (ct.IsCancellationRequested)
+        {
+          server.Cancellation();
+          return;
+        }
+        string result = server.StartListening();
+        listBox.Items.Add(string.Format("Server:{0}\n", result));
+
+      }, ct);
+    } 
+
     private void buttonStartReceiving_Click(object sender, EventArgs e)
     {
       tcs = new CancellationTokenSource();
-      CancellationToken ct = tcs.Token;
 
       // Слушать пока не найдем клиента, после чего конец
       server = new Server();
-      //Task task = Task.Factory.StartNew(() => server.StartListening(), ct);
-
-      Task.Factory.StartNew(() =>
-      {
-        string result = server.StartListening();
-        listBox.Items.Add(string.Format("Server:{0}\n", result));
-        //decimal result = CalculateMeaningOfLife();
-        //ResultTextBlock.Text = result.ToString();
-      });
+      Task listenOne = Listen(tcs.Token);
 
     }
 
     private void buttonStopReceiving_Click(object sender, EventArgs e)
     {
      //Server.works = false;
-     //tcs.Cancel();
-     //listBox.Items.Add(server.result);
+      tcs.Cancel();
+      try
+      {
+        server.Cancellation();
+      }
+      catch (Exception ef)
+      {
+        Console.WriteLine(ef.ToString());
+      }
+      
     }
 
     private void listBox_DoubleClick(object sender, EventArgs e)

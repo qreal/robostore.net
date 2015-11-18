@@ -3,71 +3,57 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
+/*
+Кидает запрос северу и получает ответ
+*/
+
 public class Client
 {
   public string result = "";
 
   public string StartClient(string input)
   {
-    
     // Data buffer for incoming data.
     byte[] bytes = new byte[1024];
 
-    // Connect to a remote device.
+    // Establish the remote endpoint for the socket.
+    // This example uses port 11000 on the local computer.
+    IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
+    IPAddress ipAddress = ipHostInfo.AddressList[0];
+    IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11011);
+
+    // Create a TCP/IP  socket.
+    Socket sender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+
+    // Connect the socket to the remote endpoint. Catch any errors.
     try
     {
-      // Establish the remote endpoint for the socket.
-      // This example uses port 11000 on the local computer.
-      IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
-      IPAddress ipAddress = ipHostInfo.AddressList[0];
-      IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11006);
+      sender.Connect(remoteEP);
 
-      // Create a TCP/IP  socket.
-      Socket sender = new Socket(AddressFamily.InterNetwork,
-        SocketType.Stream, ProtocolType.Tcp);
+      Console.WriteLine("Socket connected to {0}",
+        sender.RemoteEndPoint.ToString());
 
-      
+      // Encode the data string into a byte array.
+      byte[] msg = Encoding.ASCII.GetBytes(input + "<EOF>");
 
-      // Connect the socket to the remote endpoint. Catch any errors.
-      try
-      {
-        sender.Connect(remoteEP);
+      // Send the data through the socket.
+      int bytesSent = sender.Send(msg);
 
-        Console.WriteLine("Socket connected to {0}",
-          sender.RemoteEndPoint.ToString());
+      // Receive the response from the remote device.
+      int bytesRec = sender.Receive(bytes);
+      result = Encoding.ASCII.GetString(bytes, 0, bytesRec);
+      Console.WriteLine("Echoed test = {0}", result);
 
-        // Encode the data string into a byte array.
-        byte[] msg = Encoding.ASCII.GetBytes(input+"<EOF>");
-
-        // Send the data through the socket.
-        int bytesSent = sender.Send(msg);
-
-        // Receive the response from the remote device.
-        int bytesRec = sender.Receive(bytes);
-        result = Encoding.ASCII.GetString(bytes, 0, bytesRec);
-        Console.WriteLine("Echoed test = {0}", result);
-
-        // Release the socket.
-        sender.Shutdown(SocketShutdown.Both);
-        sender.Close();
-      }
-      catch (ArgumentNullException ane)
-      {
-        Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
-      }
-      catch (SocketException se)
-      {
-        Console.WriteLine("SocketException : {0}", se.ToString());
-      }
-      catch (Exception e)
-      {
-        Console.WriteLine("Unexpected exception : {0}", e.ToString());
-      }
+      // Release the socket.
+      sender.Shutdown(SocketShutdown.Both);
+      sender.Close();
     }
     catch (Exception e)
     {
-      Console.WriteLine(e.ToString());
+      Console.WriteLine("Unexpected exception : {0}", e.ToString());
     }
+
     return result;
   }
 }
