@@ -1,0 +1,16 @@
+﻿@model List<string>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>
+    Messages from Route Server: <br>
+</h1>
+
+@foreach (string s in Model)
+{
+    @s <br>
+}
+
+
