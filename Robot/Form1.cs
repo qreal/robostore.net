@@ -77,5 +77,14 @@ namespace Robot
     {
       listBox.Items.Clear();
     }
+
+    private void RouterOff_Click(object sender, EventArgs e)
+    {
+      Task.Factory.StartNew(() =>
+      {
+        new Client().StartClient("<OFF>");
+        listBox.Items.Add("server is dead x_x\n");
+      });
+    }
   }
 }

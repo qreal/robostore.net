@@ -32,6 +32,7 @@
       this.buttonStartReceiving = new System.Windows.Forms.Button();
       this.buttonConfiguration = new System.Windows.Forms.Button();
       this.buttonStopReceiving = new System.Windows.Forms.Button();
+      this.RouterOff = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // listBox
@@ -76,11 +77,24 @@
       this.buttonStopReceiving.UseVisualStyleBackColor = true;
       this.buttonStopReceiving.Click += new System.EventHandler(this.buttonStopReceiving_Click);
       // 
+      // RouterOff
+      // 
+      this.RouterOff.BackColor = System.Drawing.Color.Red;
+      this.RouterOff.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+      this.RouterOff.Location = new System.Drawing.Point(295, 333);
+      this.RouterOff.Name = "RouterOff";
+      this.RouterOff.Size = new System.Drawing.Size(270, 46);
+      this.RouterOff.TabIndex = 5;
+      this.RouterOff.Text = "ROUTER OFF";
+      this.RouterOff.UseVisualStyleBackColor = false;
+      this.RouterOff.Click += new System.EventHandler(this.RouterOff_Click);
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(855, 484);
+      this.Controls.Add(this.RouterOff);
       this.Controls.Add(this.buttonStopReceiving);
       this.Controls.Add(this.buttonConfiguration);
       this.Controls.Add(this.buttonStartReceiving);
@@ -97,6 +111,7 @@
     private System.Windows.Forms.Button buttonStartReceiving;
     private System.Windows.Forms.Button buttonConfiguration;
     private System.Windows.Forms.Button buttonStopReceiving;
+    private System.Windows.Forms.Button RouterOff;
   }
 }
 
