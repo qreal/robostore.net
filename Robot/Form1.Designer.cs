@@ -31,7 +31,6 @@
       this.listBox = new System.Windows.Forms.ListBox();
       this.buttonStartReceiving = new System.Windows.Forms.Button();
       this.buttonConfiguration = new System.Windows.Forms.Button();
-      this.buttonStopReceiving = new System.Windows.Forms.Button();
       this.RouterOff = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
@@ -67,16 +66,6 @@
       this.buttonConfiguration.UseVisualStyleBackColor = true;
       this.buttonConfiguration.Click += new System.EventHandler(this.buttonConfiguration_Click);
       // 
-      // buttonStopReceiving
-      // 
-      this.buttonStopReceiving.Location = new System.Drawing.Point(446, 184);
-      this.buttonStopReceiving.Name = "buttonStopReceiving";
-      this.buttonStopReceiving.Size = new System.Drawing.Size(119, 59);
-      this.buttonStopReceiving.TabIndex = 4;
-      this.buttonStopReceiving.Text = "Stop Receiving";
-      this.buttonStopReceiving.UseVisualStyleBackColor = true;
-      this.buttonStopReceiving.Click += new System.EventHandler(this.buttonStopReceiving_Click);
-      // 
       // RouterOff
       // 
       this.RouterOff.BackColor = System.Drawing.Color.Red;
@@ -95,7 +84,6 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(855, 484);
       this.Controls.Add(this.RouterOff);
-      this.Controls.Add(this.buttonStopReceiving);
       this.Controls.Add(this.buttonConfiguration);
       this.Controls.Add(this.buttonStartReceiving);
       this.Controls.Add(this.listBox);
@@ -110,7 +98,6 @@
     private System.Windows.Forms.ListBox listBox;
     private System.Windows.Forms.Button buttonStartReceiving;
     private System.Windows.Forms.Button buttonConfiguration;
-    private System.Windows.Forms.Button buttonStopReceiving;
     private System.Windows.Forms.Button RouterOff;
   }
 }
