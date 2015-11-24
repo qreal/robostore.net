@@ -4,22 +4,26 @@
 */
 
 using System;
+using Newtonsoft.Json;
+using Router.Models;
 
 
 namespace Router
 {
   public class MessageProcessor
   {
-
     /*
     Мы знаем, что все сообщения должны заканчиваться на <EOF>
     */
+
     public void Proccess(string str)
     {
-      string json = str.Replace("<EOF>","");
-      Configuration configuration = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Configuration>(json);
-
-      Console.WriteLine(configuration.Port);
+      /*
+        Мы знаем, что все сообщения должны заканчиваться на <EOF>
+      */
+      string json = str.Replace("<EOF>", "");
+      Message message = JsonConvert.DeserializeObject<Message>(json);
+      Console.WriteLine(message.Robot.Port);
     }
 
   }

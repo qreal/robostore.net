@@ -6,6 +6,8 @@ using System.Runtime.Serialization.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using Formatting = System.Xml.Formatting;
 
 namespace Robot
 {
@@ -22,30 +24,32 @@ namespace Robot
       InitializeComponent();
     }
 
+    // Отправляем конфигурацию
     private void buttonConfiguration_Click(object sender, EventArgs e)
     {
+      // создали кофигурацию
       Configuration configuration = new Configuration()
       {
         Port = PortListening,
-        RobotID = RoobotID,
-        Commands = new List<string> { "<OFF>" }
+        RobotID = RoobotID
       };
 
-      // Serialize JSON 
-      // See more at this https://msdn.microsoft.com/en-us/library/bb412179(v=vs.110).aspx
-      MemoryStream stream = new MemoryStream();
-      DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Configuration));
-      serializer.WriteObject(stream, configuration);
-      stream.Position = 0;
-      StreamReader streamReader = new StreamReader(stream);
-      string message = streamReader.ReadToEnd();
+      // создали пустое сообщение с командой выключить
+      Message message = new Message()
+      {
+        Commands = new List<string>() {"<OFF>"},
+        Server = null,
+        Robot = configuration,
+        Text = null
+      };
 
+      string messageFinal = JsonConvert.SerializeObject(message);
+ 
       // dont forget add EOF
-      message += "<EOF>";
-
+      messageFinal += "<EOF>";
 
       Client client = new Client();
-      Thread sendThread = new Thread(new ThreadStart(() => client.StartClient(message)));
+      Thread sendThread = new Thread(new ThreadStart(() => client.StartClient(messageFinal)));
       sendThread.Start();
       if (sendThread.Join(TimeSpan.FromSeconds(5)))
       {
@@ -57,8 +61,6 @@ namespace Robot
         listBox.Items.Add("\tcannot sent config");
       }
       sendThread.Abort();
-
-
     }
 
     private void buttonStartReceiving_Click(object sender, EventArgs e)
