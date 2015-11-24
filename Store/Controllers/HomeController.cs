@@ -13,7 +13,7 @@ namespace Store.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View(Messages);
+          return RedirectToAction(actionName: "ShowAll", controllerName: "Message");
         }
     }
 }

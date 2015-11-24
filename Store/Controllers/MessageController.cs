@@ -1,19 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Web.Mvc;
+using Store.ViewModels;
 
 namespace Store.Controllers
 {
   public class MessageController : Controller
   {
+    private static List<MessageFromRobot> messages = new List<MessageFromRobot>();
 
     [HttpPost]
-    public JsonResult Post(string value)
+    public JsonResult Post(MessageFromRobot msg)
     {
-      HomeController.Messages.Add(value);
+      messages.Add(msg);
       return Json("success");
+    }
+
+    public ActionResult ShowAll()
+    {
+      return View(messages);
     }
 
     [HttpGet]

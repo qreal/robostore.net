@@ -32,6 +32,7 @@
       this.buttonStartReceiving = new System.Windows.Forms.Button();
       this.buttonConfiguration = new System.Windows.Forms.Button();
       this.RouterOff = new System.Windows.Forms.Button();
+      this.buttonSayHello = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // listBox
@@ -78,11 +79,22 @@
       this.RouterOff.UseVisualStyleBackColor = false;
       this.RouterOff.Click += new System.EventHandler(this.RouterOff_Click);
       // 
+      // buttonSayHello
+      // 
+      this.buttonSayHello.Location = new System.Drawing.Point(431, 184);
+      this.buttonSayHello.Name = "buttonSayHello";
+      this.buttonSayHello.Size = new System.Drawing.Size(130, 59);
+      this.buttonSayHello.TabIndex = 6;
+      this.buttonSayHello.Text = "Say Hello";
+      this.buttonSayHello.UseVisualStyleBackColor = true;
+      this.buttonSayHello.Click += new System.EventHandler(this.buttonSayHello_Click);
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(855, 484);
+      this.Controls.Add(this.buttonSayHello);
       this.Controls.Add(this.RouterOff);
       this.Controls.Add(this.buttonConfiguration);
       this.Controls.Add(this.buttonStartReceiving);
@@ -99,6 +111,7 @@
     private System.Windows.Forms.Button buttonStartReceiving;
     private System.Windows.Forms.Button buttonConfiguration;
     private System.Windows.Forms.Button RouterOff;
+    private System.Windows.Forms.Button buttonSayHello;
   }
 }
 

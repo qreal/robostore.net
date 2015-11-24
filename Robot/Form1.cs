@@ -88,5 +88,43 @@ namespace Robot
         listBox.Items.Add("server is dead x_x\n");
       });
     }
+
+    private void buttonSayHello_Click(object sender, EventArgs e)
+    {
+      //создали кофигурацию
+      Configuration configuration = new Configuration()
+      {
+        Port = PortListening,
+        RobotID = RoobotID
+      };
+
+      // создали пустое сообщение с командой выключить
+      Message message = new Message()
+      {
+        Commands = new List<string>() { "<OFF>" },
+        Server = null,
+        Robot = configuration,
+        Text = "hello"
+      };
+
+      string messageFinal = JsonConvert.SerializeObject(message);
+
+      // dont forget add EOF
+      messageFinal += "<EOF>";
+
+      Client client = new Client();
+      Thread sendThread = new Thread(new ThreadStart(() => client.StartClient(messageFinal)));
+      sendThread.Start();
+      if (sendThread.Join(TimeSpan.FromSeconds(5)))
+      {
+        listBox.Items.Add("\tsuccessfully sent config:\n");
+        listBox.Items.Add("server says:" + client.result + "\n");
+      }
+      else
+      {
+        listBox.Items.Add("\tcannot sent config");
+      }
+      sendThread.Abort();
+    }
   }
 }
