@@ -1,18 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Store.ViewModels;
+
+/*
+Класс для работы с Роутером
+*/
 
 namespace Store.Models
 {
   public class RouterConnector
   {
-    public void SendToRobot()
+    // отправить на захардкоденного робота
+    public void SendToRobot(MessageRobot messageFromForm)
     {
+      Message messageToRobot = new Message()
+      {
+        //Commands = new List<string>() {"<OFF>"},
+        Commands = null,
+        Robot = new Configuration()
+        {
+          RobotID = messageFromForm.RobotID
+        },
+        Server = "1",
+        Text = messageFromForm.Text
+      };
+      
       // Data buffer for incoming data.
       byte[] bytes = new Byte[1024];
       string result = "";
@@ -32,14 +48,15 @@ namespace Store.Models
       {
         sender.Connect(remoteEP);
 
-        Debug.WriteLine("Socket connected to {0}",
-          sender.RemoteEndPoint.ToString());
+        Debug.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+
+        string messageFinal = JsonConvert.SerializeObject(messageToRobot) + "<EOF>";
 
         // Encode the data string into a byte array.
-        byte[] msg = Encoding.ASCII.GetBytes("hello" + "<EOF>");
+        byte[] msg = Encoding.ASCII.GetBytes(messageFinal);
 
         // Send the data through the socket.
-        int bytesSent = sender.Send(msg);
+        sender.Send(msg);
 
         // Receive the response from the remote device.
         int bytesRec = sender.Receive(bytes);
@@ -54,7 +71,6 @@ namespace Store.Models
       {
         Debug.WriteLine("Unexpected exception : {0}", e.ToString());
       }
-
     }
   }
 }

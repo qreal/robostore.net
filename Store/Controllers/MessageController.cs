@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using Store.Models;
 using Store.ViewModels;
 
 namespace Store.Controllers
@@ -11,10 +8,18 @@ namespace Store.Controllers
   public class MessageController : Controller
   {
     private static List<MessageRobot> messages = new List<MessageRobot>();
+    private RouterConnector routerConnector;
+
+    public MessageController()
+    {
+      routerConnector = new RouterConnector();
+    }
 
     [HttpPost]
     public JsonResult Post(MessageRobot msg)
     {
+      // добавим тут синтаксис Sent и Received, чтобы было что-то похожее на переписку
+      msg.Text = "(received) " + msg.Text;
       messages.Add(msg);
       return Json("success");
     }
@@ -35,9 +40,10 @@ namespace Store.Controllers
     {
       if (ModelState.IsValid)
       {
-        // тут будет отправка сообщений на робота через класс RouterConnector
+        routerConnector.SendToRobot(msg);
+        msg.Text = "(sent) " + msg.Text;
+        messages.Add(msg);
         return RedirectToAction("ShowAll");
-
       }
       else
       {
@@ -45,6 +51,5 @@ namespace Store.Controllers
         return View(msg);
       }
     }
-
   }
 }

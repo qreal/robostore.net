@@ -101,7 +101,8 @@ namespace Robot
       // создали пустое сообщение с командой выключить
       Message message = new Message()
       {
-        Commands = new List<string>() { "<OFF>" },
+        //Commands = new List<string>() { "<OFF>" },
+        Commands = null,
         Server = null,
         Robot = configuration,
         Text = "hello"
