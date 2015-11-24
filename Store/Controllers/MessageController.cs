@@ -10,10 +10,10 @@ namespace Store.Controllers
 {
   public class MessageController : Controller
   {
-    private static List<MessageFromRobot> messages = new List<MessageFromRobot>();
+    private static List<MessageRobot> messages = new List<MessageRobot>();
 
     [HttpPost]
-    public JsonResult Post(MessageFromRobot msg)
+    public JsonResult Post(MessageRobot msg)
     {
       messages.Add(msg);
       return Json("success");
@@ -25,51 +25,25 @@ namespace Store.Controllers
     }
 
     [HttpGet]
-    public JsonResult Send()
+    public ActionResult SendForm()
     {
-      // Data buffer for incoming data.
-      byte[] bytes = new Byte[1024];
-      string result = "";
+      return View();
+    }
 
-      // Establish the remote endpoint for the socket.
-      // This example uses port 11000 on the local computer.
-      IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
-      IPAddress ipAddress = ipHostInfo.AddressList[0];
-      IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11011);
-
-      // Create a TCP/IP  socket.
-      Socket sender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-
-      // Connect the socket to the remote endpoint. Catch any errors.
-      try
+    [HttpPost]
+    public ActionResult SendForm(MessageRobot msg)
+    {
+      if (ModelState.IsValid)
       {
-        sender.Connect(remoteEP);
+        // тут будет отправка сообщений на робота через класс RouterConnector
+        return RedirectToAction("ShowAll");
 
-        Console.WriteLine("Socket connected to {0}",
-          sender.RemoteEndPoint.ToString());
-
-        // Encode the data string into a byte array.
-        byte[] msg = Encoding.ASCII.GetBytes("hello" + "<EOF>");
-
-        // Send the data through the socket.
-        int bytesSent = sender.Send(msg);
-
-        // Receive the response from the remote device.
-        int bytesRec = sender.Receive(bytes);
-        result = Encoding.ASCII.GetString(bytes, 0, bytesRec);
-        Console.WriteLine("Echoed test = {0}", result);
-
-        // Release the socket.
-        sender.Shutdown(SocketShutdown.Both);
-        sender.Close();
       }
-      catch (Exception e)
+      else
       {
-        Console.WriteLine("Unexpected exception : {0}", e.ToString());
+        // there is a validation error
+        return View(msg);
       }
-
-      return Json("success", JsonRequestBehavior.AllowGet);
     }
 
   }

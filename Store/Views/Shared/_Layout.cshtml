@@ -1,6 +1,22 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css"/>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 </head>
-@RenderBody()
+<body>
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <div>
+        @if (TempData["message"] != null)
+        {
+        <div class="alert alert-success">@TempData["message"]</div>
+        }
+        @RenderBody()
+    </div>
+</body>
+
 </html>

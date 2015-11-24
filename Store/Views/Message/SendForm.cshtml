@@ -1,0 +1,32 @@
+﻿
+@model Store.ViewModels.MessageRobot
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h4>Send Message</h4>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+        <div class="form-group">
+            <label>Text:</label>
+            @Html.TextBoxFor(x => x.Text, new { @class = "form-control" })
+        </div>
+            <div class="form-group">
+                <label>Which Robot?</label>
+                @Html.DropDownListFor(x => x.RobotID, new[]
+                {
+                    new SelectListItem()
+                    {
+                        Text = "default test robot",
+                        Value = "23"
+                    }
+                }, "Choose a robot", new { @class = "form-control" })
+            </div>
+            <div class="text-center">
+                <input class="btn btn-success" type="submit" value="Send" />
+            </div>
+        }
+    </div>
+</div>
+
