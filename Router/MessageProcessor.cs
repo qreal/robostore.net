@@ -6,9 +6,12 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Router.Models;
 
@@ -89,6 +92,28 @@ namespace Router
       return true;
     }
 
+    public static void sendEcho(int RobotId)
+    {
+      Configuration configuration = new Configuration() { RobotID = RobotId, Port = 0 };
+      Message message = new Message()
+      {
+        Commands = new List<string>() { "<ECHO>" },
+        Robot = configuration,
+        Server = null,
+        Text = null
+      };
+      bool result = true;
+      while (result)
+      {
+        Thread.Sleep(1000);
+        result = MessageProcessor.SendMessageToRobot(JsonConvert.SerializeObject(message));
+        if (result)
+          Console.WriteLine("Robot is online now");
+      }
+      Console.WriteLine("Robot is offline now");
+      Store.Robots.First(x => x.Config.RobotID == 1).isOnline = false;
+    }
+
     public void Proccess(string str)
     {
       /*
@@ -101,10 +126,33 @@ namespace Router
       Message message = JsonConvert.DeserializeObject<Message>(json);
 
 
-      // сообщение от робота. Его нужно отправить на Сервер.
+      /* сообщение от робота. Его нужно отправить в на Сервер в любом случае.
+         Также мы должны начать отправлять эхо запросы и сделить, онлайн ли наш Робот или нет.
+      */
       if (message.Server == null)
       {
-        sendMessageToServer(message.Robot.RobotID.ToString(), message.Text);
+        // работу с сервером временно отменил.
+        //sendMessageToServer(message.Robot.RobotID.ToString(), message.Text);
+
+
+        // Добавляем в список Роботов, если его еще там нет.
+        if (Store.Robots.FirstOrDefault(x => x.Config.RobotID == message.Robot.RobotID) == null)
+        {
+          Store.Robots.Add(new Robot()
+          {
+            Config = message.Robot,
+            isOnline = true
+          });
+        }
+
+        /*
+          Запускаем таску, которая шлет эхо сообщения на робота и 
+          останавливается, если при передаче происзошла ошибка.
+        */
+        Task hearBeating = Task.Factory.StartNew(() =>
+        {
+          sendEcho(message.Robot.RobotID);
+        });
       }
       // сообщение от сервера. Его нужно отправить на Робота.
       else
