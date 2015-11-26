@@ -75,7 +75,7 @@ public class Server
     {
       Console.WriteLine(e.ToString());
     }
-
+    Cancellation();
     Console.WriteLine("\nPress ENTER to continue...");
     Console.Read();
     return data;

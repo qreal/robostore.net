@@ -77,7 +77,8 @@ namespace Router
         sender.Close();
 
         // Сообщение должно быть эхом (таким же)
-        if (result != text)
+
+        if (text + "<EOF>" != result)
           return false;
       }
       catch (Exception e)

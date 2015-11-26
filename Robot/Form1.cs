@@ -66,6 +66,7 @@ namespace Robot
         server = new Server();
         string result = server.StartListening();
         listBox.Items.Add(string.Format("Server:{0}\n", result));
+        buttonStartReceiving_Click(sender, e);
       });
     }
 

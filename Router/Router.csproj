@@ -53,6 +53,8 @@
     <Compile Include="Models\Configuration.cs" />
     <Compile Include="MessageProcessor.cs" />
     <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Robot.cs" />
+    <Compile Include="Models\Store.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
