@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Runtime.Serialization.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
-using Formatting = System.Xml.Formatting;
 
 namespace Robot
 {
@@ -44,7 +40,7 @@ namespace Robot
       };
 
       string messageFinal = JsonConvert.SerializeObject(message);
- 
+
       // dont forget add EOF
       messageFinal += "<EOF>";
 
@@ -65,14 +61,12 @@ namespace Robot
 
     private void buttonStartReceiving_Click(object sender, EventArgs e)
     {
-
       Task.Factory.StartNew(() =>
       {
         server = new Server();
         string result = server.StartListening();
         listBox.Items.Add(string.Format("Server:{0}\n", result));
       });
-
     }
 
     private void listBox_DoubleClick(object sender, EventArgs e)
@@ -110,9 +104,10 @@ namespace Robot
 
       string messageFinal = JsonConvert.SerializeObject(message);
 
-      // dont forget add EOF
+      // dont forget to add EOF
       messageFinal += "<EOF>";
 
+      // Тут даем 5 секунд потоку на выполнение и если что убиваем его
       Client client = new Client();
       Thread sendThread = new Thread(new ThreadStart(() => client.StartClient(messageFinal)));
       sendThread.Start();

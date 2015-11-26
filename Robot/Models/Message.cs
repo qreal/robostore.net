@@ -1,5 +1,10 @@
 ﻿using System.Collections.Generic;
 
+/*
+Общий формат сообщения.
+Общий класс всех 3х сущностей
+*/
+
 namespace Robot
 {
   public class Message

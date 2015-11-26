@@ -4,6 +4,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net;
 using System.Net.Sockets;
@@ -35,7 +36,8 @@ namespace Router
       Console.WriteLine("Server reports:" + result);
     }
 
-    private static void SendMessageToRobot(string text)
+    // отправить сообщение по сокету по порту 11012
+    public static bool SendMessageToRobot(string text)
     {
       // Data buffer for incoming data.
       byte[] bytes = new Byte[1024];
@@ -73,11 +75,17 @@ namespace Router
         // Release the socket.
         sender.Shutdown(SocketShutdown.Both);
         sender.Close();
+
+        // Сообщение должно быть эхом (таким же)
+        if (result != text)
+          return false;
       }
       catch (Exception e)
       {
-        Console.WriteLine("Unexpected exception : {0}", e.ToString());
+        //Console.WriteLine("Unexpected exception : {0}", e.ToString());
+        return false;
       }
+      return true;
     }
 
     public void Proccess(string str)
@@ -95,7 +103,7 @@ namespace Router
       // сообщение от робота. Его нужно отправить на Сервер.
       if (message.Server == null)
       {
-        sendMessageToServer(message.Robot.Port.ToString(), message.Text);
+        sendMessageToServer(message.Robot.RobotID.ToString(), message.Text);
       }
       // сообщение от сервера. Его нужно отправить на Робота.
       else

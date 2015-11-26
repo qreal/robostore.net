@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 
 /*
-Кидает запрос северу и получает ответ
+Самый простой эхо клиент
 */
 
 public class Client

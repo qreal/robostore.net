@@ -2,14 +2,15 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
+
+/*
+Самый простой эхо сервер
+*/
 
 public class Server
 {
   // Incoming data from the client.
   private string data = null;
-
-  public bool works = true;
 
   private Socket listener;
   private Socket handler;
