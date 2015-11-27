@@ -80,7 +80,7 @@ namespace Robot
       Task.Factory.StartNew(() =>
       {
         new Client().StartClient("<OFF>");
-        listBox.Items.Add("server is dead x_x\n");
+        listBox.Items.Add("Bela Lugosis is dead x_x\n");
       });
     }
 

@@ -27,16 +27,25 @@ namespace Router
     /*
     Простой post запрос
     */
-    private void sendMessageToServer(string sender, string text)
+    private static void sendMessageToServer(string sender, string text)
     {
       var webClient = new WebClient();
       var pars = new NameValueCollection();
       pars.Add("format", "json");
       pars.Add("Text", text);
       pars.Add("RobotID", sender);
-      var response = webClient.UploadValues("http://localhost:45534/message/post", pars);
-      string result = System.Text.Encoding.UTF8.GetString(response);
-      Console.WriteLine("Server reports:" + result);
+      try
+      {
+        var response = webClient.UploadValues("http://localhost:45534/message/post", pars);
+        string result = System.Text.Encoding.UTF8.GetString(response);
+        Console.WriteLine("Server reports:" + result);
+      }
+      catch (Exception e)
+      {
+        Console.WriteLine("sending message to server failed\n");
+      }
+      
+      
     }
 
     // отправить сообщение по сокету по порту 11012
@@ -87,6 +96,7 @@ namespace Router
       catch (Exception e)
       {
         //Console.WriteLine("Unexpected exception : {0}", e.ToString());
+        Console.WriteLine("sending message to robot failed\n");
         return false;
       }
       return true;
@@ -103,14 +113,29 @@ namespace Router
         Text = null
       };
       bool result = true;
+
+      /*
+      нужно сказать серверу, что робот онлайн только 1 раз, поэтому нужен флаг
+      */
+      bool serverKnows = false;
+
       while (result)
       {
         Thread.Sleep(1000);
         result = MessageProcessor.SendMessageToRobot(JsonConvert.SerializeObject(message));
         if (result)
+        {
           Console.WriteLine("Robot is online now");
+          if (!serverKnows)
+          {
+            sendMessageToServer(message.Robot.RobotID.ToString(), "I am online!");
+            serverKnows = true;
+          }
+        }
+          
       }
       Console.WriteLine("Robot is offline now");
+      sendMessageToServer(message.Robot.RobotID.ToString(), "I am offline!");
       Store.Robots.First(x => x.Config.RobotID == 1).isOnline = false;
     }
 
@@ -132,7 +157,7 @@ namespace Router
       if (message.Server == null)
       {
         // работу с сервером временно отменил.
-        //sendMessageToServer(message.Robot.RobotID.ToString(), message.Text);
+        sendMessageToServer(message.Robot.RobotID.ToString(), message.Text);
 
 
         // Добавляем в список Роботов, если его еще там нет.
