@@ -1,5 +1,4 @@
-﻿
-/*
+﻿/*
 Сей класс решает, что делать с полученным сообщением
 */
 
@@ -16,7 +15,7 @@ using Newtonsoft.Json;
 using Router.Models;
 
 /*
-Сейчас выбор робота закахркожен, позже будет получать из списка
+Сейчас выбор робота закахркожен = 1, позже будет получать из списка
 */
 
 
@@ -27,13 +26,14 @@ namespace Router
     /*
     Простой post запрос
     */
-    private static void sendMessageToServer(string sender, string text)
+    private static void sendMessageToServer(Message message)
     {
       var webClient = new WebClient();
       var pars = new NameValueCollection();
       pars.Add("format", "json");
-      pars.Add("Text", text);
-      pars.Add("RobotID", sender);
+      pars.Add("Text", message.Text);
+      pars.Add("From", message.From.ToString());
+      pars.Add("To", message.To.ToString());
       try
       {
         var response = webClient.UploadValues("http://localhost:45534/message/post", pars);
@@ -44,8 +44,7 @@ namespace Router
       {
         Console.WriteLine("sending message to server failed\n");
       }
-      
-      
+       
     }
 
     // отправить сообщение по сокету по порту 11012
@@ -104,19 +103,22 @@ namespace Router
 
     public static void sendEcho(int RobotId)
     {
-      Configuration configuration = new Configuration() { RobotID = RobotId, Port = 0 };
+      // создали эхо - сообщение
       Message message = new Message()
       {
         Commands = new List<string>() { "<ECHO>" },
-        Robot = configuration,
-        Server = null,
+        From = 0,
+        To = RobotId,
         Text = null
       };
+
+      // оно дошло?
       bool result = true;
 
       /*
       нужно сказать серверу, что робот онлайн только 1 раз, поэтому нужен флаг
       */
+
       bool serverKnows = false;
 
       while (result)
@@ -128,15 +130,29 @@ namespace Router
           Console.WriteLine("Robot is online now");
           if (!serverKnows)
           {
-            sendMessageToServer(message.Robot.RobotID.ToString(), "I am online!");
+            Message notificationOn = new Message()
+            {
+              Commands = null,
+              From = RobotId,
+              Text = "I am online!",
+              To = 0
+            };
+            sendMessageToServer(notificationOn);
             serverKnows = true;
           }
-        }
-          
+        }    
       }
+
       Console.WriteLine("Robot is offline now");
-      sendMessageToServer(message.Robot.RobotID.ToString(), "I am offline!");
-      Store.Robots.First(x => x.Config.RobotID == 1).isOnline = false;
+      Message notificationOff = new Message()
+      {
+        Commands = null,
+        From = RobotId,
+        Text = "I am offline!",
+        To = 0
+      };
+      sendMessageToServer(notificationOff);
+      //Store.Robots.First(x => x.Config.RobotID == 1).isOnline = false;
     }
 
     public void Proccess(string str)
@@ -154,21 +170,19 @@ namespace Router
       /* сообщение от робота. Его нужно отправить в на Сервер в любом случае.
          Также мы должны начать отправлять эхо запросы и сделить, онлайн ли наш Робот или нет.
       */
-      if (message.Server == null)
+      if (message.From != 0)
       {
-        // работу с сервером временно отменил.
-        sendMessageToServer(message.Robot.RobotID.ToString(), message.Text);
-
+        sendMessageToServer(message);
 
         // Добавляем в список Роботов, если его еще там нет.
-        if (Store.Robots.FirstOrDefault(x => x.Config.RobotID == message.Robot.RobotID) == null)
-        {
-          Store.Robots.Add(new Robot()
-          {
-            Config = message.Robot,
-            isOnline = true
-          });
-        }
+        //if (Store.Robots.FirstOrDefault(x => x.Config.RobotID == message.Robot.RobotID) == null)
+        //{
+        //  Store.Robots.Add(new Robot()
+        //  {
+        //    Config = message.Robot,
+        //    isOnline = true
+        //  });
+        //}
 
         /*
           Запускаем таску, которая шлет эхо сообщения на робота и 
@@ -176,16 +190,13 @@ namespace Router
         */
         Task hearBeating = Task.Factory.StartNew(() =>
         {
-          sendEcho(message.Robot.RobotID);
+          sendEcho(message.From);
         });
       }
       // сообщение от сервера. Его нужно отправить на Робота.
+      // Но только если он онлайн
       else
       {
-        // потому что идет к роботу
-        message.Server = null;
-        // потому что для робота они другие
-        message.Commands = null;
         SendMessageToRobot(JsonConvert.SerializeObject(message));
       }
     }

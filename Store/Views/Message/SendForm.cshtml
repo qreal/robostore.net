@@ -1,5 +1,5 @@
 ﻿
-@model Store.ViewModels.MessageRobot
+@model Store.Models.Message
 
 <div class="panel panel-success">
     <div class="panel-heading">
@@ -14,12 +14,12 @@
         </div>
             <div class="form-group">
                 <label>Which Robot?</label>
-                @Html.DropDownListFor(x => x.RobotID, new[]
+                @Html.DropDownListFor(x => x.To, new[]
                 {
                     new SelectListItem()
                     {
                         Text = "default test robot",
-                        Value = "23"
+                        Value = "1"
                     }
                 }, "Choose a robot", new { @class = "form-control" })
             </div>

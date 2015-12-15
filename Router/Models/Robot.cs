@@ -2,6 +2,8 @@
 Конфигурация робота + онлайн ли он
 */
 
+// пока не нужен
+
 namespace Router.Models
 {
   public class Robot

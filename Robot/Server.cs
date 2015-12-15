@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -44,7 +45,7 @@ public class Server
     {
       listener.Bind(localEndPoint);
       listener.Listen(1); // The maximum length of the pending connections queue.
-      Console.WriteLine("Waiting for a connection...");
+      Debug.WriteLine("Waiting for a connection...");
       // Program is suspended while waiting for an incoming connection.
       handler = listener.Accept();
       data = null;
@@ -62,7 +63,7 @@ public class Server
       }
 
       // Show the data on the console.
-      Console.WriteLine("Text received : {0}", data);
+      Debug.WriteLine("Text received : {0}", data);
 
       // Echo the data back to the client.
       byte[] msg = Encoding.ASCII.GetBytes(data);

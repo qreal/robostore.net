@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using Store.Models;
-using Store.ViewModels;
 
 namespace Store.Controllers
 {
   public class MessageController : Controller
   {
-    private static List<MessageRobot> messages = new List<MessageRobot>();
+    private static List<Message> messages = new List<Message>();
     private RouterConnector routerConnector;
 
     public MessageController()
@@ -15,8 +14,11 @@ namespace Store.Controllers
       routerConnector = new RouterConnector();
     }
 
+    /*
+    Принимает по API сообщения от Роботов
+    */
     [HttpPost]
-    public JsonResult Post(MessageRobot msg)
+    public JsonResult Post(Message msg)
     {
       // добавим тут синтаксис Sent и Received, чтобы было что-то похожее на переписку
       msg.Text = "(received) " + msg.Text;
@@ -29,6 +31,9 @@ namespace Store.Controllers
       return View(messages);
     }
 
+    /*
+    Отправить сообщение на Робота (попытаться)
+    */
     [HttpGet]
     public ActionResult SendForm()
     {
@@ -36,7 +41,7 @@ namespace Store.Controllers
     }
 
     [HttpPost]
-    public ActionResult SendForm(MessageRobot msg)
+    public ActionResult SendForm(Message msg)
     {
       if (ModelState.IsValid)
       {

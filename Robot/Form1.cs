@@ -5,13 +5,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
+/*
+Пока только 1 робот и Id у него захардкожен и = 1.
+*/
+
 namespace Robot
 {
   public partial class Form1 : Form
   {
     // Info about Robot
     private int PortListening = 11012;
-    private int RoobotID = 23;
+    private int RobotID = 1;
 
     private Server server = null;
 
@@ -26,17 +30,16 @@ namespace Robot
       // создали кофигурацию
       Configuration configuration = new Configuration()
       {
-        Port = PortListening,
-        RobotID = RoobotID
+        Port = PortListening
       };
 
       // создали пустое сообщение с командой выключить
       Message message = new Message()
       {
-        Commands = new List<string>() {"<OFF>"},
-        Server = null,
-        Robot = configuration,
-        Text = null
+        Commands = new List<string>() {},
+        To = 0,
+        From = RobotID,
+        Text = JsonConvert.SerializeObject(configuration)
       };
 
       string messageFinal = JsonConvert.SerializeObject(message);
@@ -86,20 +89,14 @@ namespace Robot
 
     private void buttonSayHello_Click(object sender, EventArgs e)
     {
-      //создали кофигурацию
-      Configuration configuration = new Configuration()
-      {
-        Port = PortListening,
-        RobotID = RoobotID
-      };
 
       // создали пустое сообщение с командой выключить
       Message message = new Message()
       {
         //Commands = new List<string>() { "<OFF>" },
         Commands = null,
-        Server = null,
-        Robot = configuration,
+        From = RobotID,
+        To = 0,
         Text = "hello"
       };
 

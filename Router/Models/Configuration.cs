@@ -7,7 +7,6 @@ namespace Router.Models
 {
   public class Configuration
   {
-    public int RobotID { get; set; }
     public int Port { get; set; }
   }
 }

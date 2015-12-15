@@ -4,10 +4,21 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Newtonsoft.Json;
-using Store.ViewModels;
 
 /*
 Класс для работы с Роутером
+*/
+
+/*
+Внимание!
+Пока работаем только с одним роботом и его ID будет захардкожено.
+Пусть оно будет = 1
+*/
+
+/*
+TODO
+Сейчас все отапрвялется на Роутер. 
+Сделать систему с ожиданием в 1 секунду, если не получили эхо, то отправляем на Роутер
 */
 
 namespace Store.Models
@@ -15,19 +26,10 @@ namespace Store.Models
   public class RouterConnector
   {
     // отправить на захардкоденного робота
-    public void SendToRobot(MessageRobot messageFromForm)
+    public void SendToRobot(Message messageToRobot)
     {
-      Message messageToRobot = new Message()
-      {
-        //Commands = new List<string>() {"<OFF>"},
-        Commands = null,
-        Robot = new Configuration()
-        {
-          RobotID = messageFromForm.RobotID
-        },
-        Server = "1",
-        Text = messageFromForm.Text
-      };
+      messageToRobot.From = 0;
+      messageToRobot.To = 1;
       
       // Data buffer for incoming data.
       byte[] bytes = new Byte[1024];
