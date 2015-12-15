@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Router.Models.Data;
 
 
 /*
@@ -19,7 +20,7 @@ namespace Router
     /*
     Класс для обработки сообщений
     */
-    private static MessageProcessor processor = new MessageProcessor();
+    private static MessageProcessor processor = new MessageProcessor(new Data());
 
     /*
     Получить сообщение и отправить его обратно

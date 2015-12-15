@@ -30,7 +30,7 @@
     {
       this.listBox = new System.Windows.Forms.ListBox();
       this.buttonStartReceiving = new System.Windows.Forms.Button();
-      this.buttonConfiguration = new System.Windows.Forms.Button();
+      this.buttonRegister = new System.Windows.Forms.Button();
       this.RouterOff = new System.Windows.Forms.Button();
       this.buttonSayHello = new System.Windows.Forms.Button();
       this.SuspendLayout();
@@ -57,15 +57,15 @@
       this.buttonStartReceiving.UseVisualStyleBackColor = true;
       this.buttonStartReceiving.Click += new System.EventHandler(this.buttonStartReceiving_Click);
       // 
-      // buttonConfiguration
+      // buttonRegister
       // 
-      this.buttonConfiguration.Location = new System.Drawing.Point(295, 268);
-      this.buttonConfiguration.Name = "buttonConfiguration";
-      this.buttonConfiguration.Size = new System.Drawing.Size(270, 59);
-      this.buttonConfiguration.TabIndex = 3;
-      this.buttonConfiguration.Text = "Send Configuration";
-      this.buttonConfiguration.UseVisualStyleBackColor = true;
-      this.buttonConfiguration.Click += new System.EventHandler(this.buttonConfiguration_Click);
+      this.buttonRegister.Location = new System.Drawing.Point(295, 268);
+      this.buttonRegister.Name = "buttonRegister";
+      this.buttonRegister.Size = new System.Drawing.Size(270, 59);
+      this.buttonRegister.TabIndex = 3;
+      this.buttonRegister.Text = "Register Robot";
+      this.buttonRegister.UseVisualStyleBackColor = true;
+      this.buttonRegister.Click += new System.EventHandler(this.buttonRegister_Click);
       // 
       // RouterOff
       // 
@@ -96,7 +96,7 @@
       this.ClientSize = new System.Drawing.Size(855, 484);
       this.Controls.Add(this.buttonSayHello);
       this.Controls.Add(this.RouterOff);
-      this.Controls.Add(this.buttonConfiguration);
+      this.Controls.Add(this.buttonRegister);
       this.Controls.Add(this.buttonStartReceiving);
       this.Controls.Add(this.listBox);
       this.Name = "Form1";
@@ -109,7 +109,7 @@
 
     private System.Windows.Forms.ListBox listBox;
     private System.Windows.Forms.Button buttonStartReceiving;
-    private System.Windows.Forms.Button buttonConfiguration;
+    private System.Windows.Forms.Button buttonRegister;
     private System.Windows.Forms.Button RouterOff;
     private System.Windows.Forms.Button buttonSayHello;
   }

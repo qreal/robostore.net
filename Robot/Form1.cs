@@ -4,6 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using Robot.ViewModels;
+using Message = Robot.Models.Entities.Message;
 
 /*
 Пока только 1 робот и Id у него захардкожен и = 1.
@@ -16,6 +18,8 @@ namespace Robot
     // Info about Robot
     private int PortListening = 11012;
     private int RobotID = 1;
+    // Это какой-то триковский номер
+    private string Number = "agent_007";
 
     private Server server = null;
 
@@ -25,21 +29,23 @@ namespace Robot
     }
 
     // Отправляем конфигурацию
-    private void buttonConfiguration_Click(object sender, EventArgs e)
+    // пока не работает
+    private void buttonRegister_Click(object sender, EventArgs e)
     {
       // создали кофигурацию
-      Configuration configuration = new Configuration()
+      InitialConfiguration initialConfiguration = new InitialConfiguration()
       {
-        Port = PortListening
+        Port = PortListening,
+        Number = Number
       };
 
-      // создали пустое сообщение с командой выключить
+      // создали пустое сообщение с командой регистрации Робота в Системе
       Message message = new Message()
       {
-        Commands = new List<string>() {},
+        Commands = new List<string>() {"<INIT>"},
         To = 0,
         From = RobotID,
-        Text = JsonConvert.SerializeObject(configuration)
+        Text = JsonConvert.SerializeObject(initialConfiguration)
       };
 
       string messageFinal = JsonConvert.SerializeObject(message);

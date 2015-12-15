@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -13,9 +12,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Router.Models;
+using Router.Models.Data;
+using Router.Models.Entities;
+using Router.ViewModels;
 
 /*
 Сейчас выбор робота закахркожен = 1, позже будет получать из списка
+*/
+
+/*
+TODO 
+Вынести комманды в константы куда-нибудь
 */
 
 
@@ -23,6 +30,13 @@ namespace Router
 {
   public class MessageProcessor
   {
+    private IData data;
+
+    public MessageProcessor(IData d)
+    {
+      data = d;
+    }
+
     /*
     Простой post запрос
     */
@@ -174,15 +188,27 @@ namespace Router
       {
         sendMessageToServer(message);
 
-        // Добавляем в список Роботов, если его еще там нет.
-        //if (Store.Robots.FirstOrDefault(x => x.Config.RobotID == message.Robot.RobotID) == null)
-        //{
-        //  Store.Robots.Add(new Robot()
-        //  {
-        //    Config = message.Robot,
-        //    isOnline = true
-        //  });
-        //}
+        // Если регистрация Робота в Системе
+        if (message.Commands.IndexOf("<INIT>") != -1)
+        {
+          // нужно вытащить конфигурацию через декод JSON
+          InitialConfiguration configurationIni = JsonConvert.DeserializeObject<InitialConfiguration>(message.Text);
+          Configuration configuration = new Configuration()
+          {
+            Port = configurationIni.Port
+          };
+
+          Robot robot = new Robot()
+          {
+            isOnline = true,
+            IP = Dns.Resolve(Dns.GetHostName()).AddressList[0].ToString(),
+            Number = configurationIni.Number
+          };
+          data.AddAsync(robot).Wait();
+          configuration.RobotID = robot.RobotID;
+          data.AddAsync(configuration).Wait();
+          // создать робота и привязать к конфигурации
+        }
 
         /*
           Запускаем таску, которая шлет эхо сообщения на робота и 

@@ -5,7 +5,7 @@
 Общий класс всех 3х сущностей
 */
 
-namespace Robot
+namespace Robot.Models.Entities
 {
   public class Message
   {
