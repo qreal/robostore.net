@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -27,6 +29,29 @@ namespace Robot
       InitializeComponent();
     }
 
+    /*
+    Простой post запрос
+    */
+    private void SendMessageToServer(Message message)
+    {
+      var webClient = new WebClient();
+      var pars = new NameValueCollection();
+      pars.Add("format", "json");
+      pars.Add("Text", message.Text);
+      pars.Add("From", message.From);
+      pars.Add("To", message.To);
+      try
+      {
+        var response = webClient.UploadValues("http://localhost:45534/message/post", pars);
+        string result = System.Text.Encoding.UTF8.GetString(response);
+        listBox.Items.Add("Server reports:" + result);
+      }
+      catch (Exception)
+      {
+        listBox.Items.Add("sending message to server failed\n");
+      }
+    }
+
     // Отправляем конфигурацию
     // пока не работает
     private void buttonRegister_Click(object sender, EventArgs e)
@@ -47,22 +72,15 @@ namespace Robot
         Text = JsonConvert.SerializeObject(initialConfiguration)
       };
 
-      string messageFinal = JsonConvert.SerializeObject(message);
-
-      // dont forget add EOF
-      messageFinal += "<EOF>";
-
-      Client client = new Client();
-      Thread sendThread = new Thread(new ThreadStart(() => client.StartClient(messageFinal)));
+      Thread sendThread = new Thread(new ThreadStart( () => SendMessageToServer(message)));
       sendThread.Start();
       if (sendThread.Join(TimeSpan.FromSeconds(5)))
       {
         listBox.Items.Add("\tsuccessfully sent config:\n");
-        listBox.Items.Add("server says:" + client.result + "\n");
       }
       else
       {
-        listBox.Items.Add("\tcannot sent config");
+        listBox.Items.Add("\tcannot sent config timeout");
       }
       sendThread.Abort();
     }
@@ -105,25 +123,18 @@ namespace Robot
         Text = "hello"
       };
 
-      string messageFinal = JsonConvert.SerializeObject(message);
-
-      // dont forget to add EOF
-      messageFinal += "<EOF>";
-
-      // Тут даем 5 секунд потоку на выполнение и если что убиваем его
-      Client client = new Client();
-      Thread sendThread = new Thread(new ThreadStart(() => client.StartClient(messageFinal)));
+      Thread sendThread = new Thread(new ThreadStart(() => SendMessageToServer(message)));
       sendThread.Start();
       if (sendThread.Join(TimeSpan.FromSeconds(5)))
       {
-        listBox.Items.Add("\tsuccessfully sent config:\n");
-        listBox.Items.Add("server says:" + client.result + "\n");
+        listBox.Items.Add("\tsuccessfully said hello:\n");
       }
       else
       {
-        listBox.Items.Add("\tcannot say hello");
+        listBox.Items.Add("\tcannot sent config timeout");
       }
       sendThread.Abort();
+
     }
 
     private void GetMailButton_Click(object sender, EventArgs e)

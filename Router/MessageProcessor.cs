@@ -58,7 +58,6 @@ namespace Router
       {
         Console.WriteLine("sending message to server failed\n");
       }
-       
     }
 
     // отправить сообщение по сокету по порту 11012
