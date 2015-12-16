@@ -1,4 +1,7 @@
 ﻿using System.Web.Http;
+using Microsoft.Practices.Unity;
+using Store.Models.Data;
+using Store.Services;
 
 namespace Store
 {
@@ -16,6 +19,10 @@ namespace Store
         routeTemplate: "api/{controller}/{id}",
         defaults: new { id = RouteParameter.Optional }
         );
+
+      //var container = new UnityContainer();
+      //container.RegisterType<IData, Data>(new HierarchicalLifetimeManager());
+      //config.DependencyResolver = new UnityResolver(container);
 
       config.Formatters.Remove(config.Formatters.XmlFormatter);
     }

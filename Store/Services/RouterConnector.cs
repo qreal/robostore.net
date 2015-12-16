@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Newtonsoft.Json;
+using Store.ViewModels;
 
 /*
 Класс для работы с Роутером
@@ -15,18 +16,12 @@ using Newtonsoft.Json;
 Пусть оно будет = agent_007
 */
 
-/*
-TODO
-Сейчас все отапрвялется на Роутер. 
-Сделать систему с ожиданием в 1 секунду, если не получили эхо, то отправляем на Роутер
-*/
-
-namespace Store.Models
+namespace Store.Services
 {
   public class RouterConnector
   {
     // отправить на захардкоденного робота
-    public void SendToRobot(Message messageToRobot)
+    public void SendToRobot(MessageVM messageToRobot)
     {
       messageToRobot.From = "0";
       messageToRobot.To = "agent_007";

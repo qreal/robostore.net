@@ -4,12 +4,16 @@
 Пока можно менять только порт, который Робот слушает.
 */
 
-namespace Store.Models
+using System.ComponentModel.DataAnnotations;
+
+namespace Store.Models.Entities
 {
 
-  public class Configuration
+  public class ConfigurationE
   {
+    [Key]
     public int ConfigurationID { get; set; }
+    public virtual RobotE Robot { get; set; }
     public int RobotID { get; set; }
     public int Port { get; set; }
   }

@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RobotDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Configurations">
+          <Key>
+            <PropertyRef Name="ConfigurationID" />
+          </Key>
+          <Property Name="ConfigurationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RobotID" Type="int" Nullable="false" />
+          <Property Name="Port" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="RobotID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Robots">
+          <Key>
+            <PropertyRef Name="RobotID" />
+          </Key>
+          <Property Name="RobotID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="isOnline" Type="bit" Nullable="false" />
+          <Property Name="IP" Type="nvarchar(max)" />
+          <Property Name="Number" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_Configurations_dbo_Robots_RobotID">
+          <End Role="Robots" Type="Self.Robots" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Configurations" Type="Self.Configurations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Robots">
+              <PropertyRef Name="RobotID" />
+            </Principal>
+            <Dependent Role="Configurations">
+              <PropertyRef Name="RobotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Messages_dbo_Robots_RobotID">
+          <End Role="Robots" Type="Self.Robots" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Robots">
+              <PropertyRef Name="RobotID" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="RobotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RobotDBModelStoreContainer">
+          <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Robots" EntityType="Self.Robots" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Configurations_dbo_Robots_RobotID" Association="Self.FK_dbo_Configurations_dbo_Robots_RobotID">
+            <End Role="Robots" EntitySet="Robots" />
+            <End Role="Configurations" EntitySet="Configurations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Messages_dbo_Robots_RobotID" Association="Self.FK_dbo_Messages_dbo_Robots_RobotID">
+            <End Role="Robots" EntitySet="Robots" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RobotDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Configuration">
+          <Key>
+            <PropertyRef Name="ConfigurationID" />
+          </Key>
+          <Property Name="ConfigurationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RobotID" Type="Int32" Nullable="false" />
+          <Property Name="Port" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Robot" Relationship="Self.FK_dbo_Configurations_dbo_Robots_RobotID" FromRole="Configurations" ToRole="Robots" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RobotID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Robot" Relationship="Self.FK_dbo_Messages_dbo_Robots_RobotID" FromRole="Messages" ToRole="Robots" />
+        </EntityType>
+        <EntityType Name="Robot">
+          <Key>
+            <PropertyRef Name="RobotID" />
+          </Key>
+          <Property Name="RobotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="isOnline" Type="Boolean" Nullable="false" />
+          <Property Name="IP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Configurations" Relationship="Self.FK_dbo_Configurations_dbo_Robots_RobotID" FromRole="Robots" ToRole="Configurations" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_dbo_Messages_dbo_Robots_RobotID" FromRole="Robots" ToRole="Messages" />
+        </EntityType>
+        <Association Name="FK_dbo_Configurations_dbo_Robots_RobotID">
+          <End Role="Robots" Type="Self.Robot" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Configurations" Type="Self.Configuration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Robots">
+              <PropertyRef Name="RobotID" />
+            </Principal>
+            <Dependent Role="Configurations">
+              <PropertyRef Name="RobotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Messages_dbo_Robots_RobotID">
+          <End Role="Robots" Type="Self.Robot" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Messages" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Robots">
+              <PropertyRef Name="RobotID" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="RobotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RobotDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Configurations" EntityType="Self.Configuration" />
+          <EntitySet Name="Messages" EntityType="Self.Message" />
+          <EntitySet Name="Robots" EntityType="Self.Robot" />
+          <AssociationSet Name="FK_dbo_Configurations_dbo_Robots_RobotID" Association="Self.FK_dbo_Configurations_dbo_Robots_RobotID">
+            <End Role="Robots" EntitySet="Robots" />
+            <End Role="Configurations" EntitySet="Configurations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Messages_dbo_Robots_RobotID" Association="Self.FK_dbo_Messages_dbo_Robots_RobotID">
+            <End Role="Robots" EntitySet="Robots" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RobotDBModelStoreContainer" CdmEntityContainer="RobotDBEntities">
+          <EntitySetMapping Name="Configurations">
+            <EntityTypeMapping TypeName="RobotDBModel.Configuration">
+              <MappingFragment StoreEntitySet="Configurations">
+                <ScalarProperty Name="ConfigurationID" ColumnName="ConfigurationID" />
+                <ScalarProperty Name="RobotID" ColumnName="RobotID" />
+                <ScalarProperty Name="Port" ColumnName="Port" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="RobotDBModel.Message">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="RobotID" ColumnName="RobotID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Robots">
+            <EntityTypeMapping TypeName="RobotDBModel.Robot">
+              <MappingFragment StoreEntitySet="Robots">
+                <ScalarProperty Name="RobotID" ColumnName="RobotID" />
+                <ScalarProperty Name="isOnline" ColumnName="isOnline" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

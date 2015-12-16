@@ -5,9 +5,9 @@
 Общий класс всех 3х сущностей
 */
 
-namespace Store.Models
+namespace Store.ViewModels
 {
-  public class Message
+  public class MessageVM
   {
     public string From { get; set; }
     public string To { get; set; }
