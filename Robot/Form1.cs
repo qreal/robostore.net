@@ -95,7 +95,7 @@ namespace Robot
     private void buttonSayHello_Click(object sender, EventArgs e)
     {
 
-      // создали пустое сообщение с командой выключить
+      // создали сообщение
       Message message = new Message()
       {
         //Commands = new List<string>() { "<OFF>" },
@@ -121,7 +121,39 @@ namespace Robot
       }
       else
       {
-        listBox.Items.Add("\tcannot sent config");
+        listBox.Items.Add("\tcannot say hello");
+      }
+      sendThread.Abort();
+    }
+
+    private void GetMailButton_Click(object sender, EventArgs e)
+    {
+      // создали сообщение
+      Message message = new Message()
+      {
+        Commands = new List<string>() {"<MAIL>"},
+        From = Number,
+        To = "0",
+        Text = ""
+      };
+
+      string messageFinal = JsonConvert.SerializeObject(message);
+
+      // dont forget to add EOF
+      messageFinal += "<EOF>";
+
+      // Тут даем 5 секунд потоку на выполнение и если что убиваем его
+      Client client = new Client();
+      Thread sendThread = new Thread(new ThreadStart(() => client.StartClient(messageFinal)));
+      sendThread.Start();
+      if (sendThread.Join(TimeSpan.FromSeconds(5)))
+      {
+        listBox.Items.Add("\tsuccessfully sent config:\n");
+        listBox.Items.Add("server says:" + client.result + "\n");
+      }
+      else
+      {
+        listBox.Items.Add("\tcannot sent mail query");
       }
       sendThread.Abort();
     }

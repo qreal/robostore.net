@@ -33,6 +33,7 @@
       this.buttonRegister = new System.Windows.Forms.Button();
       this.RouterOff = new System.Windows.Forms.Button();
       this.buttonSayHello = new System.Windows.Forms.Button();
+      this.GetMailButton = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // listBox
@@ -61,7 +62,7 @@
       // 
       this.buttonRegister.Location = new System.Drawing.Point(295, 268);
       this.buttonRegister.Name = "buttonRegister";
-      this.buttonRegister.Size = new System.Drawing.Size(270, 59);
+      this.buttonRegister.Size = new System.Drawing.Size(130, 59);
       this.buttonRegister.TabIndex = 3;
       this.buttonRegister.Text = "Register Robot";
       this.buttonRegister.UseVisualStyleBackColor = true;
@@ -89,11 +90,22 @@
       this.buttonSayHello.UseVisualStyleBackColor = true;
       this.buttonSayHello.Click += new System.EventHandler(this.buttonSayHello_Click);
       // 
+      // GetMailButton
+      // 
+      this.GetMailButton.Location = new System.Drawing.Point(431, 268);
+      this.GetMailButton.Name = "GetMailButton";
+      this.GetMailButton.Size = new System.Drawing.Size(130, 59);
+      this.GetMailButton.TabIndex = 7;
+      this.GetMailButton.Text = "Get Mail";
+      this.GetMailButton.UseVisualStyleBackColor = true;
+      this.GetMailButton.Click += new System.EventHandler(this.GetMailButton_Click);
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(855, 484);
+      this.Controls.Add(this.GetMailButton);
       this.Controls.Add(this.buttonSayHello);
       this.Controls.Add(this.RouterOff);
       this.Controls.Add(this.buttonRegister);
@@ -112,6 +124,7 @@
     private System.Windows.Forms.Button buttonRegister;
     private System.Windows.Forms.Button RouterOff;
     private System.Windows.Forms.Button buttonSayHello;
+    private System.Windows.Forms.Button GetMailButton;
   }
 }
 

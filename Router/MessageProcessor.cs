@@ -40,7 +40,7 @@ namespace Router
     /*
     Простой post запрос
     */
-    private static void sendMessageToServer(Message message)
+    private static void SendMessageToServer(Message message)
     {
       var webClient = new WebClient();
       var pars = new NameValueCollection();
@@ -150,7 +150,7 @@ namespace Router
               Text = "I am online!",
               To = "0"
             };
-            sendMessageToServer(notificationOn);
+            SendMessageToServer(notificationOn);
             serverKnows = true;
           }
         }    
@@ -164,7 +164,7 @@ namespace Router
         Text = "I am offline!",
         To = "0"
       };
-      sendMessageToServer(notificationOff);
+      SendMessageToServer(notificationOff);
     }
 
     public void Proccess(string str)
@@ -184,7 +184,7 @@ namespace Router
       */
       if (message.From != "0")
       {
-        sendMessageToServer(message);
+        SendMessageToServer(message);
 
         // Если регистрация Робота в Системе
         if (message.Commands.IndexOf("<INIT>") != -1)
@@ -206,6 +206,22 @@ namespace Router
           configuration.RobotID = robot.RobotID;
           data.AddAsync(configuration).Wait();
           // создать робота и привязать к конфигурации
+        }
+
+        // запрос на получение всех сообщений
+        if (message.Commands.IndexOf("<MAIL>") != -1)
+        {
+          // вообще нужна таска, которая будет отправлять все это дело.
+          Task sending = Task.Factory.StartNew(() =>
+          {
+            Robot robot = data.Robots.First(x => x.Number == message.From);
+            var messages = data.Messages.Where(x => x.Robot.RobotID == robot.RobotID);
+            foreach (var mes in messages)
+            {
+              SendMessageToRobot(mes.Text);
+              data.RemoveAsync(mes); // для теста можно закомментить
+            }
+          });
         }
 
         /*
