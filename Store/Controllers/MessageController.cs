@@ -33,7 +33,6 @@ namespace Store.Controllers
 
     public ActionResult ShowAll()
     {
-      var mes = data.Messages.ToList();
       return View(messages);
     }
 
@@ -51,10 +50,27 @@ namespace Store.Controllers
     {
       if (ModelState.IsValid)
       {
-        routerConnector.SendToRobot(msg);
-        msg.Text = "(sent) " + msg.Text;
-        messages.Add(msg);
-        return RedirectToAction("ShowAll");
+        // from server
+        msg.From = "0";
+        // надем Робота
+        Robot robot = data.Robots.First(x => x.Number == msg.To);
+        // если можно отправить на Робота, то ОК отправим.
+        if (robot.isOnline && routerConnector.SendMessageToRobot(msg))
+        {
+          msg.Text = "(sent) " + msg.Text;
+          messages.Add(msg);
+          return RedirectToAction("ShowAll");
+        }
+        // А если нет, то положим сообщение в БД
+        else
+        {
+          var x = data.Messages;
+          data.AddAsync(new Message() {Robot = robot, Text = msg.Text}).Wait();
+          msg.Text = "(sent to router) " + msg.Text;
+          messages.Add(msg);
+          return RedirectToAction("ShowAll");
+        }
+        
       }
       else
       {

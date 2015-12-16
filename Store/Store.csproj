@@ -196,7 +196,6 @@
       <DependentUpon>EntitiesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Data\Data.cs" />
-    <Compile Include="Models\Data\DataContext.cs" />
     <Compile Include="Models\Data\EntitiesModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -220,9 +219,6 @@
     <Compile Include="Models\Data\Robot.cs">
       <DependentUpon>EntitiesModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\ConfigurationE.cs" />
-    <Compile Include="Models\Entities\RobotE.cs" />
-    <Compile Include="Models\Entities\StoredMessageE.cs" />
     <Compile Include="ViewModels\MessageVM.cs" />
     <Compile Include="Services\RouterConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

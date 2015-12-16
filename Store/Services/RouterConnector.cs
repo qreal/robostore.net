@@ -2,8 +2,10 @@
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using Newtonsoft.Json;
+using Store.Models.Data;
 using Store.ViewModels;
 
 /*
@@ -20,12 +22,11 @@ namespace Store.Services
 {
   public class RouterConnector
   {
-    // отправить на захардкоденного робота
-    public void SendToRobot(MessageVM messageToRobot)
+    // отправить сообщение по сокету по порту 11012
+    public bool SendMessageToRobot(MessageVM messageToRobot)
     {
-      messageToRobot.From = "0";
-      messageToRobot.To = "agent_007";
-      
+      string text = JsonConvert.SerializeObject(messageToRobot);
+
       // Data buffer for incoming data.
       byte[] bytes = new Byte[1024];
       string result = "";
@@ -34,7 +35,7 @@ namespace Store.Services
       // This example uses port 11000 on the local computer.
       IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
       IPAddress ipAddress = ipHostInfo.AddressList[0];
-      IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11011);
+      IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11012);
 
       // Create a TCP/IP  socket.
       Socket sender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -45,29 +46,34 @@ namespace Store.Services
       {
         sender.Connect(remoteEP);
 
-        Debug.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
-
-        string messageFinal = JsonConvert.SerializeObject(messageToRobot) + "<EOF>";
+        Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint);
 
         // Encode the data string into a byte array.
-        byte[] msg = Encoding.ASCII.GetBytes(messageFinal);
+        byte[] msg = Encoding.ASCII.GetBytes(text + "<EOF>");
 
         // Send the data through the socket.
-        sender.Send(msg);
+        int bytesSent = sender.Send(msg);
 
         // Receive the response from the remote device.
         int bytesRec = sender.Receive(bytes);
         result = Encoding.ASCII.GetString(bytes, 0, bytesRec);
-        Debug.WriteLine("Echoed test = {0}", result);
+        Console.WriteLine("Echoed test = {0}", result);
 
         // Release the socket.
         sender.Shutdown(SocketShutdown.Both);
         sender.Close();
+
+        // Сообщение должно быть эхом (таким же)
+
+        if (text + "<EOF>" != result)
+          return false;
       }
       catch (Exception e)
       {
-        Debug.WriteLine("Unexpected exception : {0}", e.ToString());
+        Console.WriteLine("sending message to robot failed\n");
+        return false;
       }
+      return true;
     }
   }
 }

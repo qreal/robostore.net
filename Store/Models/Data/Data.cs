@@ -32,7 +32,7 @@ namespace Store.Models.Data
         case "Configuration":
           _configurations.Add((Configuration)o);
           break;
-        case "StoredMessage":
+        case "Message":
           _messages.Add((Message)o);
           break;
         case "Robot":
@@ -50,7 +50,7 @@ namespace Store.Models.Data
         case "Configuration":
           _configurations.Update((Configuration)o);
           break;
-        case "StoredMessage":
+        case "Message":
           _messages.Update((Message)o);
           break;
         case "Robot":
@@ -68,7 +68,7 @@ namespace Store.Models.Data
         case "Configuration":
           _configurations.Remove(((Configuration)o).ConfigurationID);
           break;
-        case "StoredMessage":
+        case "Message":
           _messages.Remove(((Message)o).MessageID);
           break;
         case "Robot":
