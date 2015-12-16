@@ -11,8 +11,8 @@ using Newtonsoft.Json;
 
 /*
 Внимание!
-Пока работаем только с одним роботом и его ID будет захардкожено.
-Пусть оно будет = 1
+Пока работаем только с одним роботом и его Number(триковский номер) будет захардкожено.
+Пусть оно будет = agent_007
 */
 
 /*
@@ -28,8 +28,8 @@ namespace Store.Models
     // отправить на захардкоденного робота
     public void SendToRobot(Message messageToRobot)
     {
-      messageToRobot.From = 0;
-      messageToRobot.To = 1;
+      messageToRobot.From = "0";
+      messageToRobot.To = "agent_007";
       
       // Data buffer for incoming data.
       byte[] bytes = new Byte[1024];

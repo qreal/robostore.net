@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlTypes;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading;
@@ -70,10 +71,12 @@ namespace Router
         их через класс MessageProcessor. По завершении этой таски убиваем основной поток.
       */
 
+      bool run = true;
       Task listening = Task.Factory.StartNew(() =>
       {
         Console.WriteLine("Router started working");
         ReceiveEcho();
+        run = false;
         Console.WriteLine("Router finished working");
       });
 
@@ -84,6 +87,7 @@ namespace Router
         Console.Write(".");
         Thread.Sleep(1000);
       }
+
 
     }
   }

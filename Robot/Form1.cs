@@ -17,7 +17,6 @@ namespace Robot
   {
     // Info about Robot
     private int PortListening = 11012;
-    private int RobotID = 1;
     // Это какой-то триковский номер
     private string Number = "agent_007";
 
@@ -43,8 +42,8 @@ namespace Robot
       Message message = new Message()
       {
         Commands = new List<string>() {"<INIT>"},
-        To = 0,
-        From = RobotID,
+        To = "0",
+        From = Number,
         Text = JsonConvert.SerializeObject(initialConfiguration)
       };
 
@@ -100,9 +99,9 @@ namespace Robot
       Message message = new Message()
       {
         //Commands = new List<string>() { "<OFF>" },
-        Commands = null,
-        From = RobotID,
-        To = 0,
+        Commands = new List<string>(),
+        From = Number,
+        To = "0",
         Text = "hello"
       };
 

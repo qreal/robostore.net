@@ -1,7 +1,6 @@
 ﻿/*
 Сей класс решает, что делать с полученным сообщением
 */
-
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -46,15 +45,15 @@ namespace Router
       var pars = new NameValueCollection();
       pars.Add("format", "json");
       pars.Add("Text", message.Text);
-      pars.Add("From", message.From.ToString());
-      pars.Add("To", message.To.ToString());
+      pars.Add("From", message.From);
+      pars.Add("To", message.To);
       try
       {
         var response = webClient.UploadValues("http://localhost:45534/message/post", pars);
         string result = System.Text.Encoding.UTF8.GetString(response);
         Console.WriteLine("Server reports:" + result);
       }
-      catch (Exception e)
+      catch (Exception)
       {
         Console.WriteLine("sending message to server failed\n");
       }
@@ -115,14 +114,14 @@ namespace Router
       return true;
     }
 
-    public static void sendEcho(int RobotId)
+    public static void sendEcho(string RobotNumber)
     {
       // создали эхо - сообщение
       Message message = new Message()
       {
         Commands = new List<string>() { "<ECHO>" },
-        From = 0,
-        To = RobotId,
+        From = "0",
+        To = RobotNumber,
         Text = null
       };
 
@@ -147,9 +146,9 @@ namespace Router
             Message notificationOn = new Message()
             {
               Commands = null,
-              From = RobotId,
+              From = RobotNumber,
               Text = "I am online!",
-              To = 0
+              To = "0"
             };
             sendMessageToServer(notificationOn);
             serverKnows = true;
@@ -161,9 +160,9 @@ namespace Router
       Message notificationOff = new Message()
       {
         Commands = null,
-        From = RobotId,
+        From = RobotNumber,
         Text = "I am offline!",
-        To = 0
+        To = "0"
       };
       sendMessageToServer(notificationOff);
       //Store.Robots.First(x => x.Config.RobotID == 1).isOnline = false;
@@ -184,7 +183,7 @@ namespace Router
       /* сообщение от робота. Его нужно отправить в на Сервер в любом случае.
          Также мы должны начать отправлять эхо запросы и сделить, онлайн ли наш Робот или нет.
       */
-      if (message.From != 0)
+      if (message.From != "0")
       {
         sendMessageToServer(message);
 
@@ -214,15 +213,18 @@ namespace Router
           Запускаем таску, которая шлет эхо сообщения на робота и 
           останавливается, если при передаче происзошла ошибка.
         */
-        Task hearBeating = Task.Factory.StartNew(() =>
+        Task heartBeating = Task.Factory.StartNew(() =>
         {
           sendEcho(message.From);
         });
       }
-      // сообщение от сервера. Его нужно отправить на Робота.
-      // Но только если он онлайн
+      // сообщение от сервера. 
       else
       {
+        // Его нужно отправить на Робота.
+        // Но только если он онлайн
+        //if (data.Robots.FirstOrDefault(x => x.Number == message.From) != null)
+
         SendMessageToRobot(JsonConvert.SerializeObject(message));
       }
     }

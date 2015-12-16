@@ -9,8 +9,8 @@ namespace Router.Models
 {
   public class Message
   {
-    public int From { get; set; }
-    public int To { get; set; }
+    public string From { get; set; }
+    public string To { get; set; }
     public List<string> Commands { get; set; }
     public string Text { get; set; }
   }
