@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -107,7 +108,6 @@ namespace Router
       }
       catch (Exception e)
       {
-        //Console.WriteLine("Unexpected exception : {0}", e.ToString());
         Console.WriteLine("sending message to robot failed\n");
         return false;
       }
@@ -165,7 +165,6 @@ namespace Router
         To = "0"
       };
       sendMessageToServer(notificationOff);
-      //Store.Robots.First(x => x.Config.RobotID == 1).isOnline = false;
     }
 
     public void Proccess(string str)
@@ -221,11 +220,24 @@ namespace Router
       // сообщение от сервера. 
       else
       {
-        // Его нужно отправить на Робота.
-        // Но только если он онлайн
-        //if (data.Robots.FirstOrDefault(x => x.Number == message.From) != null)
+        // сначала найдем этого Робота в базе.
+        Robot robot = data.Robots.First(x => x.Number == message.To);
+        // если онлайн и сообщение до него дошло, то ОК. 
+        if (robot.isOnline && SendMessageToRobot(JsonConvert.SerializeObject(message)))
+        {
 
-        SendMessageToRobot(JsonConvert.SerializeObject(message));
+        }
+        // если Робот сейчас не online или недоступен, то сохраним сообщение в БД
+        else
+        {
+          data.AddAsync(new StoredMessage()
+          {
+            Robot = robot,
+            Text = message.Text
+          }).Wait();
+        }
+
+        
       }
     }
 

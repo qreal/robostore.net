@@ -72,7 +72,6 @@
     <Compile Include="Models\Data\IData.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Entities\Robot.cs" />
-    <Compile Include="Models\Store.cs" />
     <Compile Include="Models\Entities\StoredMessage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
