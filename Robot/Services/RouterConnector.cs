@@ -5,13 +5,14 @@ using System.Text;
 
 /*
 Самый простой эхо клиент
+Используется для отправки сообщений на Роутер
 */
 
-public class Client
+public class RouterConnector
 {
   public string result = "";
 
-  public string StartClient(string input)
+  public string SendMessageToRouter(string input)
   {
     // Data buffer for incoming data.
     byte[] bytes = new byte[1024];

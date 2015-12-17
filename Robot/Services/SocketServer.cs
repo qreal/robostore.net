@@ -6,9 +6,10 @@ using System.Text;
 
 /*
 Самый простой эхо сервер
+Принимает сообщения от Роутера и Сервера
 */
 
-public class Server
+public class SocketServer
 {
   // Incoming data from the client.
   private string data = null;

@@ -22,7 +22,7 @@ namespace Robot
     // Это какой-то триковский номер
     private string Number = "agent_007";
 
-    private Server server = null;
+    private SocketServer server = null;
 
     public Form1()
     {
@@ -89,7 +89,7 @@ namespace Robot
     {
       Task.Factory.StartNew(() =>
       {
-        server = new Server();
+        server = new SocketServer();
         string result = server.StartListening();
         listBox.Items.Add(string.Format("Server:{0}\n", result));
         buttonStartReceiving_Click(sender, e);
@@ -105,7 +105,7 @@ namespace Robot
     {
       Task.Factory.StartNew(() =>
       {
-        new Client().StartClient("<OFF>");
+        new RouterConnector().SendMessageToRouter("<OFF>");
         listBox.Items.Add("Bela Lugosis is dead x_x\n");
       });
     }
@@ -154,13 +154,13 @@ namespace Robot
       messageFinal += "<EOF>";
 
       // Тут даем 5 секунд потоку на выполнение и если что убиваем его
-      Client client = new Client();
-      Thread sendThread = new Thread(new ThreadStart(() => client.StartClient(messageFinal)));
+      RouterConnector routerConnector = new RouterConnector();
+      Thread sendThread = new Thread(new ThreadStart(() => routerConnector.SendMessageToRouter(messageFinal)));
       sendThread.Start();
       if (sendThread.Join(TimeSpan.FromSeconds(5)))
       {
         listBox.Items.Add("\tsuccessfully sent config:\n");
-        listBox.Items.Add("server says:" + client.result + "\n");
+        listBox.Items.Add("server says:" + routerConnector.result + "\n");
       }
       else
       {
