@@ -1,9 +1,6 @@
 ﻿using System;
-using System.IO;
-using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Router.Models.Data;
 using Router.Services;
 
 /*
@@ -28,6 +25,7 @@ namespace Router
       {
         Console.WriteLine("Router started working");
         server.ReceiveEcho();
+        //GetMessageMock();
         Console.WriteLine("Router finished working");
       });
 

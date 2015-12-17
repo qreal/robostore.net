@@ -35,13 +35,12 @@ namespace Router.Services
     public MessageProcessor(IData d)
     {
       data = d;
-      _robotConnector = new RobotConnector();
+      _robotConnector = new RobotConnector(data);
       _serverConnector = new ServerConnector();
     }
 
     public async Task Proccess(string str)
     {
-      Console.WriteLine("Proccessing started\n"); //
       /*
         Мы знаем, что все сообщения должны заканчиваться на <EOF>
       */
@@ -57,10 +56,8 @@ namespace Router.Services
       */
       if (message.From != "0")
       {
-        Console.WriteLine("Sending to Server\n"); //
         // Пока что все запросы идут на Сервер, в будущем будет не так.
         await _serverConnector.SendMessageToServer(message);
-        Console.WriteLine("sent to Server\n"); //
 
         // запрос на получение всех сообщений
         if (message.HasCommand(Mail))
@@ -68,13 +65,10 @@ namespace Router.Services
           Robot robot = data.Robots.First(x => x.Number == message.From);
           var messages = data.Messages.Where(x => x.Robot.RobotID == robot.RobotID);
           Console.WriteLine("We have {0} messages",messages.Count());
-          foreach (var mes in messages)
+          foreach (var mes in messages.ToList())
           {
-            Console.WriteLine("Seding one to robot");
             await _robotConnector.SendMessageToRobotTask(mes.Text);
-            Console.WriteLine("Sent one to robot and deleting");
             await data.RemoveAsync(mes);
-            Console.WriteLine("deleted");
           }
         }
 
@@ -82,11 +76,10 @@ namespace Router.Services
           Запускаем таску, которая шлет эхо сообщения на робота и 
           останавливается, если при передаче происзошла ошибка.
         */
-        //await _robotConnector.SendEchoTask(message.From);
-        //Task heartBeating = Task.Factory.StartNew(() =>
-        //{
-        //  _robotConnector.SendEcho(message.From);
-        //});
+        Task heartBeating = Task.Factory.StartNew(() =>
+        {
+          _robotConnector.SendEcho(message.From).Start();
+        });
       }
       // сообщение от сервера. 
       else

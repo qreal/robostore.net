@@ -48,7 +48,7 @@ namespace Router.Services
           Console.WriteLine("received:\n" + data);
           Task.Factory.StartNew(() =>
           {
-            processor.Proccess(data).Start();
+            processor.Proccess(data);
           });
 
 

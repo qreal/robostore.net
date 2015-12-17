@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Router.Models;
+using Router.Models.Data;
 
 /*
 Класс для связи с Роботом.
@@ -20,14 +22,15 @@ namespace Router.Services
   public class RobotConnector
   {
     private readonly ServerConnector _serverConnector;
+    private readonly IData data;
 
-    public RobotConnector()
+    public RobotConnector(IData d)
     {
       _serverConnector = new ServerConnector();
+      data = d;
     }
 
     public Task<bool> SendMessageToRobotTask(string text) => Task.Factory.StartNew(() => SendMessageToRobot(text));
-    public Task SendEchoTask(string robotNumber) => Task.Factory.StartNew( () => SendEcho(robotNumber));
 
     // отправить сообщение по сокету по порту 11012
     public bool SendMessageToRobot(string text)
@@ -82,7 +85,7 @@ namespace Router.Services
       return true;
     }
 
-    public void SendEcho(string robotNumber)
+    public async Task SendEcho(string robotNumber)
     {
       // создали эхо - сообщение
       Message message = new Message()
@@ -105,7 +108,7 @@ namespace Router.Services
       while (result)
       {
         Thread.Sleep(1000);
-        result = SendMessageToRobot(JsonConvert.SerializeObject(message));
+        result = await SendMessageToRobotTask(JsonConvert.SerializeObject(message));
         if (result)
         {
           Console.WriteLine("Robot is online now");
@@ -118,7 +121,7 @@ namespace Router.Services
               Text = "I am online!",
               To = "0"
             };
-            _serverConnector.SendMessageToServer(notificationOn);
+            await _serverConnector.SendMessageToServer(notificationOn);
             serverKnows = true;
           }
         }
@@ -132,7 +135,10 @@ namespace Router.Services
         Text = "I am offline!",
         To = "0"
       };
-      _serverConnector.SendMessageToServer(notificationOff);
+      var robot = data.Robots.First(x => x.Number == robotNumber);
+      robot.isOnline = false;
+      await data.UpdateAsync(robot);
+      await _serverConnector.SendMessageToServer(notificationOff);
     }
   }
 }

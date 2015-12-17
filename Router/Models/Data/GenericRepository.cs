@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 
 /*
 Класс выполняет CRUD с таблицей БД
