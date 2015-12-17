@@ -20,7 +20,7 @@ using Store.ViewModels;
 
 namespace Store.Services
 {
-  public class RouterConnector
+  public class RobotConnector
   {
     // отправить сообщение по сокету по порту 11012
     public bool SendMessageToRobot(MessageVM messageToRobot)

@@ -1,9 +1,8 @@
 ﻿/*
-Конфигурация робота
-Общий класс всех 3х сущностей
+Объект этого класса нам дает Робот при первом подключении
 */
 
-namespace Robot.ViewModels
+namespace Store.ViewModels
 {
   public class InitialConfiguration
   {

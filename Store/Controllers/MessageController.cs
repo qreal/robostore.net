@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Store.Models.Data;
 using Store.Services;
@@ -10,24 +11,25 @@ namespace Store.Controllers
   public class MessageController : Controller
   {
     private static List<MessageVM> messages = new List<MessageVM>();
-    private RouterConnector routerConnector;
+    private RobotConnector _robotConnector;
     private IData data;
+    private MessageProccessor proccessor;
 
     public MessageController(IData d)
     {
       data = d;
-      routerConnector = new RouterConnector();
+      _robotConnector = new RobotConnector();
+      proccessor = new MessageProccessor(data);
     }
 
     /*
     Принимает по API сообщения от Роботов
     */
     [HttpPost]
-    public JsonResult Post(MessageVM msg)
+    public async Task<JsonResult> Post(MessageVM msg)
     {
-      // добавим тут синтаксис Sent и Received, чтобы было что-то похожее на переписку
-      msg.Text = "(received) " + msg.Text;
       messages.Add(msg);
+      await proccessor.proccess(msg);
       return Json("success");
     }
 
@@ -46,7 +48,7 @@ namespace Store.Controllers
     }
 
     [HttpPost]
-    public ActionResult SendForm(MessageVM msg)
+    public async Task <ActionResult> SendForm(MessageVM msg)
     {
       if (ModelState.IsValid)
       {
@@ -55,7 +57,7 @@ namespace Store.Controllers
         // надем Робота
         Robot robot = data.Robots.First(x => x.Number == msg.To);
         // если можно отправить на Робота, то ОК отправим.
-        if (robot.isOnline && routerConnector.SendMessageToRobot(msg))
+        if (robot.isOnline && _robotConnector.SendMessageToRobot(msg))
         {
           msg.Text = "(sent) " + msg.Text;
           messages.Add(msg);
@@ -65,8 +67,8 @@ namespace Store.Controllers
         else
         {
           var x = data.Messages;
-          data.AddAsync(new Message() {Robot = robot, Text = msg.Text}).Wait();
-          msg.Text = "(sent to router) " + msg.Text;
+          await data.AddAsync(new Message() {Robot = robot, Text = msg.Text});
+          msg.Text = "(saved to DB) " + msg.Text;
           messages.Add(msg);
           return RedirectToAction("ShowAll");
         }

@@ -219,8 +219,10 @@
     <Compile Include="Models\Data\Robot.cs">
       <DependentUpon>EntitiesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\MessageProccessor.cs" />
+    <Compile Include="ViewModels\InitialConfiguration.cs" />
     <Compile Include="ViewModels\MessageVM.cs" />
-    <Compile Include="Services\RouterConnector.cs" />
+    <Compile Include="Services\RobotConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

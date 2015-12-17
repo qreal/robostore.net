@@ -67,13 +67,13 @@ namespace Router.Models.Data
       switch (objectName)
       {
         case "Configuration":
-          _configurations.Remove( ((Configuration)o).ConfigurationID );
+          _configurations.Remove(((Configuration) o).ConfigurationID);
           break;
         case "StoredMessage":
-          _messages.Remove(((StoredMessage)o).MessageID);
+          _messages.Remove(((StoredMessage) o).MessageID);
           break;
         case "Robot":
-          _robots.Remove(((Robot)o).RobotID);
+          _robots.Remove(((Robot) o).RobotID);
           break;
       }
       await _context.SaveChangesAsync();
