@@ -9,5 +9,6 @@ namespace Robot.ViewModels
   {
     public int Port { get; set; }
     public string Number { get; set; }
+    public string IP { get; set; }
   }
 }

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using Robot.Services;
 using Robot.ViewModels;
 using Message = Robot.Models.Entities.Message;
 
@@ -23,33 +24,12 @@ namespace Robot
     private string Number = "agent_007";
 
     private SocketServer server = null;
+    private ServerConnector serverConnector;
 
     public Form1()
     {
       InitializeComponent();
-    }
-
-    /*
-    Простой post запрос
-    */
-    private void SendMessageToServer(Message message)
-    {
-      var webClient = new WebClient();
-      var pars = new NameValueCollection();
-      pars.Add("format", "json");
-      pars.Add("Text", message.Text);
-      pars.Add("From", message.From);
-      pars.Add("To", message.To);
-      try
-      {
-        var response = webClient.UploadValues("http://localhost:45534/message/post", pars);
-        string result = System.Text.Encoding.UTF8.GetString(response);
-        listBox.Items.Add("Server reports:" + result);
-      }
-      catch (Exception)
-      {
-        listBox.Items.Add("sending message to server failed\n");
-      }
+      serverConnector = new ServerConnector();
     }
 
     // Отправляем конфигурацию
@@ -60,7 +40,8 @@ namespace Robot
       InitialConfiguration initialConfiguration = new InitialConfiguration()
       {
         Port = PortListening,
-        Number = Number
+        Number = Number,
+        IP = Dns.Resolve(Dns.GetHostName()).AddressList[0].ToString()
       };
 
       // создали пустое сообщение с командой регистрации Робота в Системе
@@ -72,9 +53,9 @@ namespace Robot
         Text = JsonConvert.SerializeObject(initialConfiguration)
       };
 
-      Thread sendThread = new Thread(new ThreadStart( () => SendMessageToServer(message)));
+      Thread sendThread = new Thread(new ThreadStart( () => serverConnector.SendMessageToServer(message)));
       sendThread.Start();
-      if (sendThread.Join(TimeSpan.FromSeconds(5)))
+      if (sendThread.Join(TimeSpan.FromSeconds(50)))
       {
         listBox.Items.Add("\tsuccessfully sent config:\n");
       }
@@ -85,15 +66,16 @@ namespace Robot
       sendThread.Abort();
     }
 
-    private void buttonStartReceiving_Click(object sender, EventArgs e)
+
+    private async void buttonStartReceiving_Click(object sender, EventArgs e)
     {
-      Task.Factory.StartNew(() =>
-      {
-        server = new SocketServer();
-        string result = server.StartListening();
-        listBox.Items.Add(string.Format("Server:{0}\n", result));
-        buttonStartReceiving_Click(sender, e);
-      });
+      server = new SocketServer();
+      // ждем подключения и передаем управление вызывающему коду
+      string result = await server.StartListeningTask();
+      // вернулись с подключением и записали результат
+      listBox.Items.Add(string.Format("Server:{0}\n", result));
+      // рекурсивно вызвались, ибо слушаем всегда
+      buttonStartReceiving_Click(sender, e);
     }
 
     private void listBox_DoubleClick(object sender, EventArgs e)
@@ -123,7 +105,7 @@ namespace Robot
         Text = "hello"
       };
 
-      Thread sendThread = new Thread(new ThreadStart(() => SendMessageToServer(message)));
+      Thread sendThread = new Thread(new ThreadStart(() => serverConnector.SendMessageToServer(message)));
       sendThread.Start();
       if (sendThread.Join(TimeSpan.FromSeconds(5)))
       {
@@ -159,7 +141,7 @@ namespace Robot
       sendThread.Start();
       if (sendThread.Join(TimeSpan.FromSeconds(5)))
       {
-        listBox.Items.Add("\tsuccessfully sent config:\n");
+        listBox.Items.Add("\tsuccessfully sent mail request:\n");
         listBox.Items.Add("server says:" + routerConnector.result + "\n");
       }
       else
