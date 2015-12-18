@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Store.Models.Data;
 using Store.ViewModels;
@@ -22,6 +23,9 @@ namespace Store.Services
 {
   public class RobotConnector
   {
+    public Task<bool> SendMessageToRobotTask(MessageVM messageToRobot)
+      => Task.Factory.StartNew( () => SendMessageToRobot(messageToRobot) );
+
     // отправить сообщение по сокету по порту 11012
     public bool SendMessageToRobot(MessageVM messageToRobot)
     {

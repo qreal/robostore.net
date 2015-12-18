@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Store.Models.Data;
@@ -25,7 +24,7 @@ namespace Store.Services
       data = d;
     }
 
-    public async Task proccess(MessageVM message)
+    public async Task Proccess(MessageVM message)
     {
       if (message.HasCommand(Init))
       {
@@ -43,7 +42,6 @@ namespace Store.Services
           Number = configurationIni.Number
         };
         await data.AddAsync(robot);
-        var x = 5;
         configuration.RobotID = robot.RobotID;
         await data.AddAsync(configuration);
       }

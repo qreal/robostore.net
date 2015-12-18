@@ -29,7 +29,7 @@ namespace Store.Controllers
     public async Task<JsonResult> Post(MessageVM msg)
     {
       messages.Add(msg);
-      await proccessor.proccess(msg);
+      await proccessor.Proccess(msg);
       return Json("success");
     }
 
@@ -57,7 +57,7 @@ namespace Store.Controllers
         // надем Робота
         Robot robot = data.Robots.First(x => x.Number == msg.To);
         // если можно отправить на Робота, то ОК отправим.
-        if (robot.isOnline && _robotConnector.SendMessageToRobot(msg))
+        if (robot.isOnline &&  await _robotConnector.SendMessageToRobotTask(msg))
         {
           msg.Text = "(sent) " + msg.Text;
           messages.Add(msg);
