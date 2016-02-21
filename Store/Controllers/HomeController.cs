@@ -10,10 +10,10 @@ namespace Store.Controllers
     {
       public static List<string> Messages = new List<string>();
 
-        // GET: Home
-        public ActionResult Index()
-        {
-          return RedirectToAction(actionName: "ShowAll", controllerName: "Message");
-        }
+        //// GET: Home
+        //public ActionResult Index()
+        //{
+        //  return RedirectToAction(actionName: "ShowAll", controllerName: "Message");
+        //}
     }
 }
