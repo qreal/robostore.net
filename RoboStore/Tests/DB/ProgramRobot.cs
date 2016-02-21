@@ -7,17 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Store.Models.Data
+namespace Tests.DB
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Message
+    public partial class ProgramRobot
     {
-        public int MessageID { get; set; }
-        public string Text { get; set; }
+        public int ProgramRobotID { get; set; }
+        public int ProgramID { get; set; }
         public int RobotID { get; set; }
+        public int CurrentVersion { get; set; }
     
+        public virtual Program Program { get; set; }
         public virtual Robot Robot { get; set; }
     }
 }

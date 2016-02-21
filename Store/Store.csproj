@@ -147,28 +147,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Models\Data\EntitiesModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EntitiesModel.edmx</DependentUpon>
-      <LastGenOutput>EntitiesModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Data\EntitiesModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EntitiesModel.edmx</DependentUpon>
-      <LastGenOutput>EntitiesModel.cs</LastGenOutput>
-    </Content>
+    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\Data\EntitiesModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EntitiesModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Data\EntitiesModel.edmx.diagram">
-      <DependentUpon>EntitiesModel.edmx</DependentUpon>
-    </Content>
-    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
@@ -192,33 +177,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Data\Configuration.cs">
-      <DependentUpon>EntitiesModel.tt</DependentUpon>
+    <Compile Include="Migrations\201602211137441_StartUpMigration.cs" />
+    <Compile Include="Migrations\201602211137441_StartUpMigration.Designer.cs">
+      <DependentUpon>201602211137441_StartUpMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\Data.cs" />
-    <Compile Include="Models\Data\EntitiesModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntitiesModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Data\EntitiesModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntitiesModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Data\EntitiesModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntitiesModel.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Data\DataContext.cs" />
     <Compile Include="Models\Data\GenericRepository.cs" />
     <Compile Include="Models\Data\IData.cs" />
-    <Compile Include="Models\Data\Message.cs">
-      <DependentUpon>EntitiesModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Data\Robot.cs">
-      <DependentUpon>EntitiesModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Entities\Configuration.cs" />
+    <Compile Include="Models\Entities\Program.cs" />
+    <Compile Include="Models\Entities\ProgramRobot.cs" />
+    <Compile Include="Models\Entities\Robot.cs" />
     <Compile Include="Services\MessageProccessor.cs" />
     <Compile Include="ViewModels\InitialConfiguration.cs" />
     <Compile Include="ViewModels\MessageVM.cs" />
@@ -246,6 +217,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201602211137441_StartUpMigration.resx">
+      <DependentUpon>201602211137441_StartUpMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

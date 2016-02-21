@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\stars_000\Desktop\s123\Project\Robots\robostore.net\Store\Models\Data\EntitiesModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\stars_000\Desktop\s123\Projects\Robots\robostore.net\RoboStore\Tests\DB\RobotData.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 
 namespace Store.Models.Data
 {
   public class GenericRepository<TEntity> where TEntity : class
   {
-    internal RobotDBEntities context;
+    internal DataContext context;
     internal DbSet<TEntity> dbSet;
 
-    public GenericRepository(RobotDBEntities context)
+    public GenericRepository(DataContext context)
     {
       this.context = context;
-      this.dbSet = context.Set<TEntity>();
+     dbSet = context.Set<TEntity>();
     }
 
     public void Add(TEntity entity)
@@ -23,14 +18,9 @@ namespace Store.Models.Data
       dbSet.Add(entity);
     }
 
-    public void Remove(int id)
+    public void Remove(TEntity entity)
     {
-      TEntity entityToDelete = dbSet.Find(id);
-      if (context.Entry(entityToDelete).State == EntityState.Detached)
-      {
-        dbSet.Attach(entityToDelete);
-      }
-      dbSet.Remove(entityToDelete);
+      dbSet.Remove(entity);
     }
 
     public void Update(TEntity entityToUpdate)

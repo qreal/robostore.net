@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Store.Models.Data
+namespace Tests.DB
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class RobotDBEntities : DbContext
+    public partial class RobotsDBEntities : DbContext
     {
-        public RobotDBEntities()
-            : base("name=RobotDBEntities")
+        public RobotsDBEntities()
+            : base("name=RobotsDBEntities")
         {
         }
     
@@ -26,7 +26,8 @@ namespace Store.Models.Data
         }
     
         public virtual DbSet<Configuration> Configurations { get; set; }
-        public virtual DbSet<Message> Messages { get; set; }
+        public virtual DbSet<ProgramRobot> ProgramRobots { get; set; }
+        public virtual DbSet<Program> Programs { get; set; }
         public virtual DbSet<Robot> Robots { get; set; }
     }
 }

@@ -7,28 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Store.Models.Data
+namespace Tests.DB
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Robot
+    public partial class Program
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Robot()
+        public Program()
         {
-            this.Configurations = new HashSet<Configuration>();
-            this.Messages = new HashSet<Message>();
+            this.ProgramRobots = new HashSet<ProgramRobot>();
         }
     
-        public int RobotID { get; set; }
-        public bool isOnline { get; set; }
-        public string IP { get; set; }
-        public string Number { get; set; }
+        public int ProgramID { get; set; }
+        public int ActualVersion { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Configuration> Configurations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<ProgramRobot> ProgramRobots { get; set; }
     }
 }

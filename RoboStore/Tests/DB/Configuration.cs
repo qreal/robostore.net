@@ -7,8 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Store.Models.Data
-{  
+namespace Tests.DB
+{
+    using System;
+    using System.Collections.Generic;
+    
     public partial class Configuration
     {
         public int ConfigurationID { get; set; }
