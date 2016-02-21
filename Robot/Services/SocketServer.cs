@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 /*
 Самый простой эхо сервер
-Принимает сообщения от Роутера и Сервера
+Принимает сообщения от Сервера
 */
 
 namespace Robot.Services

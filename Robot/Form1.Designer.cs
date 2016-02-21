@@ -30,10 +30,12 @@
     {
       this.listBox = new System.Windows.Forms.ListBox();
       this.buttonStartReceiving = new System.Windows.Forms.Button();
-      this.buttonRegister = new System.Windows.Forms.Button();
-      this.RouterOff = new System.Windows.Forms.Button();
-      this.buttonSayHello = new System.Windows.Forms.Button();
-      this.GetMailButton = new System.Windows.Forms.Button();
+      this.buttonGetConfigurations = new System.Windows.Forms.Button();
+      this.buttonSendConfiguration = new System.Windows.Forms.Button();
+      this.groupBoxConfiguration = new System.Windows.Forms.GroupBox();
+      this.textBoxPort = new System.Windows.Forms.TextBox();
+      this.LabelPort = new System.Windows.Forms.Label();
+      this.groupBoxConfiguration.SuspendLayout();
       this.SuspendLayout();
       // 
       // listBox
@@ -50,69 +52,76 @@
       // 
       // buttonStartReceiving
       // 
-      this.buttonStartReceiving.Location = new System.Drawing.Point(295, 184);
+      this.buttonStartReceiving.Location = new System.Drawing.Point(12, 184);
       this.buttonStartReceiving.Name = "buttonStartReceiving";
-      this.buttonStartReceiving.Size = new System.Drawing.Size(130, 59);
+      this.buttonStartReceiving.Size = new System.Drawing.Size(153, 59);
       this.buttonStartReceiving.TabIndex = 1;
       this.buttonStartReceiving.Text = "Start Receiving";
       this.buttonStartReceiving.UseVisualStyleBackColor = true;
       this.buttonStartReceiving.Click += new System.EventHandler(this.buttonStartReceiving_Click);
       // 
-      // buttonRegister
+      // buttonGetConfigurations
       // 
-      this.buttonRegister.Location = new System.Drawing.Point(295, 268);
-      this.buttonRegister.Name = "buttonRegister";
-      this.buttonRegister.Size = new System.Drawing.Size(130, 59);
-      this.buttonRegister.TabIndex = 3;
-      this.buttonRegister.Text = "Register Robot";
-      this.buttonRegister.UseVisualStyleBackColor = true;
-      this.buttonRegister.Click += new System.EventHandler(this.buttonRegister_Click);
+      this.buttonGetConfigurations.Location = new System.Drawing.Point(12, 249);
+      this.buttonGetConfigurations.Name = "buttonGetConfigurations";
+      this.buttonGetConfigurations.Size = new System.Drawing.Size(153, 59);
+      this.buttonGetConfigurations.TabIndex = 2;
+      this.buttonGetConfigurations.Text = "Get Configurations";
+      this.buttonGetConfigurations.UseVisualStyleBackColor = true;
+      this.buttonGetConfigurations.Click += new System.EventHandler(this.buttonGetConfigurations_Click);
       // 
-      // RouterOff
+      // buttonSendConfiguration
       // 
-      this.RouterOff.BackColor = System.Drawing.Color.Red;
-      this.RouterOff.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-      this.RouterOff.Location = new System.Drawing.Point(295, 333);
-      this.RouterOff.Name = "RouterOff";
-      this.RouterOff.Size = new System.Drawing.Size(270, 46);
-      this.RouterOff.TabIndex = 5;
-      this.RouterOff.Text = "ROUTER OFF";
-      this.RouterOff.UseVisualStyleBackColor = false;
-      this.RouterOff.Click += new System.EventHandler(this.RouterOff_Click);
+      this.buttonSendConfiguration.Location = new System.Drawing.Point(12, 314);
+      this.buttonSendConfiguration.Name = "buttonSendConfiguration";
+      this.buttonSendConfiguration.Size = new System.Drawing.Size(153, 59);
+      this.buttonSendConfiguration.TabIndex = 3;
+      this.buttonSendConfiguration.Text = "Send Configuration";
+      this.buttonSendConfiguration.UseVisualStyleBackColor = true;
+      this.buttonSendConfiguration.Click += new System.EventHandler(this.buttonSendConfiguration_Click);
       // 
-      // buttonSayHello
+      // groupBoxConfiguration
       // 
-      this.buttonSayHello.Location = new System.Drawing.Point(431, 184);
-      this.buttonSayHello.Name = "buttonSayHello";
-      this.buttonSayHello.Size = new System.Drawing.Size(130, 59);
-      this.buttonSayHello.TabIndex = 6;
-      this.buttonSayHello.Text = "Say Hello";
-      this.buttonSayHello.UseVisualStyleBackColor = true;
-      this.buttonSayHello.Click += new System.EventHandler(this.buttonSayHello_Click);
+      this.groupBoxConfiguration.Controls.Add(this.textBoxPort);
+      this.groupBoxConfiguration.Controls.Add(this.LabelPort);
+      this.groupBoxConfiguration.Location = new System.Drawing.Point(171, 184);
+      this.groupBoxConfiguration.Name = "groupBoxConfiguration";
+      this.groupBoxConfiguration.Size = new System.Drawing.Size(254, 189);
+      this.groupBoxConfiguration.TabIndex = 4;
+      this.groupBoxConfiguration.TabStop = false;
+      this.groupBoxConfiguration.Text = "Configuration";
       // 
-      // GetMailButton
+      // textBoxPort
       // 
-      this.GetMailButton.Location = new System.Drawing.Point(431, 268);
-      this.GetMailButton.Name = "GetMailButton";
-      this.GetMailButton.Size = new System.Drawing.Size(130, 59);
-      this.GetMailButton.TabIndex = 7;
-      this.GetMailButton.Text = "Get Mail";
-      this.GetMailButton.UseVisualStyleBackColor = true;
-      this.GetMailButton.Click += new System.EventHandler(this.GetMailButton_Click);
+      this.textBoxPort.Location = new System.Drawing.Point(17, 48);
+      this.textBoxPort.Name = "textBoxPort";
+      this.textBoxPort.Size = new System.Drawing.Size(100, 22);
+      this.textBoxPort.TabIndex = 1;
+      this.textBoxPort.Text = "11012";
+      // 
+      // LabelPort
+      // 
+      this.LabelPort.AutoSize = true;
+      this.LabelPort.Location = new System.Drawing.Point(14, 28);
+      this.LabelPort.Name = "LabelPort";
+      this.LabelPort.Size = new System.Drawing.Size(38, 17);
+      this.LabelPort.TabIndex = 0;
+      this.LabelPort.Text = "Port:";
       // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(855, 484);
-      this.Controls.Add(this.GetMailButton);
-      this.Controls.Add(this.buttonSayHello);
-      this.Controls.Add(this.RouterOff);
-      this.Controls.Add(this.buttonRegister);
+      this.ClientSize = new System.Drawing.Size(437, 380);
+      this.Controls.Add(this.groupBoxConfiguration);
+      this.Controls.Add(this.buttonSendConfiguration);
+      this.Controls.Add(this.buttonGetConfigurations);
       this.Controls.Add(this.buttonStartReceiving);
       this.Controls.Add(this.listBox);
       this.Name = "Form1";
       this.Text = "Robot";
+      this.groupBoxConfiguration.ResumeLayout(false);
+      this.groupBoxConfiguration.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -121,10 +130,11 @@
 
     private System.Windows.Forms.ListBox listBox;
     private System.Windows.Forms.Button buttonStartReceiving;
-    private System.Windows.Forms.Button buttonRegister;
-    private System.Windows.Forms.Button RouterOff;
-    private System.Windows.Forms.Button buttonSayHello;
-    private System.Windows.Forms.Button GetMailButton;
+    private System.Windows.Forms.Button buttonGetConfigurations;
+    private System.Windows.Forms.Button buttonSendConfiguration;
+    private System.Windows.Forms.GroupBox groupBoxConfiguration;
+    private System.Windows.Forms.TextBox textBoxPort;
+    private System.Windows.Forms.Label LabelPort;
   }
 }
 
