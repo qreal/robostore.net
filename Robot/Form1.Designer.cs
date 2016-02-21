@@ -35,6 +35,7 @@
       this.groupBoxConfiguration = new System.Windows.Forms.GroupBox();
       this.textBoxPort = new System.Windows.Forms.TextBox();
       this.LabelPort = new System.Windows.Forms.Label();
+      this.buttonGetProgram = new System.Windows.Forms.Button();
       this.groupBoxConfiguration.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -108,11 +109,22 @@
       this.LabelPort.TabIndex = 0;
       this.LabelPort.Text = "Port:";
       // 
+      // buttonGetProgram
+      // 
+      this.buttonGetProgram.Location = new System.Drawing.Point(431, 184);
+      this.buttonGetProgram.Name = "buttonGetProgram";
+      this.buttonGetProgram.Size = new System.Drawing.Size(153, 59);
+      this.buttonGetProgram.TabIndex = 5;
+      this.buttonGetProgram.Text = "Get Program";
+      this.buttonGetProgram.UseVisualStyleBackColor = true;
+      this.buttonGetProgram.Click += new System.EventHandler(this.buttonGetProgram_Click);
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(437, 380);
+      this.ClientSize = new System.Drawing.Size(587, 380);
+      this.Controls.Add(this.buttonGetProgram);
       this.Controls.Add(this.groupBoxConfiguration);
       this.Controls.Add(this.buttonSendConfiguration);
       this.Controls.Add(this.buttonGetConfigurations);
@@ -135,6 +147,7 @@
     private System.Windows.Forms.GroupBox groupBoxConfiguration;
     private System.Windows.Forms.TextBox textBoxPort;
     private System.Windows.Forms.Label LabelPort;
+    private System.Windows.Forms.Button buttonGetProgram;
   }
 }
 

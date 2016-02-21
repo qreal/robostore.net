@@ -1,0 +1,14 @@
+﻿using Tests.Data;
+
+/*
+Общие штуки для тестов бизнес логики выносим сюда
+*/
+
+namespace Tests.Logic
+{
+  public class LogicTest
+  {
+    // Эмулируем главную БД
+    protected readonly FakeData data = new FakeData();
+  }
+}

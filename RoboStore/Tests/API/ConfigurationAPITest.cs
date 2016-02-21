@@ -12,16 +12,13 @@ using Tests.Services;
 namespace Tests.API
 {
   [TestClass]
-  public class ConfigurationAPITest
+  public class ConfigurationAPITest: APITest
   {
     /*
     Тестируем 2 функции контроллера - получить конфигурации и добавить новую
     */
-
-    private RobotsDBEntities context = new RobotsDBEntities();
     private Robot robot;
     private List<Configuration> configurations = new List<Configuration>();
-    private string serverUrl = "http://robstore.azurewebsites.net/api";
 
 
 

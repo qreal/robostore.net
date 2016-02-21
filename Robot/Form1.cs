@@ -13,6 +13,7 @@ namespace Robot
   public partial class Form1 : Form
   {
     private ConfigurationManager managerConfiguration;
+    private ProgramManager managerProgram;
 
     private SocketServer server;
 
@@ -20,6 +21,7 @@ namespace Robot
     {
       InitializeComponent();
       managerConfiguration = new ConfigurationManager();
+      managerProgram = new ProgramManager();
     }
 
     private async void buttonStartReceiving_Click(object sender, EventArgs e)
@@ -54,6 +56,15 @@ namespace Robot
     {
       managerConfiguration.PostConfiguration(new ConfigurationImport {Port = int.Parse(textBoxPort.Text), RobotID = 4});
       listBox.Items.Add("Current configuration sent to server \n");
+    }
+
+    private async void buttonGetProgram_Click(object sender, EventArgs e)
+    {
+      var program = managerProgram.GetConfigurations();
+      listBox.Items.Add("Got a program from server: \n");
+      listBox.Items.Add("Name:" + program.Name);
+      listBox.Items.Add("Version:" + program.ActualVersion);
+      listBox.Items.Add("Code:" + program.Code);
     }
   }
 }

@@ -10,10 +10,8 @@ using Store.ViewModels.Configuration;
 
 namespace Robot.Models
 {
-  public class ConfigurationManager
+  public class ConfigurationManager : Manager
   {
-    private string serverUrl = "http://robstore.azurewebsites.net/api";
-
     public ConfigurationExport[] GetConfigurations(int RobotId = 4)
     {
       ConfigurationExport[] response;
