@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Store.Models.Entities;
 using Store.Models.Managers;
 using Store.ViewModels.Configuration;
 using Tests.Data;
@@ -11,14 +12,19 @@ namespace Tests.Logic.Configuration
   // Проверяем получение и передачу категорий
   /// </summary>
   [TestClass]
-  public class ConfigurationTest
+  public class ConfigurationLogicTest
   {
+    //[TestMethod]
+    //public async Task llo()
+    //{
+    //  await data.AddAsync(new Robot());
+    //}
 
     // Эмулируем главную БД
     private readonly FakeData data = new FakeData();
     private readonly ConfigurationManager _manager;
 
-    public ConfigurationTest()
+    public ConfigurationLogicTest()
     {
       _manager = new ConfigurationManager(data);
     }
