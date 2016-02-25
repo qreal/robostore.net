@@ -1,19 +1,18 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Tests.DB;
 using Tests.Services;
 
 /*
 CRUD тесты для всех сущностей в БД
 */
 
-namespace Tests
+namespace Tests.DB
 {
   [TestClass]
   public class DataBaseTest
   {
-    private RobotsDBEntities context = new RobotsDBEntities();
+    private readonly RobotsDBEntities _context = new RobotsDBEntities();
 
     // создадим тестовые данные
 
@@ -78,17 +77,17 @@ namespace Tests
       programRobot.Program = program;
 
       // запомним текущие количества
-      _amountConfigurationsWas = context.Configurations.Count();
-      _amountProgramRobotsWas = context.ProgramRobots.Count();
-      _amountProgramsWas = context.Programs.Count();
-      _amountRobotsWas = context.Robots.Count();
+      _amountConfigurationsWas = _context.Configurations.Count();
+      _amountProgramRobotsWas = _context.ProgramRobots.Count();
+      _amountProgramsWas = _context.Programs.Count();
+      _amountRobotsWas = _context.Robots.Count();
 
       // добавим в бд
-      context.Robots.Add(robot);
-      context.Programs.Add(program);
-      context.ProgramRobots.Add(programRobot);
-      context.Configurations.Add(configuration);
-      context.SaveChanges();
+      _context.Robots.Add(robot);
+      _context.Programs.Add(program);
+      _context.ProgramRobots.Add(programRobot);
+      _context.Configurations.Add(configuration);
+      _context.SaveChanges();
 
       // проверить, что наши экземпляры сущностей лежат в БД
       CheckEntitiesIsInDB();
@@ -102,10 +101,10 @@ namespace Tests
       configuration.Port = MoqDataGenerator.GetRandomNumber(10, 11111);
 
       // сохраним изменения в БД
-      context.Entry(program).State = EntityState.Modified;
-      context.Entry(programRobot).State = EntityState.Modified;
-      context.Entry(configuration).State = EntityState.Modified;
-      context.SaveChanges();
+      _context.Entry(program).State = EntityState.Modified;
+      _context.Entry(programRobot).State = EntityState.Modified;
+      _context.Entry(configuration).State = EntityState.Modified;
+      _context.SaveChanges();
 
       // проверить, что наши экземпляры сущностей по-прежнему лежат в БД
       CheckEntitiesIsInDB();
@@ -120,32 +119,32 @@ namespace Tests
       int configurationId = configuration.ConfigurationID;
 
       // удалим из бд
-      context.Robots.Remove(robot);
-      context.Configurations.Remove(configuration);
-      context.ProgramRobots.Remove(programRobot);
-      context.Programs.Remove(program);
-      context.SaveChanges();
+      _context.Robots.Remove(robot);
+      _context.Configurations.Remove(configuration);
+      _context.ProgramRobots.Remove(programRobot);
+      _context.Programs.Remove(program);
+      _context.SaveChanges();
 
       // проверим количества 
-      Assert.AreEqual(_amountRobotsWas, context.Robots.Count());
-      Assert.AreEqual(_amountConfigurationsWas, context.Configurations.Count());
-      Assert.AreEqual(_amountProgramRobotsWas, context.ProgramRobots.Count());
-      Assert.AreEqual(_amountProgramsWas, context.Programs.Count());
+      Assert.AreEqual(_amountRobotsWas, _context.Robots.Count());
+      Assert.AreEqual(_amountConfigurationsWas, _context.Configurations.Count());
+      Assert.AreEqual(_amountProgramRobotsWas, _context.ProgramRobots.Count());
+      Assert.AreEqual(_amountProgramsWas, _context.Programs.Count());
 
       // проверим, что таких сущностей теперь нету
-      Assert.AreEqual(null, context.Programs.FirstOrDefault(x => x.ProgramID == programId));
-      Assert.AreEqual(null, context.Robots.FirstOrDefault(x => x.RobotID == robotId));
-      Assert.AreEqual(null, context.ProgramRobots.FirstOrDefault(x => x.ProgramRobotID == programRobotId));
-      Assert.AreEqual(null, context.Configurations.FirstOrDefault(x => x.ConfigurationID == configurationId));
+      Assert.AreEqual(null, _context.Programs.FirstOrDefault(x => x.ProgramID == programId));
+      Assert.AreEqual(null, _context.Robots.FirstOrDefault(x => x.RobotID == robotId));
+      Assert.AreEqual(null, _context.ProgramRobots.FirstOrDefault(x => x.ProgramRobotID == programRobotId));
+      Assert.AreEqual(null, _context.Configurations.FirstOrDefault(x => x.ConfigurationID == configurationId));
     }
 
     // проверить, что наши экземпляры сущностей лежат в БД
     private void CheckEntitiesIsInDB()
     {
-      Assert.AreSame(robot, context.Robots.ToList().Last());
-      Assert.AreSame(program, context.Programs.ToList().Last());
-      Assert.AreSame(configuration, context.Configurations.ToList().Last());
-      Assert.AreSame(programRobot, context.ProgramRobots.ToList().Last());
+      Assert.AreSame(robot, _context.Robots.ToList().Last());
+      Assert.AreSame(program, _context.Programs.ToList().Last());
+      Assert.AreSame(configuration, _context.Configurations.ToList().Last());
+      Assert.AreSame(programRobot, _context.ProgramRobots.ToList().Last());
     }
   }
 

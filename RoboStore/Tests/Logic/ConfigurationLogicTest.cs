@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Store.Models.Managers;
 using Store.ViewModels.Configuration;
-using Tests.Data;
 
 namespace Tests.Logic.Configuration
 {

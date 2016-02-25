@@ -72,11 +72,12 @@
     <Compile Include="API\APITest.cs" />
     <Compile Include="API\ConfigurationAPITest.cs" />
     <Compile Include="API\ProgramAPITest.cs" />
-    <Compile Include="DataBaseTest.cs" />
+    <Compile Include="DB\DataBaseTest.cs" />
     <Compile Include="DB\Configuration.cs">
       <DependentUpon>RobotData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\FakeData.cs" />
+    <Compile Include="Logic\HomeTest.cs" />
+    <Compile Include="Services\FakeData.cs" />
     <Compile Include="DB\Program.cs">
       <DependentUpon>RobotData.tt</DependentUpon>
     </Compile>
@@ -105,6 +106,7 @@
     <Compile Include="Logic\LogicTest.cs" />
     <Compile Include="Logic\ProgramLogicTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\FakeRobotConnector.cs" />
     <Compile Include="Services\MoqDataGenerator.cs" />
   </ItemGroup>
   <ItemGroup>

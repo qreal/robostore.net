@@ -27,20 +27,26 @@ namespace Tests.API
     {
       // создали тестовые данные
       GenerateTestData();
-
-      // делаем запрос на получение Конфиг для нового Робота
-      using (var wb = new WebClient())
+    
+      try
       {
-        wb.Encoding = Encoding.UTF8;
-        var json = wb.DownloadString(serverUrl + "/configuration/get?RobotId=" + robot.RobotID);
-        ConfigurationExport[] resp = JsonConvert.DeserializeObject<ConfigurationExport[]>(json);
-        Assert.AreEqual(2, resp.Length);
-        Assert.AreEqual(resp[0].Port, configurations[0].Port);
-        Assert.AreEqual(resp[1].Port, configurations[1].Port);
+        // делаем запрос на получение Конфиг для нового Робота
+        using (var wb = new WebClient())
+        {
+          wb.Encoding = Encoding.UTF8;
+          var json = wb.DownloadString(serverUrl + "/configuration/get?RobotId=" + robot.RobotID);
+          ConfigurationExport[] resp = JsonConvert.DeserializeObject<ConfigurationExport[]>(json);
+          Assert.AreEqual(2, resp.Length);
+          Assert.AreEqual(resp[0].Port, configurations[0].Port);
+          Assert.AreEqual(resp[1].Port, configurations[1].Port);
+        }
+      }
+      finally
+      {
+        // удалили тестовые данные
+        RemoveTestData();
       }
 
-      // удалили тестовые данные
-      RemoveTestData();
     }
 
     [TestMethod]
@@ -53,19 +59,24 @@ namespace Tests.API
       context.Robots.Add(robot);
       context.SaveChanges();
 
-      using (var wb = new WebClient())
+      try
       {
-        var data = new NameValueCollection();
-        data["Port"] = port.ToString();
-        data["RobotID"] = robot.RobotID.ToString();
-        wb.UploadValues(serverUrl + "/configuration/post", "POST", data);
+        using (var wb = new WebClient())
+        {
+          var data = new NameValueCollection();
+          data["Port"] = port.ToString();
+          data["RobotID"] = robot.RobotID.ToString();
+          wb.UploadValues(serverUrl + "/configuration/post", "POST", data);
+        }
+
+        Assert.AreEqual(amountBefore + 1, context.Configurations.Count());
+        Assert.AreEqual(port, context.Configurations.ToList().Last().Port);
       }
-
-      Assert.AreEqual(amountBefore + 1, context.Configurations.Count());
-      Assert.AreEqual(port, context.Configurations.ToList().Last().Port);
-
-      context.Robots.Remove(robot);
-      context.SaveChanges();
+      finally
+      {
+        context.Robots.Remove(robot);
+        context.SaveChanges();
+      }
     }
 
     private void GenerateTestData()

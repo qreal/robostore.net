@@ -16,18 +16,13 @@
         <span class="pull-right label label-primary">Version: @Model.ActualVersion</span>
     </h3>
 
-    @*@using (Html.BeginForm("AddToCart", "Cart"))
+    @using (Html.BeginForm("AddProgramToRobot", "Home"))
     {
     <div class="pull-right">
         @Html.HiddenFor(x => x.ProgramID)
-        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-        <input type="submit" class="btn btn-success" value="Add to cart" />
+        <input type="submit" class="btn btn-success" value="Send to robot" />
     </div>
-    }*@
-
-    <div class="pull-right">
-        <input type="submit" class="btn btn-success" value="Add to robot"/>
-    </div>
+    }
 
     <span class="lead"> Здесь будет описание @*@Model.Description*@</span>
 </div>

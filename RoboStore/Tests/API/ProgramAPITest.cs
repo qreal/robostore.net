@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -24,20 +25,25 @@ namespace Tests.API
       context.Programs.Add(program);
       context.SaveChanges();
 
-      // делаем запрос на получение программы
-      using (var wb = new WebClient())
+      try
       {
-        wb.Encoding = Encoding.UTF8;
-        var json = wb.DownloadString(serverUrl + "/program/get?id=" + program.ProgramID);
-        ProgramExport resp = JsonConvert.DeserializeObject<ProgramExport>(json);
-        Assert.AreEqual(program.ActualVersion, resp.ActualVersion);
-        Assert.AreEqual(program.Code, resp.Code);
-        Assert.AreEqual(program.Name, resp.Name);
+        // делаем запрос на получение программы
+        using (var wb = new WebClient())
+        {
+          wb.Encoding = Encoding.UTF8;
+          var json = wb.DownloadString(serverUrl + "/program/getProgramById?id=" + program.ProgramID);
+          ProgramExport resp = JsonConvert.DeserializeObject<ProgramExport>(json);
+          Assert.AreEqual(program.ActualVersion, resp.ActualVersion);
+          Assert.AreEqual(program.Code, resp.Code);
+          Assert.AreEqual(program.Name, resp.Name);
+        }
       }
-
-      // удаляем новую прогу из БД
-      context.Programs.Remove(program);
-      context.SaveChanges();
+      finally
+      {
+        // удаляем новую прогу из БД
+        context.Programs.Remove(program);
+        context.SaveChanges();
+      }  
     }
   }
 }

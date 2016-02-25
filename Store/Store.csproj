@@ -153,10 +153,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\robstore - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\robstore - Web Deploy.pubxml" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -182,9 +178,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602211137441_StartUpMigration.cs" />
-    <Compile Include="Migrations\201602211137441_StartUpMigration.Designer.cs">
-      <DependentUpon>201602211137441_StartUpMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201602251558462_AddReceivedField.cs" />
+    <Compile Include="Migrations\201602251558462_AddReceivedField.Designer.cs">
+      <DependentUpon>201602251558462_AddReceivedField.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\Data.cs" />
@@ -198,12 +194,8 @@
     <Compile Include="Models\Managers\ConfigurationManager.cs" />
     <Compile Include="Models\Managers\ProgramManager.cs" />
     <Compile Include="Models\Services\PagingInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Include="Services\Bootstrapper.cs" />
+    <Compile Include="Services\Abstract\IRobotConnector.cs" />
     <Compile Include="Services\MessageProccessor.cs" />
     <Compile Include="Services\PagingHelpers.cs" />
     <Compile Include="Services\UnityResolver.cs" />
@@ -213,6 +205,7 @@
     <Compile Include="ViewModels\Configuration\ConfigurationImport.cs" />
     <Compile Include="ViewModels\Home\ProgramsListViewModel.cs" />
     <Compile Include="ViewModels\Program\ProgramExport.cs" />
+    <Compile Include="ViewModels\Program\ProgramIdExport.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -236,8 +229,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201602211137441_StartUpMigration.resx">
-      <DependentUpon>201602211137441_StartUpMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201602251558462_AddReceivedField.resx">
+      <DependentUpon>201602251558462_AddReceivedField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

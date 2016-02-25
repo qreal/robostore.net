@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Store.Models.Data;
 using Store.Models.Entities;
-using Tests.Services;
 
-namespace Tests.Data
+namespace Tests.Services
 {
   /*
   Класс реализует интерфейс данных из БД, чтобы проверить бизнесс логику
@@ -27,14 +27,8 @@ namespace Tests.Data
         Configurations = new List<Configuration>(),
         ProgramRobots = new List<ProgramRobot>()
       };
-      var program = new Program
-      {
-        ActualVersion = MoqDataGenerator.GetRandomNumber(1, 10),
-        Code = MoqDataGenerator.GetRandomString(100),
-        Name = MoqDataGenerator.GetRandomString(10),
-        ProgramID = MoqDataGenerator.GetRandomNumber(10, 100),
-        ProgramRobots = new List<ProgramRobot>()
-      };
+      var program = CreateProgram(id:1);
+
       var configuration = new Configuration
       {
         ConfigurationID = MoqDataGenerator.GetRandomNumber(10, 100),
@@ -62,6 +56,12 @@ namespace Tests.Data
       _programs.Add(program);
       _configurations.Add(configuration);
       _programRobots.Add(programRobot);
+
+      // добавили еще 4 программы для теста pagination
+      for (var i = 0; i < 4; i++)
+      {
+        _programs.Add(CreateProgram(i + 2));
+      }
     }
 
     public IEnumerable<Robot> Robots => _robots;
@@ -155,5 +155,15 @@ namespace Tests.Data
         }
       });
     }
+
+    private Program CreateProgram(int id) =>
+      new Program
+    {
+      ActualVersion = MoqDataGenerator.GetRandomNumber(1, 10),
+      Code = MoqDataGenerator.GetRandomString(100),
+      Name = MoqDataGenerator.GetRandomString(10),
+      ProgramID = id,
+      ProgramRobots = new List<ProgramRobot>()
+    };
   }
 }

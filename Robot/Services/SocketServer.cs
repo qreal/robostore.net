@@ -15,10 +15,11 @@ namespace Robot.Services
   public class SocketServer
   {
     // Incoming data from the client.
-    private string data = null;
+    private string data;
 
     private Socket listener;
     private Socket handler;
+    private int port = 11012;
 
     public void Cancellation()
     {
@@ -27,13 +28,7 @@ namespace Robot.Services
       listener.Close();
     }
 
-    public Task<string> StartListeningTask ()
-    {
-       return Task.Factory.StartNew( () =>
-       {
-         return StartListening();
-       });
-    }
+    public Task<string> StartListeningTask () => Task.Factory.StartNew(StartListening);
 
     public string StartListening()
     {
@@ -45,7 +40,7 @@ namespace Robot.Services
       // host running the application.
       IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
       IPAddress ipAddress = ipHostInfo.AddressList[0];
-      IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11012);
+      IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
 
       // Create a TCP/IP socket.
       listener = new Socket(AddressFamily.InterNetwork,

@@ -23,7 +23,7 @@ namespace Store.Services
       // register all your components with the container here  
       //This is the important line to edit  
       container.RegisterType<IData, Data>();
-
+      container.RegisterType<IRobotConnector, RobotConnector>();
 
       RegisterTypes(container);
       return container;

@@ -1,7 +1,11 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Store.Models.Data;
+using Store.Models.Entities;
+using Store.Models.Managers;
 using Store.Models.Services;
+using Store.Services;
 using Store.ViewModels.Home;
 
 namespace Store.Controllers
@@ -11,30 +15,27 @@ namespace Store.Controllers
     private IData data;
     // сколько програм мы отображаем на одной странице
     private int pageSize = 4;
+    private ProgramManager _programManager;
+    private IRobotConnector _robotConnector;
+    private const int TestRobotId = 4;
 
-    public HomeController(IData d)
+    public HomeController(IData d, IRobotConnector r)
     {
-      data = d;
+      _programManager = new ProgramManager(d, r);
     }
 
     /*
       Отображем список программ
     */
-    public ViewResult Index(int page = 1)
+    public ViewResult Index(int page = 1) => View(_programManager.FormProgramList(pageSize, page));
+    
+    /*
+      Добавляем выбранную программу в программы для робота и сообщаем ему об этом
+    */
+    public async Task<string> AddProgramToRobot(int programId)
     {
-      var viewModel = new ProgramsListViewModel
-      {
-        Programs = data.Programs.OrderBy(x => x.Name).
-                                 Skip((page - 1)*pageSize).
-                                 Take(pageSize),
-        PagingInfo = new PagingInfo
-        {
-          CurrentPage = page,
-          ItemsPerPage = pageSize,
-          TotalItems = data.Programs.Count()
-        }
-      };
-      return View(viewModel);
+      await _programManager.AddProgramToRobot(programId, TestRobotId);
+      return "success";
     }
 
   }

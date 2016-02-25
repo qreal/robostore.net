@@ -12,13 +12,15 @@ namespace Robot.Models
 {
   class ProgramManager : Manager
   {
-    public ProgramExport GetConfigurations(int id = 5)
+    public Task<ProgramExport> GetProgramAsync(int id = 5) => Task.Factory.StartNew(() => GetProgram(id));
+
+    public ProgramExport GetProgram(int id = 5)
     {
       ProgramExport response;
       using (var wb = new WebClient())
       {
         wb.Encoding = Encoding.UTF8;
-        var json = wb.DownloadString(serverUrl + "/program/get?id=" + id);
+        var json = wb.DownloadString(serverUrl + "/program/getProgramById?id=" + id);
         response = JsonConvert.DeserializeObject<ProgramExport>(json);
       }
       return response;

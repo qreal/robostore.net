@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Robot.Models;
 using Robot.Services;
 using Store.ViewModels.Configuration;
+using Store.ViewModels.Program;
 
 /*
 Пока только 1 робот и Id у него захардкожен и = 1.
@@ -12,16 +14,18 @@ namespace Robot
 {
   public partial class Form1 : Form
   {
-    private ConfigurationManager managerConfiguration;
-    private ProgramManager managerProgram;
+    private ConfigurationManager configurationManager;
+    private ProgramManager programManager;
+    private MessageParser messageParser;
 
     private SocketServer server;
 
     public Form1()
     {
       InitializeComponent();
-      managerConfiguration = new ConfigurationManager();
-      managerProgram = new ProgramManager();
+      configurationManager = new ConfigurationManager();
+      programManager = new ProgramManager();
+      messageParser = new MessageParser(this);
     }
 
     private async void buttonStartReceiving_Click(object sender, EventArgs e)
@@ -31,6 +35,8 @@ namespace Robot
       string result = await server.StartListeningTask();
       // вернулись с подключением и записали результат
       listBox.Items.Add(string.Format("Server:{0}\n", result));
+      // парсим входную строку
+      messageParser.ParseCommand(result);
       // рекурсивно вызвались, ибо слушаем всегда
       buttonStartReceiving_Click(sender, e);
     }
@@ -42,7 +48,7 @@ namespace Robot
 
     private async void buttonGetConfigurations_Click(object sender, EventArgs e)
     {
-      var configurations = managerConfiguration.GetConfigurations();
+      var configurations = configurationManager.GetConfigurations();
       listBox.Items.Add("Configurations from server are: \n");
       int i = 0;
       foreach (var config in configurations)
@@ -54,17 +60,22 @@ namespace Robot
 
     private async void buttonSendConfiguration_Click(object sender, EventArgs e)
     {
-      managerConfiguration.PostConfiguration(new ConfigurationImport {Port = int.Parse(textBoxPort.Text), RobotID = 4});
+      configurationManager.PostConfiguration(new ConfigurationImport {Port = int.Parse(textBoxPort.Text), RobotID = 4});
       listBox.Items.Add("Current configuration sent to server \n");
     }
 
-    private async void buttonGetProgram_Click(object sender, EventArgs e)
+    private async void buttonGetProgram_Click(object sender, EventArgs e) => OutputProgram(await programManager.GetProgramAsync());
+
+
+    public void OutputProgram(ProgramExport program)
     {
-      var program = managerProgram.GetConfigurations();
-      listBox.Items.Add("Got a program from server: \n");
-      listBox.Items.Add("Name:" + program.Name);
-      listBox.Items.Add("Version:" + program.ActualVersion);
-      listBox.Items.Add("Code:" + program.Code);
+      FormWriteLine("Got a program from server: \n");
+      FormWriteLine("Name:" + program.Name);
+      FormWriteLine("Version:" + program.ActualVersion);
+      FormWriteLine("Code:" + program.Code);
     }
+
+    public void FormWriteLine(string text) => listBox.Items.Add(text);
+    
   }
 }
