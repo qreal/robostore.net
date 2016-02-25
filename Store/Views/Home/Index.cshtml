@@ -1,5 +1,15 @@
-﻿@model System.Collections.Generic.List<string>
+﻿@using Store.Services
+@model Store.ViewModels.Home.ProgramsListViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Programs";
 }
+
+@foreach (var p in Model.Programs)
+{
+    @Html.Partial("ProgramSummary", p)
+}
+
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("Index", new { page = x}))
+</div>
