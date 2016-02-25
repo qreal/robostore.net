@@ -64,7 +64,14 @@ namespace Robot
       listBox.Items.Add("Current configuration sent to server \n");
     }
 
-    private async void buttonGetProgram_Click(object sender, EventArgs e) => OutputProgram(await programManager.GetProgramAsync());
+    private async void buttonGetProgram_Click(object sender, EventArgs e)
+    {
+      var programs = await programManager.GetProgramAsync();
+      foreach (var program in programs)
+      {
+        OutputProgram(program);
+      }
+    }
 
 
     public void OutputProgram(ProgramExport program)

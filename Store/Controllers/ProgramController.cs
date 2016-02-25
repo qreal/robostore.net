@@ -19,6 +19,7 @@ namespace Store.Controllers
 
     [Route("api/program/getProgramById")]
     [HttpGet]
+    // todo как мы узнаем, кто получатель, то ему Received = true поставим
     public ProgramExport GetProgram(int id) => _manager.GetProgramById(id);
 
     [Route("api/program/getLoadingProgramsIds")]

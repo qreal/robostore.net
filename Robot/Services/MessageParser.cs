@@ -33,7 +33,11 @@ namespace Robot.Services
           {
               case OperationType.GetAll:
               form.FormWriteLine("Parser: we need to get some programms");
-              form.OutputProgram(await programManager.GetProgramAsync());
+              var programs = await programManager.GetProgramAsync();
+              foreach (var program in programs)
+              {
+                form.OutputProgram(program);
+              }
               break;
             case OperationType.None:
               break;
