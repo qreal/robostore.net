@@ -178,9 +178,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602251558462_AddReceivedField.cs" />
-    <Compile Include="Migrations\201602251558462_AddReceivedField.Designer.cs">
-      <DependentUpon>201602251558462_AddReceivedField.cs</DependentUpon>
+    <Compile Include="Migrations\201602252100515_ImagesAdded.cs" />
+    <Compile Include="Migrations\201602252100515_ImagesAdded.Designer.cs">
+      <DependentUpon>201602252100515_ImagesAdded.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\Data.cs" />
@@ -188,6 +188,7 @@
     <Compile Include="Models\Data\GenericRepository.cs" />
     <Compile Include="Models\Data\IData.cs" />
     <Compile Include="Models\Entities\Configuration.cs" />
+    <Compile Include="Models\Entities\Image.cs" />
     <Compile Include="Models\Entities\Program.cs" />
     <Compile Include="Models\Entities\ProgramRobot.cs" />
     <Compile Include="Models\Entities\Robot.cs" />
@@ -229,8 +230,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201602251558462_AddReceivedField.resx">
-      <DependentUpon>201602251558462_AddReceivedField.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201602252100515_ImagesAdded.resx">
+      <DependentUpon>201602252100515_ImagesAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -10,6 +10,12 @@ namespace Store.Models.Entities
     public string Name { get; set; }
     public string Code { get; set; }
     [JsonIgnore]
-    public virtual List<ProgramRobot> ProgramRobots { get; set; } 
+    public virtual List<ProgramRobot> ProgramRobots { get; set; }
+    
+    public string Description { get; set; }
+    [JsonIgnore]
+    public Image Image { get; set; }
+
+    public int ImageID { get; set; }
   }
 }
