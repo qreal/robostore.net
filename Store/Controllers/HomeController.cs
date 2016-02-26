@@ -2,11 +2,8 @@
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Store.Models.Data;
-using Store.Models.Entities;
 using Store.Models.Managers;
-using Store.Models.Services;
 using Store.Services;
-using Store.ViewModels.Home;
 
 namespace Store.Controllers
 {
@@ -36,6 +33,12 @@ namespace Store.Controllers
     {
       await _programManager.AddProgramToRobot(programId, TestRobotId);
       return "success";
+    }
+
+    public FileContentResult GetImage(int programId)
+    {
+      var image = _programManager.GetImageById(programId);
+      return File(image.ImageData, image.ImageMimeType);
     }
 
   }

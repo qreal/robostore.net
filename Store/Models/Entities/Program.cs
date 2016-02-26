@@ -14,7 +14,7 @@ namespace Store.Models.Entities
     
     public string Description { get; set; }
     [JsonIgnore]
-    public Image Image { get; set; }
+    public virtual Image Image { get; set; }
 
     public int ImageID { get; set; }
   }

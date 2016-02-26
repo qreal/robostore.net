@@ -13,6 +13,14 @@
           <Property Name="RobotID" Type="int" Nullable="false" />
           <Property Name="Port" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageData" Type="varbinary(max)" />
+          <Property Name="ImageMimeType" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="ProgramRobots">
           <Key>
             <PropertyRef Name="ProgramRobotID" />
@@ -21,6 +29,7 @@
           <Property Name="ProgramID" Type="int" Nullable="false" />
           <Property Name="RobotID" Type="int" Nullable="false" />
           <Property Name="CurrentVersion" Type="int" Nullable="false" />
+          <Property Name="Received" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Programs">
           <Key>
@@ -30,6 +39,8 @@
           <Property Name="ActualVersion" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="Code" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="ImageID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Robots">
           <Key>
@@ -79,8 +90,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_Programs_dbo_Images_ImageID">
+          <End Role="Images" Type="Self.Images" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Programs" Type="Self.Programs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="ImageID" />
+            </Principal>
+            <Dependent Role="Programs">
+              <PropertyRef Name="ImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="RobotsDBModelStoreContainer">
           <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProgramRobots" EntityType="Self.ProgramRobots" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Programs" EntityType="Self.Programs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Robots" EntityType="Self.Robots" Schema="dbo" store:Type="Tables" />
@@ -95,6 +121,10 @@
           <AssociationSet Name="FK_dbo_ProgramRobots_dbo_Robots_RobotID" Association="Self.FK_dbo_ProgramRobots_dbo_Robots_RobotID">
             <End Role="Robots" EntitySet="Robots" />
             <End Role="ProgramRobots" EntitySet="ProgramRobots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Programs_dbo_Images_ImageID" Association="Self.FK_dbo_Programs_dbo_Images_ImageID">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="Programs" EntitySet="Programs" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -111,6 +141,15 @@
           <Property Name="Port" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Robot" Relationship="Self.FK_dbo_Configurations_dbo_Robots_RobotID" FromRole="Configurations" ToRole="Robots" />
         </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageData" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ImageMimeType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Programs" Relationship="Self.FK_dbo_Programs_dbo_Images_ImageID" FromRole="Images" ToRole="Programs" />
+        </EntityType>
         <EntityType Name="ProgramRobot">
           <Key>
             <PropertyRef Name="ProgramRobotID" />
@@ -119,6 +158,7 @@
           <Property Name="ProgramID" Type="Int32" Nullable="false" />
           <Property Name="RobotID" Type="Int32" Nullable="false" />
           <Property Name="CurrentVersion" Type="Int32" Nullable="false" />
+          <Property Name="Received" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Program" Relationship="Self.FK_dbo_ProgramRobots_dbo_Programs_ProgramID" FromRole="ProgramRobots" ToRole="Programs" />
           <NavigationProperty Name="Robot" Relationship="Self.FK_dbo_ProgramRobots_dbo_Robots_RobotID" FromRole="ProgramRobots" ToRole="Robots" />
         </EntityType>
@@ -130,6 +170,9 @@
           <Property Name="ActualVersion" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImageID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Image" Relationship="Self.FK_dbo_Programs_dbo_Images_ImageID" FromRole="Programs" ToRole="Images" />
           <NavigationProperty Name="ProgramRobots" Relationship="Self.FK_dbo_ProgramRobots_dbo_Programs_ProgramID" FromRole="Programs" ToRole="ProgramRobots" />
         </EntityType>
         <EntityType Name="Robot">
@@ -151,6 +194,20 @@
             </Principal>
             <Dependent Role="Configurations">
               <PropertyRef Name="RobotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Programs_dbo_Images_ImageID">
+          <End Role="Images" Type="Self.Image" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Programs" Type="Self.Program" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="ImageID" />
+            </Principal>
+            <Dependent Role="Programs">
+              <PropertyRef Name="ImageID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -182,14 +239,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="RobotsDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="RobotsDBEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Configurations" EntityType="Self.Configuration" />
+          <EntitySet Name="Images" EntityType="Self.Image" />
           <EntitySet Name="ProgramRobots" EntityType="Self.ProgramRobot" />
           <EntitySet Name="Programs" EntityType="Self.Program" />
           <EntitySet Name="Robots" EntityType="Self.Robot" />
           <AssociationSet Name="FK_dbo_Configurations_dbo_Robots_RobotID" Association="Self.FK_dbo_Configurations_dbo_Robots_RobotID">
             <End Role="Robots" EntitySet="Robots" />
             <End Role="Configurations" EntitySet="Configurations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Programs_dbo_Images_ImageID" Association="Self.FK_dbo_Programs_dbo_Images_ImageID">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="Programs" EntitySet="Programs" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_ProgramRobots_dbo_Programs_ProgramID" Association="Self.FK_dbo_ProgramRobots_dbo_Programs_ProgramID">
             <End Role="Programs" EntitySet="Programs" />
@@ -205,13 +267,22 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="RobotsDBModelStoreContainer" CdmEntityContainer="RobotsDBEntities">
+        <EntityContainerMapping StorageEntityContainer="RobotsDBModelStoreContainer" CdmEntityContainer="RobotsDBEntities1">
           <EntitySetMapping Name="Configurations">
             <EntityTypeMapping TypeName="RobotsDBModel.Configuration">
               <MappingFragment StoreEntitySet="Configurations">
                 <ScalarProperty Name="ConfigurationID" ColumnName="ConfigurationID" />
                 <ScalarProperty Name="RobotID" ColumnName="RobotID" />
                 <ScalarProperty Name="Port" ColumnName="Port" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="RobotsDBModel.Image">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="ImageMimeType" ColumnName="ImageMimeType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -222,6 +293,7 @@
                 <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
                 <ScalarProperty Name="RobotID" ColumnName="RobotID" />
                 <ScalarProperty Name="CurrentVersion" ColumnName="CurrentVersion" />
+                <ScalarProperty Name="Received" ColumnName="Received" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -232,6 +304,8 @@
                 <ScalarProperty Name="ActualVersion" ColumnName="ActualVersion" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

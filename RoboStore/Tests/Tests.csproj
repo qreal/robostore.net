@@ -52,6 +52,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <Choose>
@@ -72,12 +73,14 @@
     <Compile Include="API\APITest.cs" />
     <Compile Include="API\ConfigurationAPITest.cs" />
     <Compile Include="API\ProgramAPITest.cs" />
-    <Compile Include="DB\DataBaseTest.cs" />
+    <Compile Include="API\GetImageAPITest.cs" />
     <Compile Include="DB\Configuration.cs">
       <DependentUpon>RobotData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Logic\HomeTest.cs" />
-    <Compile Include="Services\FakeData.cs" />
+    <Compile Include="DB\DataBaseTest.cs" />
+    <Compile Include="DB\Image.cs">
+      <DependentUpon>RobotData.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\Program.cs">
       <DependentUpon>RobotData.tt</DependentUpon>
     </Compile>
@@ -102,6 +105,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RobotData.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Logic\HomeTest.cs" />
+    <Compile Include="Services\FakeData.cs" />
     <Compile Include="Logic\ConfigurationLogicTest.cs" />
     <Compile Include="Logic\LogicTest.cs" />
     <Compile Include="Logic\ProgramLogicTest.cs" />
@@ -110,17 +115,18 @@
     <Compile Include="Services\MoqDataGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="DB\RobotData.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>RobotData.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="DB\RobotData.edmx.diagram">
       <DependentUpon>RobotData.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DB\RobotData.Context.tt">
@@ -134,10 +140,6 @@
       <LastGenOutput>RobotData.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Store\Store.csproj">
       <Project>{d0ad2dd0-dbf2-4641-995c-5f015e1224f7}</Project>

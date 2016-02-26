@@ -12,23 +12,19 @@ namespace Tests.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class Program
+    public partial class Image
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Program()
+        public Image()
         {
-            this.ProgramRobots = new HashSet<ProgramRobot>();
+            this.Programs = new HashSet<Program>();
         }
     
-        public int ProgramID { get; set; }
-        public int ActualVersion { get; set; }
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public string Description { get; set; }
         public int ImageID { get; set; }
+        public byte[] ImageData { get; set; }
+        public string ImageMimeType { get; set; }
     
-        public virtual Image Image { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProgramRobot> ProgramRobots { get; set; }
+        public virtual ICollection<Program> Programs { get; set; }
     }
 }

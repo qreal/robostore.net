@@ -15,12 +15,21 @@ namespace Tests.API
     [TestMethod]
     public void GetProgram()
     {
+      var image = new Image
+      {
+        ImageData = MoqDataGenerator.GetSomeBytes(),
+        ImageMimeType = MoqDataGenerator.GetRandomString(6)
+      };
+      context.Images.Add(image);
+      context.SaveChanges();
+
       // создаем новую прогу в бд
       var program = new Program
       {
         ActualVersion = MoqDataGenerator.GetRandomNumber(1, 11),
         Code = MoqDataGenerator.GetRandomString(100),
-        Name = MoqDataGenerator.GetRandomString(10)
+        Name = MoqDataGenerator.GetRandomString(10),
+        Image = image
       };
       context.Programs.Add(program);
       context.SaveChanges();
@@ -40,8 +49,8 @@ namespace Tests.API
       }
       finally
       {
-        // удаляем новую прогу из БД
-        context.Programs.Remove(program);
+        // удаляем новую прогу из БД (каскадно)
+        context.Images.Remove(image);
         context.SaveChanges();
       }  
     }

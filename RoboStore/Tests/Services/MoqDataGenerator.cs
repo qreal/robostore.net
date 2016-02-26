@@ -28,5 +28,7 @@ namespace Tests.Services
       return builder.ToString();
     }
 
+    public static byte[] GetSomeBytes() => new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+
   }
 }

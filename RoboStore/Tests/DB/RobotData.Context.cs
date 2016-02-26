@@ -13,10 +13,10 @@ namespace Tests.DB
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class RobotsDBEntities : DbContext
+    public partial class RobotsDBEntities1 : DbContext
     {
-        public RobotsDBEntities()
-            : base("name=RobotsDBEntities")
+        public RobotsDBEntities1()
+            : base("name=RobotsDBEntities1")
         {
         }
     
@@ -26,6 +26,7 @@ namespace Tests.DB
         }
     
         public virtual DbSet<Configuration> Configurations { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<ProgramRobot> ProgramRobots { get; set; }
         public virtual DbSet<Program> Programs { get; set; }
         public virtual DbSet<Robot> Robots { get; set; }

@@ -18,6 +18,7 @@ namespace Tests.DB
         public int ProgramID { get; set; }
         public int RobotID { get; set; }
         public int CurrentVersion { get; set; }
+        public bool Received { get; set; }
     
         public virtual Program Program { get; set; }
         public virtual Robot Robot { get; set; }

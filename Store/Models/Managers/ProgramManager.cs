@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Razor.Generator;
 using Store.Models.Data;
 using Store.Models.Entities;
 using Store.Models.Services;
@@ -67,6 +68,9 @@ namespace Store.Models.Managers
       robotConnector.SendMessageToRobot((int)RobotConnector.OperationCategory.Program + ""
                                       + (int)RobotConnector.OperationType.GetAll);
     }
+
+    public Image GetImageById(int programId) =>
+      data.Programs.First(x => x.ProgramID == programId).Image;
       
   }
 }
