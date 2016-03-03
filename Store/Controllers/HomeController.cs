@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Store.Models.Data;
 using Store.Models.Managers;
@@ -18,6 +19,7 @@ namespace Store.Controllers
     public HomeController(IData d, IRobotConnector r)
     {
       _programManager = new ControllerManager(d, r);
+      data = d;
     }
 
     /*
@@ -39,10 +41,6 @@ namespace Store.Controllers
       return "success";
     }
 
-    public string SendProgramDirectly(int robotId)
-    {
-      return "config";
-    }
 
     // меню с ссылками на 2 таблицы
     public PartialViewResult Menu(string category = null)
@@ -57,6 +55,7 @@ namespace Store.Controllers
       var image = _programManager.GetImageById(programId);
       return File(image.ImageData, image.ImageMimeType);
     }
+
 
   }
 }

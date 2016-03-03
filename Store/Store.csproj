@@ -175,6 +175,7 @@
     <Compile Include="Controllers\ConfigurationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProgramController.cs" />
+    <Compile Include="Controllers\RobotController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -207,6 +208,7 @@
     <Compile Include="ViewModels\Home\ContentListViewModel.cs" />
     <Compile Include="ViewModels\Program\ProgramExport.cs" />
     <Compile Include="ViewModels\Program\ProgramIdExport.cs" />
+    <Compile Include="ViewModels\Robot\RobotCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -219,6 +221,7 @@
     <Content Include="Views\Home\ShowRobots.cshtml" />
     <Content Include="Views\Shared\RobotSummary.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
+    <Content Include="Views\Robot\SendForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

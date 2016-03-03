@@ -1,7 +1,5 @@
 ﻿@model Store.Models.Entities.Robot
 
-
-
 <div class="well">
 
     @*заглушака чтобы получить картинку для робота из картинок для программ*@
@@ -15,7 +13,7 @@
         <span class="pull-right label label-primary">Some Information</span>
     </h3>
 
-    @using (Html.BeginForm("SendProgramDirectly", "Home"))
+    @using (Html.BeginForm("SendForm", "Robot"))
     {
     <div class="pull-right">
         @Html.HiddenFor(x => x.RobotID)
