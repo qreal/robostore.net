@@ -1,8 +1,6 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Razor.Generator;
 using Store.Models.Data;
 using Store.Models.Entities;
 using Store.Models.Services;
@@ -10,14 +8,19 @@ using Store.Services;
 using Store.ViewModels.Home;
 using Store.ViewModels.Program;
 
+/*
+Класс призван выполнять все функции контролеров.
+Те контроллер только принимает запрос
+*/
+
 namespace Store.Models.Managers
 {
-  public class ProgramManager
+  public class ControllerManager
   {
     private IData data;
     private IRobotConnector robotConnector;
 
-    public ProgramManager(IData d, IRobotConnector r)
+    public ControllerManager(IData d, IRobotConnector r)
     {
       data = d;
       robotConnector = r;
@@ -37,10 +40,10 @@ namespace Store.Models.Managers
                                                                         Where(x => x.RobotID == robotId).
                                                                         Select(x => new ProgramIdExport {Id = x.ProgramID});
 
-    public ProgramsListViewModel FormProgramList(int pageSize, int page) =>
-      new ProgramsListViewModel
+    public ContentListViewModel<Program> FormProgramList(int pageSize, int page) =>
+      new ContentListViewModel<Program>
       {
-        Programs = data.Programs.OrderBy(x => x.Name).
+        Content = data.Programs.OrderBy(x => x.Name).
                                  Skip((page - 1) * pageSize).
                                  Take(pageSize),
         PagingInfo = new PagingInfo
@@ -48,6 +51,20 @@ namespace Store.Models.Managers
           CurrentPage = page,
           ItemsPerPage = pageSize,
           TotalItems = data.Programs.Count()
+        }
+      };
+
+    public ContentListViewModel<Robot> FormRobotList(int pageSize, int page) =>
+      new ContentListViewModel<Robot>
+      {
+        Content = data.Robots.OrderBy(x => x.RobotID).
+                                 Skip((page - 1) * pageSize).
+                                 Take(pageSize),
+        PagingInfo = new PagingInfo
+        {
+          CurrentPage = page,
+          ItemsPerPage = pageSize,
+          TotalItems = data.Robots.Count()
         }
       };
 

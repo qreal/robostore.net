@@ -193,7 +193,7 @@
     <Compile Include="Models\Entities\ProgramRobot.cs" />
     <Compile Include="Models\Entities\Robot.cs" />
     <Compile Include="Models\Managers\ConfigurationManager.cs" />
-    <Compile Include="Models\Managers\ProgramManager.cs" />
+    <Compile Include="Models\Managers\ControllerManager.cs" />
     <Compile Include="Models\Services\PagingInfo.cs" />
     <Compile Include="Services\Bootstrapper.cs" />
     <Compile Include="Services\Abstract\IRobotConnector.cs" />
@@ -204,7 +204,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Configuration\ConfigurationExport.cs" />
     <Compile Include="ViewModels\Configuration\ConfigurationImport.cs" />
-    <Compile Include="ViewModels\Home\ProgramsListViewModel.cs" />
+    <Compile Include="ViewModels\Home\ContentListViewModel.cs" />
     <Compile Include="ViewModels\Program\ProgramExport.cs" />
     <Compile Include="ViewModels\Program\ProgramIdExport.cs" />
   </ItemGroup>
@@ -216,6 +216,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery.validate.unobtrusive.bootstrap.min.js.map" />
     <Content Include="Views\Shared\ProgramSummary.cshtml" />
+    <Content Include="Views\Home\ShowRobots.cshtml" />
+    <Content Include="Views\Shared\RobotSummary.cshtml" />
+    <Content Include="Views\Home\Menu.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

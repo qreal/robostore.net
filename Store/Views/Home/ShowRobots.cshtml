@@ -1,0 +1,15 @@
+﻿@using Store.Services
+@model Store.ViewModels.Home.ContentListViewModel<Store.Models.Entities.Robot>
+
+@{
+  ViewBag.Title = "Robots";
+}
+
+@foreach (var p in Model.Content)
+{
+@Html.Partial("RobotSummary", p)
+}
+
+<div class="btn-group pull-right">
+    @Html.FormPageLinks(Model.PagingInfo, x => Url.Action("ShowRobots", new { page = x }))
+</div>

@@ -1,0 +1,27 @@
+﻿@model Store.Models.Entities.Robot
+
+
+
+<div class="well">
+
+    @*заглушака чтобы получить картинку для робота из картинок для программ*@
+    <div class="pull-left" style="margin-right: 10px">
+        <img class="img-thumbnail" width="75" height="75"
+             src="http://localhost:45534/Home/GetImage?programId=5" />
+    </div>
+
+    <h3>
+        <strong>Robot #@Model.RobotID</strong>
+        <span class="pull-right label label-primary">Some Information</span>
+    </h3>
+
+    @using (Html.BeginForm("SendProgramDirectly", "Home"))
+    {
+    <div class="pull-right">
+        @Html.HiddenFor(x => x.RobotID)
+        <input type="submit" class="btn btn-success" value="Send Program" />
+    </div>
+    }
+
+    <span class="lead"> More information</span>
+</div>

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<string>
+
+@{
+  var categories = Model.ToArray();
+}
+
+<div>
+
+    @Html.RouteLink(categories[0], new
+{
+    controller = "Home",
+    action = "Index",
+    category = categories[0]
+}, new
+{
+    @class = "btn btn-block btn-default btn-lg" + (ViewBag.SelectedCategory == categories[0] ? " btn-primary" : "")
+})
+
+    @Html.RouteLink(categories[1], new
+{
+    controller = "Home",
+    action = "ShowRobots",
+    category = categories[1]
+}, new
+{
+    @class = "btn btn-block btn-default btn-lg" + (ViewBag.SelectedCategory == categories[1] ? " btn-primary" : "")
+})
+</div>

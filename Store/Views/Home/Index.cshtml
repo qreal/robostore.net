@@ -1,15 +1,15 @@
 ﻿@using Store.Services
-@model Store.ViewModels.Home.ProgramsListViewModel
+@model Store.ViewModels.Home.ContentListViewModel<Store.Models.Entities.Program>
 
 @{
     ViewBag.Title = "Programs";
 }
 
-@foreach (var p in Model.Programs)
+@foreach (var p in Model.Content)
 {
     @Html.Partial("ProgramSummary", p)
 }
 
 <div class="btn-group pull-right">
-    @Html.PageLinks(Model.PagingInfo, x => Url.Action("Index", new { page = x}))
+    @Html.FormPageLinks(Model.PagingInfo, x => Url.Action("Index", new { page = x}))
 </div>

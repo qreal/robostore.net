@@ -9,12 +9,12 @@ namespace Store.Controllers
 {
   public class ProgramController : ApiController
   {
-    private readonly ProgramManager _manager;
+    private readonly ControllerManager _manager;
     private const int TestRobotId = 4;
 
     public ProgramController(IData data, IRobotConnector r)
     {
-      _manager = new ProgramManager(data, r);
+      _manager = new ControllerManager(data, r);
     }
 
     [Route("api/program/getProgramById")]

@@ -8,11 +8,11 @@ namespace Tests.Logic
   [TestClass]
   public class ProgramLogicTest : LogicTest
   {
-    private readonly ProgramManager _manager;
+    private readonly ControllerManager _manager;
 
     public ProgramLogicTest()
     {
-      _manager = new ProgramManager(data, new FakeRobotConnector());
+      _manager = new ControllerManager(data, new FakeRobotConnector());
     }
 
     [TestMethod]

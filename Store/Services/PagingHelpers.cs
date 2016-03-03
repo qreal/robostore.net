@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
+using Store.Models.Entities;
 using Store.Models.Services;
 
 /*
@@ -11,7 +15,7 @@ namespace Store.Services
 {
   public static class PagingHelpers
   {
-    public static MvcHtmlString PageLinks(this HtmlHelper html,
+    public static MvcHtmlString FormPageLinks(this HtmlHelper html,
                                                PagingInfo pagingInfo,
                                                Func<int, string> pageUrl)
     {
@@ -31,5 +35,6 @@ namespace Store.Services
       }
       return MvcHtmlString.Create(result.ToString());
     }
+
   }
 }
