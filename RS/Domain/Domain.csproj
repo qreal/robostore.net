@@ -66,9 +66,13 @@
     <Compile Include="Entities\ProgramRobot.cs" />
     <Compile Include="Entities\Robot.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Migrations\201603131611338_First.cs" />
-    <Compile Include="Migrations\201603131611338_First.Designer.cs">
-      <DependentUpon>201603131611338_First.cs</DependentUpon>
+    <Compile Include="Migrations\201603131924320_DataUpdate.cs" />
+    <Compile Include="Migrations\201603131924320_DataUpdate.Designer.cs">
+      <DependentUpon>201603131924320_DataUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603131953438_NullableFK.cs" />
+    <Compile Include="Migrations\201603131953438_NullableFK.Designer.cs">
+      <DependentUpon>201603131953438_NullableFK.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Pagination\PaginationManager.cs" />
@@ -81,8 +85,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603131611338_First.resx">
-      <DependentUpon>201603131611338_First.cs</DependentUpon>
+    <Folder Include="Users\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201603131924320_DataUpdate.resx">
+      <DependentUpon>201603131924320_DataUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603131953438_NullableFK.resx">
+      <DependentUpon>201603131953438_NullableFK.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

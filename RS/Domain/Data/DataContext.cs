@@ -9,6 +9,7 @@ namespace Domain.Data
     public DbSet<Program> Programs { get; set; }
     public DbSet<Configuration> Configurations { get; set; }
     public DbSet<ProgramRobot> ProgramRobots { get; set; }
+    public DbSet<User> Users { get; set; } 
 
   }
 }

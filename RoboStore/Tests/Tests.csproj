@@ -105,6 +105,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RobotData.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DB\User.cs">
+      <DependentUpon>RobotData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Logic\PaginationLogicTest.cs" />
     <Compile Include="Logic\ContentLogicTest.cs" />
     <Compile Include="FakeData.cs" />
@@ -129,6 +132,16 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\RS\Domain\Domain.csproj">
+      <Project>{caaad3eb-8e38-4919-9c6d-c2aa476677b6}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Store\Store.csproj">
+      <Project>{d0ad2dd0-dbf2-4641-995c-5f015e1224f7}</Project>
+      <Name>Store</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="DB\RobotData.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>RobotData.edmx</DependentUpon>
@@ -139,16 +152,6 @@
       <DependentUpon>RobotData.edmx</DependentUpon>
       <LastGenOutput>RobotData.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\RS\Domain\Domain.csproj">
-      <Project>{caaad3eb-8e38-4919-9c6d-c2aa476677b6}</Project>
-      <Name>Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Store\Store.csproj">
-      <Project>{d0ad2dd0-dbf2-4641-995c-5f015e1224f7}</Project>
-      <Name>Store</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -12,7 +12,7 @@ namespace Domain.Entities
     public virtual List<ProgramRobot> ProgramRobots { get; set; }
     [JsonIgnore]
     public virtual User User { get; set; }
-    public int UserID { get; set; }
+    public int? UserID { get; set; }
 
   }
 }

@@ -4,16 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bb847584525c417aa66e28211b33168e" Name="Diagram1">
-        <EntityTypeShape EntityType="RobotsDBModel.Configuration" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="RobotsDBModel.Image" Width="1.5" PointX="1.5" PointY="10.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RobotsDBModel.ProgramRobot" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RobotsDBModel.Program" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="RobotsDBModel.Robot" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
-        <AssociationConnector Association="RobotsDBModel.FK_dbo_Configurations_dbo_Robots_RobotID" ManuallyRouted="false" />
-        <AssociationConnector Association="RobotsDBModel.FK_dbo_Programs_dbo_Images_ImageID" ManuallyRouted="false" />
-        <AssociationConnector Association="RobotsDBModel.FK_dbo_ProgramRobots_dbo_Programs_ProgramID" ManuallyRouted="false" />
-        <AssociationConnector Association="RobotsDBModel.FK_dbo_ProgramRobots_dbo_Robots_RobotID" ManuallyRouted="false" />
+      <Diagram DiagramId="14da0eb3dea54bc1a636099c8ec091f1" Name="Diagram1">
+        <EntityTypeShape EntityType="RDBModel.Configuration" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="RDBModel.Image" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RDBModel.ProgramRobot" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RDBModel.Program" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RDBModel.Robot" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="RDBModel.User" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="RDBModel.FK_dbo_Configurations_dbo_Robots_RobotID" ManuallyRouted="false" />
+        <AssociationConnector Association="RDBModel.FK_dbo_Programs_dbo_Images_ImageID" ManuallyRouted="false" />
+        <AssociationConnector Association="RDBModel.FK_dbo_ProgramRobots_dbo_Programs_ProgramID" ManuallyRouted="false" />
+        <AssociationConnector Association="RDBModel.FK_dbo_ProgramRobots_dbo_Robots_RobotID" ManuallyRouted="false" />
+        <AssociationConnector Association="RDBModel.FK_dbo_Robots_dbo_Users_UserID" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

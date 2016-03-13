@@ -8,7 +8,7 @@ namespace Tests.API
 {
   public class APITest
   {
-    protected RobotsDBEntities1 context = new RobotsDBEntities1();
+    protected RDBEntities1 context = new RDBEntities1();
     protected string serverUrl = "http://robstore.azurewebsites.net/api";
   }
 }

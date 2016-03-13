@@ -17,10 +17,17 @@ namespace Tests
     private List<Program> _programs = new List<Program>();
     private List<Configuration> _configurations = new List<Configuration>();
     private List<ProgramRobot> _programRobots = new List<ProgramRobot>();
+    private List<User> _users = new List<User>(); 
 
     public FakeData()
     {
       // создали по одной сущности в каждый из списков
+      var user = new User
+      {
+        Login = MoqDataGenerator.GetRandomString(10),
+        Password = MoqDataGenerator.GetRandomString(10),
+        UserID = 1
+      };
       var robot = new Robot
       {
         RobotID = MoqDataGenerator.GetRandomNumber(1, 100),
@@ -50,6 +57,8 @@ namespace Tests
       // добавили связи между сущностями
       robot.Configurations.Add(configuration);
       robot.ProgramRobots.Add(programRobot);
+      robot.User = user;
+      robot.UserID = user.UserID;
       configuration.Robot = robot;
       configuration.RobotID = robot.RobotID;
       program.ProgramRobots.Add(programRobot);
@@ -77,6 +86,7 @@ namespace Tests
     public IEnumerable<Program> Programs => _programs;
     public IEnumerable<Configuration> Configurations => _configurations;
     public IEnumerable<ProgramRobot> ProgramRobots => _programRobots;
+    public IEnumerable<User> Users => _users;
 
     public Task<int> AddAsync(object o)
     {
@@ -99,6 +109,9 @@ namespace Tests
             break;
           case "ProgramRobot":
             _programRobots.Add((ProgramRobot)o);
+            break;
+          case "User":
+            _users.Add((User)o);
             break;
         }
         // 42 потому что никаких статусных кодов мы не возвращаем
@@ -133,6 +146,10 @@ namespace Tests
             // и добавил измененный 
             _programRobots.Add((ProgramRobot)o);
             break;
+          case "User":
+            _users = _users.FindAll(x => x.UserID != ((User)o).UserID);
+            _users.Add((User)o);
+            break;
         }
       });
     }
@@ -159,6 +176,9 @@ namespace Tests
           case "ProgramRobot":
             // выпилил элемент с таким ID
             _programRobots = _programRobots.FindAll(x => x.ProgramRobotID != ((ProgramRobot)o).ProgramRobotID);
+            break;
+          case "User":
+            _users = _users.FindAll(x => x.UserID != ((User)o).UserID);
             break;
         }
       });

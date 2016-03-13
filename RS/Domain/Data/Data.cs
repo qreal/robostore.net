@@ -12,6 +12,7 @@ namespace Domain.Data
     private readonly GenericRepository<Robot> _robots;
     private readonly GenericRepository<Program> _programs;
     private readonly GenericRepository<ProgramRobot> _programRobots;
+    private readonly GenericRepository<User> _users;
 
     public Data()
     {
@@ -20,12 +21,14 @@ namespace Domain.Data
       _programs = new GenericRepository<Program>(_context);
       _robots = new GenericRepository<Robot>(_context);
       _programRobots = new GenericRepository<ProgramRobot>(_context);
+      _users = new GenericRepository<User>(_context);
     }
 
     public IEnumerable<Configuration> Configurations => _context.Configurations;
     public IEnumerable<Robot> Robots => _context.Robots;
     public IEnumerable<Program> Programs => _context.Programs;
-    public IEnumerable<ProgramRobot> ProgramRobots => _context.ProgramRobots; 
+    public IEnumerable<ProgramRobot> ProgramRobots => _context.ProgramRobots;
+    public IEnumerable<User> Users => _context.Users;
 
 
     public async Task<int> AddAsync(object o)
@@ -44,6 +47,9 @@ namespace Domain.Data
           break;
         case "ProgramRobot":
           _programRobots.Add((ProgramRobot)o);
+          break;
+        case "User":
+          _users.Add((User)o);
           break;
       }
       return await _context.SaveChangesAsync();
@@ -66,6 +72,9 @@ namespace Domain.Data
         case "ProgramRobot":
           _programRobots.Update((ProgramRobot)o);
           break;
+        case "User":
+          _users.Update((User)o);
+          break;
       }
       await _context.SaveChangesAsync();
     }
@@ -86,6 +95,9 @@ namespace Domain.Data
           break;
         case "ProgramRobot":
           _programRobots.Remove((ProgramRobot)o);
+          break;
+        case "User":
+          _users.Remove((User)o);
           break;
       }
       await _context.SaveChangesAsync();
