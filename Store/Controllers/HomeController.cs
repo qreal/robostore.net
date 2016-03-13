@@ -1,36 +1,59 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
-using Store.Models.Data;
-using Store.Models.Managers;
-using Store.Services;
+using Domain;
+using Domain.Data;
+using Domain.Entities;
+using Domain.Pagination;
+using Domain.Programs;
+using Store.Models.Home;
 
 namespace Store.Controllers
 {
   public class HomeController : Controller
   {
-    private IData data;
     // сколько програм мы отображаем на одной странице
     private int pageSize = 4;
-    private ControllerManager _programManager;
-    private IRobotConnector _robotConnector;
+    private ProgramManager _programManager;
+    private PaginationManager _paginationManager;
+    private ContentManager _contentManager;
     private const int TestRobotId = 4;
 
-    public HomeController(IData d, IRobotConnector r)
+    public HomeController(IData d)
     {
-      _programManager = new ControllerManager(d, r);
-      data = d;
+      _programManager = new ProgramManager(d);
+      _paginationManager = new PaginationManager(d);
+      _contentManager = new ContentManager(d);
     }
 
     /*
       Отображем список программ
     */
-    public ViewResult Index(int page = 1) => View(_programManager.FormProgramList(pageSize, page));
+    public ViewResult Index(int page = 1) =>
+      View(new PagedContentViewModel<Program>
+      {
+        PageContent = _paginationManager.FormProgramPage(page, pageSize),
+        PagingInfo = new PagingInfo
+        {
+          CurrentPage = page,
+          ItemsPerPage = pageSize,
+          TotalItems = _contentManager.AmountPrograms
+        }
+      });
 
     /*
       Отображем список роботов
     */
-    public ViewResult ShowRobots(int page = 1) => View(_programManager.FormRobotList(pageSize, page));
+    public ViewResult ShowRobots(int page = 1) => 
+      View(new PagedContentViewModel<Robot>
+      {
+        PageContent = _paginationManager.FormRobotPage(page, pageSize),
+        PagingInfo = new PagingInfo
+        {
+          CurrentPage = page,
+          ItemsPerPage = pageSize,
+          TotalItems = _contentManager.AmoutRobots
+        }
+      });
     
     /*
       Добавляем выбранную программу в программы для робота и сообщаем ему об этом
@@ -52,10 +75,8 @@ namespace Store.Controllers
 
     public FileContentResult GetImage(int programId)
     {
-      var image = _programManager.GetImageById(programId);
+      var image = _contentManager.GetImageById(programId);
       return File(image.ImageData, image.ImageMimeType);
     }
-
-
   }
 }

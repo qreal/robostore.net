@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
+﻿using System.Collections.Specialized;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
+using Domain.Configurations;
 using Newtonsoft.Json;
-using Store.ViewModels.Configuration;
+using Store.ViewModels;
 
 namespace Robot.Models
 {

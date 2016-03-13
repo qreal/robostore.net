@@ -1,11 +1,11 @@
 ﻿@using Store.Services
-@model Store.ViewModels.Home.ContentListViewModel<Store.Models.Entities.Robot>
+@model Store.Models.Home.PagedContentViewModel<Domain.Entities.Robot>
 
 @{
   ViewBag.Title = "Robots";
 }
 
-@foreach (var p in Model.Content)
+@foreach (var p in Model.PageContent)
 {
 @Html.Partial("RobotSummary", p)
 }

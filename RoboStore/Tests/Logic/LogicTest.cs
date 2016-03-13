@@ -10,6 +10,6 @@ namespace Tests.Logic
   {
     // Эмулируем главную БД
     protected readonly FakeData data = new FakeData();
-    protected readonly FakeRobotConnector robotConnector = new FakeRobotConnector();
+    //protected readonly FakeRobotConnector robotConnector = new FakeRobotConnector();
   }
 }

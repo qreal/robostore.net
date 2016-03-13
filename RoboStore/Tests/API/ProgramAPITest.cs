@@ -3,7 +3,7 @@ using System.Net;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using Store.ViewModels.Program;
+using Store.Models.Program;
 using Tests.DB;
 using Tests.Services;
 

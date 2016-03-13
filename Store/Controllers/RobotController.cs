@@ -1,17 +1,15 @@
 ﻿using System.Web.Mvc;
-using Store.Models.Data;
+using Domain.Data;
+using Store.Models.Robot;
 using Store.Services;
-using Store.ViewModels.Robot;
 
 namespace Store.Controllers
 {
   public class RobotController : Controller
   {
-    private IData data;
-
     public RobotController(IData d)
     {
-      data = d;
+
     }
 
     public ViewResult SendForm()
@@ -24,8 +22,9 @@ namespace Store.Controllers
     [HttpPost]
     public ActionResult Edit(RobotCode rc)
     {
-      var robotConnector = new RobotConnector();
-      robotConnector.SendMessageToRobot(rc.Code);
+      //var robotConnector = new RobotConnector();
+      //robotConnector.SendMessageToRobot(rc.Code);
+      // todo переделать
       return RedirectToAction("Index", "Home");
     }
   }

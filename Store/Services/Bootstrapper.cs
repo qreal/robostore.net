@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
+using Domain.Data;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Mvc;
-using Store.Models.Data;
 
 namespace Store.Services
 {
@@ -23,7 +23,6 @@ namespace Store.Services
       // register all your components with the container here  
       //This is the important line to edit  
       container.RegisterType<IData, Data>();
-      container.RegisterType<IRobotConnector, RobotConnector>();
 
       RegisterTypes(container);
       return container;

@@ -1,30 +1,40 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
-using Store.Models.Data;
-using Store.Models.Managers;
-using Store.Services;
-using Store.ViewModels.Program;
+using Domain.Data;
+using Domain.Programs;
+using Store.Models.Program;
 
 namespace Store.Controllers
 {
   public class ProgramController : ApiController
   {
-    private readonly ControllerManager _manager;
+    private readonly ProgramManager _manager;
     private const int TestRobotId = 4;
 
-    public ProgramController(IData data, IRobotConnector r)
+    public ProgramController(IData data)
     {
-      _manager = new ControllerManager(data, r);
+      _manager = new ProgramManager(data);
     }
 
     [Route("api/program/getProgramById")]
     [HttpGet]
-    // todo как мы узнаем, кто получатель, то ему Received = true поставим
-    public ProgramExport GetProgram(int id) => _manager.GetProgramById(id);
+    public ProgramExport GetProgram(int id)
+    {
+      var program = _manager.GetProgramById(id);
+      return new ProgramExport
+      {
+        ActualVersion = program.ActualVersion,
+        Code = program.Code,
+        Name = program.Name
+      };
+    }
 
     [Route("api/program/getLoadingProgramsIds")]
     [HttpGet]
-    public IEnumerable<ProgramIdExport> GetLoadingProgramsIds() => _manager.GetProgramsIds(TestRobotId);
+    public IEnumerable<ProgramIdExport> GetLoadingProgramsIds() => 
+      _manager.GetProgramsIdsByRobotId(TestRobotId).
+      Select(x => new ProgramIdExport { Id = x.ProgramID });
 
   }
 }

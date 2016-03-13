@@ -184,31 +184,15 @@
       <DependentUpon>201602252100515_ImagesAdded.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Data\Data.cs" />
-    <Compile Include="Models\Data\DataContext.cs" />
-    <Compile Include="Models\Data\GenericRepository.cs" />
-    <Compile Include="Models\Data\IData.cs" />
-    <Compile Include="Models\Entities\Configuration.cs" />
-    <Compile Include="Models\Entities\Image.cs" />
-    <Compile Include="Models\Entities\Program.cs" />
-    <Compile Include="Models\Entities\ProgramRobot.cs" />
-    <Compile Include="Models\Entities\Robot.cs" />
-    <Compile Include="Models\Managers\ConfigurationManager.cs" />
-    <Compile Include="Models\Managers\ControllerManager.cs" />
-    <Compile Include="Models\Services\PagingInfo.cs" />
     <Compile Include="Services\Bootstrapper.cs" />
-    <Compile Include="Services\Abstract\IRobotConnector.cs" />
-    <Compile Include="Services\MessageProccessor.cs" />
-    <Compile Include="Services\PagingHelpers.cs" />
+    <Compile Include="Services\PagingHelper.cs" />
     <Compile Include="Services\UnityResolver.cs" />
-    <Compile Include="Services\RobotConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\Configuration\ConfigurationExport.cs" />
-    <Compile Include="ViewModels\Configuration\ConfigurationImport.cs" />
-    <Compile Include="ViewModels\Home\ContentListViewModel.cs" />
-    <Compile Include="ViewModels\Program\ProgramExport.cs" />
-    <Compile Include="ViewModels\Program\ProgramIdExport.cs" />
-    <Compile Include="ViewModels\Robot\RobotCode.cs" />
+    <Compile Include="Models\Configuration\ConfigurationExport.cs" />
+    <Compile Include="Models\Home\PagedContentViewModel.cs" />
+    <Compile Include="Models\Program\ProgramExport.cs" />
+    <Compile Include="Models\Program\ProgramIdExport.cs" />
+    <Compile Include="Models\Robot\RobotCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -239,6 +223,12 @@
     <EmbeddedResource Include="Migrations\201602252100515_ImagesAdded.resx">
       <DependentUpon>201602252100515_ImagesAdded.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RS\Domain\Domain.csproj">
+      <Project>{caaad3eb-8e38-4919-9c6d-c2aa476677b6}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

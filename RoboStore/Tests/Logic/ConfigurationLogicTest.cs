@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Domain.Configurations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Store.Models.Managers;
-using Store.ViewModels.Configuration;
 
-namespace Tests.Logic.Configuration
+namespace Tests.Logic
 {
   /// <summary>
   // Проверяем получение и передачу категорий
@@ -21,9 +20,9 @@ namespace Tests.Logic.Configuration
     }
 
     [TestMethod]
-    public void GetConfigurationsTest()
+    public void GetConfigurationsByRobotIdTest()
     {
-      var result = _manager.GetConfigurations(data.Robots.First().RobotID);
+      var result = _manager.GetConfigurationsByRobotId(data.Robots.First().RobotID);
       Assert.AreEqual(1, result.Count());
       Assert.AreEqual(data.Configurations.First().Port, result.First().Port);
     }

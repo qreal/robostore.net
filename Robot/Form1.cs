@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Domain.Configurations;
 using Robot.Models;
 using Robot.Services;
-using Store.ViewModels.Configuration;
 using Store.ViewModels.Program;
+using ConfigurationManager = Robot.Models.ConfigurationManager;
 
 /*
 Пока только 1 робот и Id у него захардкожен и = 1.
@@ -14,7 +14,7 @@ namespace Robot
 {
   public partial class Form1 : Form
   {
-    private ConfigurationManager configurationManager;
+    private Models.ConfigurationManager configurationManager;
     private ProgramManager programManager;
     private MessageParser messageParser;
 
