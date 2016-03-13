@@ -10,6 +10,9 @@ namespace Domain.Entities
     public virtual List<Configuration> Configurations { get; set; }
     [JsonIgnore]
     public virtual List<ProgramRobot> ProgramRobots { get; set; }
+    [JsonIgnore]
+    public virtual User User { get; set; }
+    public int UserID { get; set; }
 
   }
 }

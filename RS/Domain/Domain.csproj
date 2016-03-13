@@ -65,6 +65,12 @@
     <Compile Include="Entities\Program.cs" />
     <Compile Include="Entities\ProgramRobot.cs" />
     <Compile Include="Entities\Robot.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Migrations\201603131611338_First.cs" />
+    <Compile Include="Migrations\201603131611338_First.Designer.cs">
+      <DependentUpon>201603131611338_First.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Pagination\PaginationManager.cs" />
     <Compile Include="Pagination\PagingInfo.cs" />
     <Compile Include="Programs\ProgramManager.cs" />
@@ -73,6 +79,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201603131611338_First.resx">
+      <DependentUpon>201603131611338_First.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
