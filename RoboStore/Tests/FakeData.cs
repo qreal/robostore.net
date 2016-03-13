@@ -74,6 +74,7 @@ namespace Tests
       _programs.Add(program);
       _configurations.Add(configuration);
       _programRobots.Add(programRobot);
+      _users.Add(user);
 
       // добавили еще 4 программы для теста pagination
       for (var i = 0; i < 4; i++)
