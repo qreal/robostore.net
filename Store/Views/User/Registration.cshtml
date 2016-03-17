@@ -1,0 +1,38 @@
+﻿@model Store.Models.User.UserProfile
+
+@{
+  Layout = "~/Views/Shared/_HeadOnlyLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Registration</title>
+</head>
+
+<body>
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h4>Registration</h4>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                <label>Your name:</label>
+                @Html.TextBoxFor(x => x.Login, new {@class = "form-control"})
+            </div>
+            <div class="form-group">
+                <label>Your password:</label>
+                @Html.PasswordFor(x => x.Password, new {@class = "form-control"})
+            </div>
+            <div class="text-center">
+                <input class="btn btn-success" type="submit" value="Continue" />
+            </div>
+        }
+    </div>
+</div>
+</body>
+
+</html>
