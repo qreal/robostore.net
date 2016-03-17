@@ -206,6 +206,7 @@
     <Content Include="Views\User\Registration.cshtml" />
     <Content Include="Views\User\Welcome.cshtml" />
     <Content Include="Views\Shared\_HeadOnlyLayout.cshtml" />
+    <Content Include="Views\User\Entrance.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

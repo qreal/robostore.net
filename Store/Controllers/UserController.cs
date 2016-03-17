@@ -28,7 +28,23 @@ namespace Store.Controllers
       if (ModelState.IsValid && !userManager.TryEnter(profile.Login, profile.Password))
       {
         await userManager.CreateUser(profile.Login, profile.Password);
-        return View("Welcome", profile.Login);
+        return View("Welcome", (object)profile.Login);
+      }
+      return View();
+    }
+
+    public ActionResult Entrance()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Entrance(UserProfile profile)
+    {
+      if (ModelState.IsValid && userManager.TryEnter(profile.Login, profile.Password))
+      {
+        await userManager.CreateUser(profile.Login, profile.Password);
+        return RedirectToAction("Index", "Home");
       }
       return View();
     }
