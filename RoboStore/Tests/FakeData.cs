@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain;
 using Domain.Data;
 using Domain.Entities;
-using Tests.Services;
 
 namespace Tests
 {
@@ -89,9 +89,9 @@ namespace Tests
     public IEnumerable<ProgramRobot> ProgramRobots => _programRobots;
     public IEnumerable<User> Users => _users;
 
-    public Task<int> AddAsync(object o)
+    public Task<object> AddAsync(object o)
     {
-      return Task<int>.Factory.StartNew(() =>
+      return Task<object>.Factory.StartNew(() =>
 
       {
         // тут нужно получить тип объекта и далее его добавить/удалить в Репозиторий
@@ -115,8 +115,7 @@ namespace Tests
             _users.Add((User)o);
             break;
         }
-        // 42 потому что никаких статусных кодов мы не возвращаем
-        return 42;
+        return o;
       });
     }
 

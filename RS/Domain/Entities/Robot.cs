@@ -13,6 +13,7 @@ namespace Domain.Entities
     [JsonIgnore]
     public virtual User User { get; set; }
     public int? UserID { get; set; }
+    public int ActivationCode { get; set; }
 
   }
 }

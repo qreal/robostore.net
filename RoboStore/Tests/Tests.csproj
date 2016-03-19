@@ -74,6 +74,7 @@
     <Compile Include="API\ConfigurationAPITest.cs" />
     <Compile Include="API\ProgramAPITest.cs" />
     <Compile Include="API\GetImageAPITest.cs" />
+    <Compile Include="API\APIControllerTest.cs" />
     <Compile Include="DB\Configuration.cs">
       <DependentUpon>RobotData.tt</DependentUpon>
     </Compile>
@@ -114,9 +115,9 @@
     <Compile Include="Logic\ConfigurationLogicTest.cs" />
     <Compile Include="Logic\LogicTest.cs" />
     <Compile Include="Logic\ProgramLogicTest.cs" />
+    <Compile Include="Logic\RobotLogicTest.cs" />
     <Compile Include="Logic\UserLogicTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\MoqDataGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

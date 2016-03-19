@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Linq;
+using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Tests.Services;
 
 /*
 CRUD тесты для всех сущностей в БД
@@ -12,7 +12,7 @@ namespace Tests.DB
   [TestClass]
   public class DataBaseTest
   {
-    private readonly RDBEntities1 _context = new RDBEntities1();
+    private readonly RDBEntities2 _context = new RDBEntities2();
 
     // создадим тестовые данные
 
@@ -22,7 +22,10 @@ namespace Tests.DB
       Password = MoqDataGenerator.GetRandomString(10)
     };
 
-    private Robot robot = new Robot();
+    private Robot robot = new Robot
+    {
+      ActivationCode = MoqDataGenerator.GetRandomNumber(0,9999)
+    };
 
     private Program program = new Program
     {
@@ -121,12 +124,14 @@ namespace Tests.DB
       configuration.Port = MoqDataGenerator.GetRandomNumber(10, 11111);
       user.Login = MoqDataGenerator.GetRandomString(10);
       user.Password = MoqDataGenerator.GetRandomString(10);
+      robot.ActivationCode = MoqDataGenerator.GetRandomNumber(0, 9999);
 
       // сохраним изменения в БД
       _context.Entry(program).State = EntityState.Modified;
       _context.Entry(programRobot).State = EntityState.Modified;
       _context.Entry(configuration).State = EntityState.Modified;
       _context.Entry(user).State = EntityState.Modified;
+      _context.Entry(robot).State = EntityState.Modified;
       _context.SaveChanges();
 
       // проверить, что наши экземпляры сущностей по-прежнему лежат в БД
@@ -144,6 +149,7 @@ namespace Tests.DB
       int userId = user.UserID;
 
       // удалим из бд
+      _context.Robots.Remove(robot);
       _context.Users.Remove(user);
       _context.Programs.Remove(program);
       _context.Images.Remove(image);

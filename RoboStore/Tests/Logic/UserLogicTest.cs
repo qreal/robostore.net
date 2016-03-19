@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Domain;
 using Domain.Entities;
 using Domain.Users;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Tests.Services;
 
 namespace Tests.Logic
 {

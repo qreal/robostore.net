@@ -3,11 +3,11 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Text;
+using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Store.Models.Configuration;
 using Tests.DB;
-using Tests.Services;
 
 namespace Tests.API
 {

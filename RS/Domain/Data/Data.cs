@@ -31,7 +31,7 @@ namespace Domain.Data
     public IEnumerable<User> Users => _context.Users;
 
 
-    public async Task<int> AddAsync(object o)
+    public async Task<object> AddAsync(object o)
     {
       var objectName = o.GetType().ToString().Split('.').Last();
       switch (objectName)
@@ -52,7 +52,8 @@ namespace Domain.Data
           _users.Add((User)o);
           break;
       }
-      return await _context.SaveChangesAsync();
+      await _context.SaveChangesAsync();
+      return o;
     }
 
     public async Task UpdateAsync(object o)

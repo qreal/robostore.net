@@ -47,7 +47,8 @@
             <PropertyRef Name="RobotID" />
           </Key>
           <Property Name="RobotID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="ActivationCode" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -114,9 +115,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_Robots_dbo_Users_UserID">
-          <End Role="Users" Type="Self.Users" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Robots" Type="Self.Robots" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -208,7 +207,8 @@
             <PropertyRef Name="RobotID" />
           </Key>
           <Property Name="RobotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="ActivationCode" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Configurations" Relationship="Self.FK_dbo_Configurations_dbo_Robots_RobotID" FromRole="Robots" ToRole="Configurations" />
           <NavigationProperty Name="ProgramRobots" Relationship="Self.FK_dbo_ProgramRobots_dbo_Robots_RobotID" FromRole="Robots" ToRole="ProgramRobots" />
           <NavigationProperty Name="User" Relationship="Self.FK_dbo_Robots_dbo_Users_UserID" FromRole="Robots" ToRole="Users" />
@@ -279,9 +279,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_Robots_dbo_Users_UserID">
-          <End Role="Users" Type="Self.User" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
           <End Role="Robots" Type="Self.Robot" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -292,7 +290,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="RDBEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="RDBEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Configurations" EntityType="Self.Configuration" />
           <EntitySet Name="Images" EntityType="Self.Image" />
           <EntitySet Name="ProgramRobots" EntityType="Self.ProgramRobot" />
@@ -325,7 +323,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="RDBModelStoreContainer" CdmEntityContainer="RDBEntities1">
+        <EntityContainerMapping StorageEntityContainer="RDBModelStoreContainer" CdmEntityContainer="RDBEntities2">
           <EntitySetMapping Name="Configurations">
             <EntityTypeMapping TypeName="RDBModel.Configuration">
               <MappingFragment StoreEntitySet="Configurations">
@@ -372,6 +370,7 @@
               <MappingFragment StoreEntitySet="Robots">
                 <ScalarProperty Name="RobotID" ColumnName="RobotID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

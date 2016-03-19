@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Tests.Services;
 
 namespace Tests.Logic
 {

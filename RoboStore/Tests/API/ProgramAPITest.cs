@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Net;
 using System.Text;
+using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Store.Models.Program;
 using Tests.DB;
-using Tests.Services;
 
 namespace Tests.API
 {
