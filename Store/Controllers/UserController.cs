@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using Domain.Data;
 using Domain.Users;
 using Store.Models.User;
+using Store.Services;
 
 namespace Store.Controllers
 {
@@ -25,7 +26,7 @@ namespace Store.Controllers
     public async Task<ActionResult> Registration(UserProfile profile)
     {
       // если пароль и логин введены
-      if (ModelState.IsValid && !userManager.TryEnter(profile.Login, profile.Password))
+      if (ModelState.IsValid && userManager.TryEnter(profile.Login, profile.Password) == null)
       {
         await userManager.CreateUser(profile.Login, profile.Password);
         return View("Welcome", (object)profile.Login);
@@ -39,11 +40,12 @@ namespace Store.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult> Entrance(UserProfile profile)
+    public ActionResult Entrance(UserProfile profile)
     {
-      if (ModelState.IsValid && userManager.TryEnter(profile.Login, profile.Password))
+      var foundUser = userManager.TryEnter(profile.Login, profile.Password);
+      if (ModelState.IsValid && foundUser != null)
       {
-        await userManager.CreateUser(profile.Login, profile.Password);
+        FakeSession.User = foundUser;
         return RedirectToAction("Index", "Home");
       }
       return View();

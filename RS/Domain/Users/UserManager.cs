@@ -14,8 +14,8 @@ namespace Domain.Users
       data = d;
     }
 
-    public bool TryEnter(string login, string password)
-      => data.Users.Count(x => x.Login == login && x.Password == password) == 1;
+    public User TryEnter(string login, string password)
+      => data.Users.FirstOrDefault(x => x.Login == login && x.Password == password);
 
     public async Task CreateUser(string login, string password)
       => await data.AddAsync(new User {Login = login, Password = password});
