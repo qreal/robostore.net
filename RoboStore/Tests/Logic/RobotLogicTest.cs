@@ -21,9 +21,7 @@ namespace Tests.Logic
       var amount = data.Robots.Count();
       var result = await _manager.CreateRobot();
       Assert.AreEqual(amount + 1, data.Robots.Count());
-      Assert.AreEqual(result.RobotID, 0);
-      Assert.AreEqual(true, result.ActivationCode >= RobotManager.ActivationCodeMin
-        && result.ActivationCode <= RobotManager.ActivationCodeMax);
+      Assert.AreEqual(result.RobotID + result.ActivationCode, 0);
     }
   }
 }

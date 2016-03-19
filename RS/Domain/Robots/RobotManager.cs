@@ -7,18 +7,25 @@ namespace Domain.Robots
   public class RobotManager
   {
     private IData data;
-    public static int ActivationCodeMin { get; } = 0;
-    public static int ActivationCodeMax { get; } = 9999;
 
     public RobotManager(IData d)
     {
       data = d;
     }
 
+    /*
+      Пока что код активации и есть Id робота в базе.
+      Потом можно придумать что-то умнее
+    */
     public async Task<Robot> CreateRobot()
-      => await data.AddAsync(new Robot
+    {
+      var robot = await data.AddAsync(new Robot
       {
-        ActivationCode = MoqDataGenerator.GetRandomNumber(ActivationCodeMin, ActivationCodeMax)
+        ActivationCode = 0
       }) as Robot;
+      robot.ActivationCode = robot.RobotID;
+      await data.UpdateAsync(robot);
+      return robot;
+    }
   }
 }
