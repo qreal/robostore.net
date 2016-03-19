@@ -5,11 +5,10 @@
 }
 
 <div>
-
     @Html.RouteLink(categories[0], new
 {
-    controller = "Home",
-    action = "Index",
+    controller = "Robot",
+    action = "ShowMyRobots",
     category = categories[0]
 }, new
 {
@@ -18,11 +17,24 @@
 
     @Html.RouteLink(categories[1], new
 {
-    controller = "Home",
-    action = "ShowRobots",
+    controller = "Robot",
+    action = "AddRobotForm",
     category = categories[1]
 }, new
 {
     @class = "btn btn-block btn-default btn-lg" + (ViewBag.SelectedCategory == categories[1] ? " btn-primary" : "")
 })
+
+    @Html.RouteLink(categories[2], new
+{
+    controller = "Home",
+    action = "ShowPrograms",
+    category = categories[2]
+}, new
+{
+    @class = "btn btn-block btn-default btn-lg" + 
+    (ViewBag.SelectedCategory == categories[2] || ViewBag.SelectedCategory == null ? " btn-primary" : "")
+})
+
+   
 </div>

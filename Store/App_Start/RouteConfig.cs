@@ -15,7 +15,7 @@ namespace Store
                 defaults: new
                 {
                   controller = "Home",
-                  action = "Index",
+                  action = "ShowPrograms",
                   category = (string)null,
                   page = 1
                 }
@@ -24,7 +24,7 @@ namespace Store
       routes.MapRoute(
                 null,
                 "Page{page}",
-                new { controller = "Home", action = "Index" },
+                new { controller = "Home", action = "ShowPrograms" },
                 new { page = @"\d+" }
             );
 

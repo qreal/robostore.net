@@ -35,8 +35,14 @@ namespace Store.Controllers
     }
 
     public ActionResult Entrance()
-    {
-      return View();
+    {///
+     /// Ниже рабочий код, просто не для дебага
+     /// todo убрать комменты потом
+     /// 
+      //return View();
+      var foundUser = userManager.TryEnter("Vlad", "11");
+      FakeSession.User = foundUser;
+      return RedirectToAction("ShowPrograms", "Home");
     }
 
     [HttpPost]
@@ -46,7 +52,7 @@ namespace Store.Controllers
       if (ModelState.IsValid && foundUser != null)
       {
         FakeSession.User = foundUser;
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("ShowPrograms", "Home");
       }
       return View();
     }

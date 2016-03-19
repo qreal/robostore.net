@@ -16,11 +16,11 @@ namespace Domain.Pagination
 
     public IEnumerable<Program> FormProgramPage(int pageSize, int page) =>
       data.Programs.OrderBy(x => x.Name).
-      Skip((page - 1)*pageSize).
+      Skip((page - 1) * pageSize).
       Take(pageSize);
 
-    public IEnumerable<Robot> FormRobotPage(int pageSize, int page) =>
-      data.Robots.OrderBy(x => x.RobotID).
+    public IEnumerable<Robot> FormMyRobotPage(IEnumerable<Robot> robots, int pageSize, int page) =>
+      robots.OrderBy(x => x.RobotID).
       Skip((page - 1)*pageSize).
       Take(pageSize);
   }

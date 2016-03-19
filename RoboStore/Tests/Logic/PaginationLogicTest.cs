@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Domain;
 using Domain.Pagination;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -18,7 +17,7 @@ namespace Tests.Logic
       Assert.AreEqual(result.First().Name, programs.First().Name);
       Assert.AreEqual(result.Last().Name, programs.Last().Name);
 
-      var result2 = _manager.FormRobotPage(pageSize: 2, page: 1);
+      var result2 = _manager.FormMyRobotPage(robots:data.Robots, pageSize: 2, page: 1);
       var robots = data.Robots.OrderBy(x => x.RobotID).Take(1);
       Assert.AreEqual(result2.Count(), 1);
       Assert.AreEqual(result2.First().RobotID, robots.First().RobotID);

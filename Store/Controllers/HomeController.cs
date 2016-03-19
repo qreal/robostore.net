@@ -28,10 +28,10 @@ namespace Store.Controllers
     /*
       Отображем список программ
     */
-    public ViewResult Index(int page = 1) =>
+    public ViewResult ShowPrograms(int page = 1) =>
       View(new PagedContentViewModel<Program>
       {
-        PageContent = _paginationManager.FormProgramPage(page, pageSize),
+        PageContent = _paginationManager.FormProgramPage(pageSize, page),
         PagingInfo = new PagingInfo
         {
           CurrentPage = page,
@@ -40,20 +40,7 @@ namespace Store.Controllers
         }
       });
 
-    /*
-      Отображем список роботов
-    */
-    public ViewResult ShowRobots(int page = 1) => 
-      View(new PagedContentViewModel<Robot>
-      {
-        PageContent = _paginationManager.FormRobotPage(page, pageSize),
-        PagingInfo = new PagingInfo
-        {
-          CurrentPage = page,
-          ItemsPerPage = pageSize,
-          TotalItems = _contentManager.AmoutRobots
-        }
-      });
+    
     
     /*
       Добавляем выбранную программу в программы для робота и сообщаем ему об этом
@@ -69,7 +56,7 @@ namespace Store.Controllers
     public PartialViewResult Menu(string category = null)
     {
       ViewBag.SelectedCategory = category;
-      return PartialView("Menu", new[] { "Program", "Robots" });
+      return PartialView("Menu", new[] { "My Robots", "Add Robot", "All Program" });
     }
 
 

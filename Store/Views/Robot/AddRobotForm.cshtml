@@ -1,0 +1,22 @@
+﻿@model Store.Models.Robot.RobotActivationCode
+
+@{
+}
+
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h4>Add new Robot</h4>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm())
+            {
+            <div class="form-group">
+                <label>Activation code:</label>
+                @Html.TextBoxFor(x => x.Code, new { @class = "form-control" })
+            </div>
+            <div class="text-center">
+                <input class="btn btn-success" type="submit" value="Add Robot" />
+            </div>
+            }
+        </div>
+    </div>

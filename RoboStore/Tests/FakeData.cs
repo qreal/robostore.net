@@ -32,7 +32,8 @@ namespace Tests
       {
         RobotID = MoqDataGenerator.GetRandomNumber(1, 100),
         Configurations = new List<Configuration>(),
-        ProgramRobots = new List<ProgramRobot>()
+        ProgramRobots = new List<ProgramRobot>(),
+        ActivationCode = MoqDataGenerator.GetRandomNumber(1,100)
       };
       var program = CreateProgram(id:1);
 

@@ -78,6 +78,10 @@
     <Compile Include="Migrations\201603191510107_ActivationCodeAdded.Designer.cs">
       <DependentUpon>201603191510107_ActivationCodeAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603191804429_ImageNotRequiredAnymore.cs" />
+    <Compile Include="Migrations\201603191804429_ImageNotRequiredAnymore.Designer.cs">
+      <DependentUpon>201603191804429_ImageNotRequiredAnymore.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MoqDataGenerator.cs" />
     <Compile Include="Pagination\PaginationManager.cs" />
@@ -101,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603191510107_ActivationCodeAdded.resx">
       <DependentUpon>201603191510107_ActivationCodeAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603191804429_ImageNotRequiredAnymore.resx">
+      <DependentUpon>201603191804429_ImageNotRequiredAnymore.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

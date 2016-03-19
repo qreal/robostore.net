@@ -11,5 +11,5 @@
 }
 
 <div class="btn-group pull-right">
-    @Html.FormPageLinks(Model.PagingInfo, x => Url.Action("Index", new { page = x}))
+    @Html.FormPageLinks(Model.PagingInfo, x => Url.Action("ShowPrograms", new { page = x}))
 </div>

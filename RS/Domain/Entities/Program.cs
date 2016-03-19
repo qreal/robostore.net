@@ -16,6 +16,6 @@ namespace Domain.Entities
     [JsonIgnore]
     public virtual Image Image { get; set; }
 
-    public int ImageID { get; set; }
+    public int? ImageID { get; set; }
   }
 }
