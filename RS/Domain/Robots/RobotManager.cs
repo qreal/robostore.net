@@ -31,6 +31,9 @@ namespace Domain.Robots
       return robot;
     }
 
+    public Robot GetRobotById(int id)
+      => data.Robots.FirstOrDefault(x => x.RobotID == id);
+
     public Robot GetRobotByActivationCode(int code)
       => data.Robots.FirstOrDefault(x => x.ActivationCode == code);
 

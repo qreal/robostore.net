@@ -8,7 +8,7 @@ namespace Tests.API
 {
   public class APITest
   {
-    protected RDBEntities2 context = new RDBEntities2();
+    protected RDBEntities3 context = new RDBEntities3();
     protected string serverUrl = "http://robstark.azurewebsites.net";
   }
 }

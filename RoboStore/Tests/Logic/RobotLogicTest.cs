@@ -32,6 +32,13 @@ namespace Tests.Logic
     }
 
     [TestMethod]
+    public void GetRobotByIdTest()
+    {
+      var id = data.Robots.First().RobotID;
+      Assert.AreSame(data.Robots.First(), _manager.GetRobotById(id));
+    }
+
+    [TestMethod]
     public async Task BindRobotToUserTest()
     {
       var user = data.Users.First();

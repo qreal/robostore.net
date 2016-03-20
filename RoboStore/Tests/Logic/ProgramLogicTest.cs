@@ -18,35 +18,22 @@ namespace Tests.Logic
     [TestMethod]
     public void GetProgramByIdTest()
     {
-      var prg = data.Programs.First();
-      var result = _manager.GetProgramById(prg.ProgramID);
-      Assert.AreNotEqual(null, result);
-      Assert.AreEqual(result.Code, prg.Code);
-      Assert.AreEqual(result.Name, prg.Name);
-      Assert.AreEqual(result.ActualVersion, prg.ActualVersion);
+      var id = data.Programs.First().ProgramID;
+      Assert.AreSame(_manager.GetProgramById(id), data.Programs.First());
     }
 
     [TestMethod]
-    public void GetProgramsIdsByRobotIdTest()
+    public async Task CreateProgramRobotTest()
     {
-      var robot = data.Robots.First();
-      var result = _manager.GetProgramsIdsByRobotId(robot.RobotID);
-      Assert.AreEqual(1, result.Count());
-      var robotProgram = data.ProgramRobots.First(x => x.RobotID == robot.RobotID);
-      Assert.AreEqual(result.First().ProgramID, robotProgram.ProgramID);
-    }
-
-    [TestMethod]
-    public async Task AddProgramToRobotTest()
-    {
-      var robot = data.Robots.First();
+      var amount = data.ProgramRobots.Count();
       var program = data.Programs.First();
-      int before = data.ProgramRobots.Count();
-      await _manager.AddProgramToRobot(program.ProgramID, robot.RobotID);
-      Assert.AreEqual(before + 1, data.ProgramRobots.Count());
-      var programRobot = data.ProgramRobots.Last();
-      Assert.AreEqual(programRobot.RobotID, robot.RobotID);
-      Assert.AreEqual(programRobot.Program, program);
+      var robot = data.Robots.First();
+      await _manager.CreateProgramRobot(robot, program);
+      var result = data.ProgramRobots.Last();
+      Assert.AreEqual(amount + 1, data.ProgramRobots.Count());
+      Assert.AreSame(program, result.Program);
+      Assert.AreSame(robot, result.Robot);
+      Assert.AreEqual(result.CurrentVersion, program.ActualVersion);
     }
   }
 }

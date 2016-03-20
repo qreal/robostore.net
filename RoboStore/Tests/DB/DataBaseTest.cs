@@ -12,7 +12,7 @@ namespace Tests.DB
   [TestClass]
   public class DataBaseTest
   {
-    private readonly RDBEntities2 _context = new RDBEntities2();
+    private readonly RDBEntities3 _context = new RDBEntities3();
 
     // создадим тестовые данные
 
@@ -50,12 +50,19 @@ namespace Tests.DB
       ImageMimeType = MoqDataGenerator.GetRandomString(6)
     };
 
+    private RobotCommand robotCommand = new RobotCommand
+    {
+      Argument = MoqDataGenerator.GetRandomNumber(1, 100),
+      Type = MoqDataGenerator.GetRandomNumber(1, 100)
+    };
+
     private int _amountRobotsWas;
     private int _amountProgramsWas;
     private int _amountConfigurationsWas;
     private int _amountProgramRobotsWas;
     private int _amountImagesWas;
     private int _amountUsersWas;
+    private int _amountRobotCommandsWas;
 
     [TestMethod]
     public void TestCRUD()
@@ -94,6 +101,7 @@ namespace Tests.DB
       programRobot.Robot = robot;
       programRobot.Program = program;
       robot.User = user;
+      robotCommand.Robot = robot;
 
       // запомним текущие количества
       _amountConfigurationsWas = _context.Configurations.Count();
@@ -102,6 +110,7 @@ namespace Tests.DB
       _amountRobotsWas = _context.Robots.Count();
       _amountImagesWas = _context.Images.Count();
       _amountUsersWas = _context.Users.Count();
+      _amountRobotCommandsWas = _context.RobotCommands.Count();
 
       // добавим в бд
       _context.Users.Add(user);
@@ -110,7 +119,17 @@ namespace Tests.DB
       _context.Programs.Add(program);
       _context.ProgramRobots.Add(programRobot);
       _context.Configurations.Add(configuration);
+      _context.RobotCommands.Add(robotCommand);
       _context.SaveChanges();
+
+      // проверим количества
+      Assert.AreEqual(_amountConfigurationsWas + 1, _context.Configurations.Count());
+      Assert.AreEqual(_amountProgramRobotsWas + 1, _context.ProgramRobots.Count());
+      Assert.AreEqual(_amountProgramsWas + 1, _context.Programs.Count());
+      Assert.AreEqual(_amountRobotsWas + 1, _context.Robots.Count());
+      Assert.AreEqual(_amountImagesWas + 1, _context.Images.Count());
+      Assert.AreEqual(_amountUsersWas + 1, _context.Users.Count());
+      Assert.AreEqual(_amountRobotCommandsWas + 1, _context.RobotCommands.Count());
 
       // проверить, что наши экземпляры сущностей лежат в БД
       CheckEntitiesIsInDB();
@@ -125,6 +144,8 @@ namespace Tests.DB
       user.Login = MoqDataGenerator.GetRandomString(10);
       user.Password = MoqDataGenerator.GetRandomString(10);
       robot.ActivationCode = MoqDataGenerator.GetRandomNumber(0, 9999);
+      robotCommand.Argument = MoqDataGenerator.GetRandomNumber(1, 100);
+      robotCommand.Type = MoqDataGenerator.GetRandomNumber(1, 100);
 
       // сохраним изменения в БД
       _context.Entry(program).State = EntityState.Modified;
@@ -132,6 +153,7 @@ namespace Tests.DB
       _context.Entry(configuration).State = EntityState.Modified;
       _context.Entry(user).State = EntityState.Modified;
       _context.Entry(robot).State = EntityState.Modified;
+      _context.Entry(robotCommand).State = EntityState.Modified;
       _context.SaveChanges();
 
       // проверить, что наши экземпляры сущностей по-прежнему лежат в БД
@@ -147,8 +169,9 @@ namespace Tests.DB
       int configurationId = configuration.ConfigurationID;
       int imageId = image.ImageID;
       int userId = user.UserID;
+      int robotCommandId = robotCommand.RobotCommandID;
 
-      // удалим из бд
+      // удалим из бд (каскадно)
       _context.Robots.Remove(robot);
       _context.Users.Remove(user);
       _context.Programs.Remove(program);
@@ -162,6 +185,7 @@ namespace Tests.DB
       Assert.AreEqual(_amountProgramsWas, _context.Programs.Count());
       Assert.AreEqual(_amountImagesWas, _context.Images.Count());
       Assert.AreEqual(_amountUsersWas, _context.Users.Count());
+      Assert.AreEqual(_amountRobotCommandsWas, _context.RobotCommands.Count());
 
       // проверим, что таких сущностей теперь нету
       Assert.AreEqual(null, _context.Programs.FirstOrDefault(x => x.ProgramID == programId));
@@ -170,6 +194,7 @@ namespace Tests.DB
       Assert.AreEqual(null, _context.Configurations.FirstOrDefault(x => x.ConfigurationID == configurationId));
       Assert.AreEqual(null, _context.Images.FirstOrDefault(x => x.ImageID == imageId));
       Assert.AreEqual(null, _context.Users.FirstOrDefault(x => x.UserID == userId));
+      Assert.AreEqual(null, _context.RobotCommands.FirstOrDefault(x => x.RobotCommandID == robotCommandId));
     }
 
     // проверить, что наши экземпляры сущностей лежат в БД
@@ -181,6 +206,7 @@ namespace Tests.DB
       Assert.AreSame(programRobot, _context.ProgramRobots.ToList().Last());
       Assert.AreSame(image, _context.Images.ToList().Last());
       Assert.AreSame(user, _context.Users.ToList().Last());
+      Assert.AreSame(robotCommand, _context.RobotCommands.ToList().Last());
     }
   }
 

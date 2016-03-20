@@ -182,6 +182,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\API\RobotRegistrationOutput.cs" />
+    <Compile Include="Models\Program\ProgramInfo.cs" />
     <Compile Include="Models\Robot\RobotActivationCode.cs" />
     <Compile Include="Models\User\UserProfile.cs" />
     <Compile Include="Services\Bootstrapper.cs" />
@@ -199,7 +200,7 @@
     <Content Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\ShowPrograms.cshtml" />
+    <Content Include="Views\Program\ShowPrograms.cshtml" />
     <Content Include="Scripts\jquery.validate.unobtrusive.bootstrap.min.js.map" />
     <Content Include="Views\Shared\ProgramSummary.cshtml" />
     <Content Include="Views\Robot\ShowMyRobots.cshtml" />
@@ -210,6 +211,7 @@
     <Content Include="Views\Shared\_HeadOnlyLayout.cshtml" />
     <Content Include="Views\User\Entrance.cshtml" />
     <Content Include="Views\Robot\AddRobotForm.cshtml" />
+    <Content Include="Views\Robot\AddProgramToRobot.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

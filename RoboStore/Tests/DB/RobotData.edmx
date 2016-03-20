@@ -40,7 +40,16 @@
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="Code" Type="nvarchar(max)" />
           <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="ImageID" Type="int" Nullable="false" />
+          <Property Name="ImageID" Type="int" />
+        </EntityType>
+        <EntityType Name="RobotCommands">
+          <Key>
+            <PropertyRef Name="RobotCommandID" />
+          </Key>
+          <Property Name="RobotCommandID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RobotID" Type="int" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Argument" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Robots">
           <Key>
@@ -101,9 +110,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_Programs_dbo_Images_ImageID">
-          <End Role="Images" Type="Self.Images" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
           <End Role="Programs" Type="Self.Programs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Images">
@@ -111,6 +118,20 @@
             </Principal>
             <Dependent Role="Programs">
               <PropertyRef Name="ImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_RobotCommands_dbo_Robots_RobotID">
+          <End Role="Robots" Type="Self.Robots" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RobotCommands" Type="Self.RobotCommands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Robots">
+              <PropertyRef Name="RobotID" />
+            </Principal>
+            <Dependent Role="RobotCommands">
+              <PropertyRef Name="RobotID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -131,6 +152,7 @@
           <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProgramRobots" EntityType="Self.ProgramRobots" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Programs" EntityType="Self.Programs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RobotCommands" EntityType="Self.RobotCommands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Robots" EntityType="Self.Robots" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_Configurations_dbo_Robots_RobotID" Association="Self.FK_dbo_Configurations_dbo_Robots_RobotID">
@@ -148,6 +170,10 @@
           <AssociationSet Name="FK_dbo_Programs_dbo_Images_ImageID" Association="Self.FK_dbo_Programs_dbo_Images_ImageID">
             <End Role="Images" EntitySet="Images" />
             <End Role="Programs" EntitySet="Programs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_RobotCommands_dbo_Robots_RobotID" Association="Self.FK_dbo_RobotCommands_dbo_Robots_RobotID">
+            <End Role="Robots" EntitySet="Robots" />
+            <End Role="RobotCommands" EntitySet="RobotCommands" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Robots_dbo_Users_UserID" Association="Self.FK_dbo_Robots_dbo_Users_UserID">
             <End Role="Users" EntitySet="Users" />
@@ -198,9 +224,19 @@
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ImageID" Type="Int32" Nullable="false" />
+          <Property Name="ImageID" Type="Int32" />
           <NavigationProperty Name="Image" Relationship="Self.FK_dbo_Programs_dbo_Images_ImageID" FromRole="Programs" ToRole="Images" />
           <NavigationProperty Name="ProgramRobots" Relationship="Self.FK_dbo_ProgramRobots_dbo_Programs_ProgramID" FromRole="Programs" ToRole="ProgramRobots" />
+        </EntityType>
+        <EntityType Name="RobotCommand">
+          <Key>
+            <PropertyRef Name="RobotCommandID" />
+          </Key>
+          <Property Name="RobotCommandID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RobotID" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Argument" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Robot" Relationship="Self.FK_dbo_RobotCommands_dbo_Robots_RobotID" FromRole="RobotCommands" ToRole="Robots" />
         </EntityType>
         <EntityType Name="Robot">
           <Key>
@@ -211,6 +247,7 @@
           <Property Name="ActivationCode" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Configurations" Relationship="Self.FK_dbo_Configurations_dbo_Robots_RobotID" FromRole="Robots" ToRole="Configurations" />
           <NavigationProperty Name="ProgramRobots" Relationship="Self.FK_dbo_ProgramRobots_dbo_Robots_RobotID" FromRole="Robots" ToRole="ProgramRobots" />
+          <NavigationProperty Name="RobotCommands" Relationship="Self.FK_dbo_RobotCommands_dbo_Robots_RobotID" FromRole="Robots" ToRole="RobotCommands" />
           <NavigationProperty Name="User" Relationship="Self.FK_dbo_Robots_dbo_Users_UserID" FromRole="Robots" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
@@ -237,9 +274,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_Programs_dbo_Images_ImageID">
-          <End Role="Images" Type="Self.Image" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Images" Type="Self.Image" Multiplicity="0..1" />
           <End Role="Programs" Type="Self.Program" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Images">
@@ -278,6 +313,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_RobotCommands_dbo_Robots_RobotID">
+          <End Role="Robots" Type="Self.Robot" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RobotCommands" Type="Self.RobotCommand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Robots">
+              <PropertyRef Name="RobotID" />
+            </Principal>
+            <Dependent Role="RobotCommands">
+              <PropertyRef Name="RobotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_Robots_dbo_Users_UserID">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
           <End Role="Robots" Type="Self.Robot" Multiplicity="*" />
@@ -290,11 +339,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="RDBEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="RDBEntities3" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Configurations" EntityType="Self.Configuration" />
           <EntitySet Name="Images" EntityType="Self.Image" />
           <EntitySet Name="ProgramRobots" EntityType="Self.ProgramRobot" />
           <EntitySet Name="Programs" EntityType="Self.Program" />
+          <EntitySet Name="RobotCommands" EntityType="Self.RobotCommand" />
           <EntitySet Name="Robots" EntityType="Self.Robot" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_dbo_Configurations_dbo_Robots_RobotID" Association="Self.FK_dbo_Configurations_dbo_Robots_RobotID">
@@ -313,6 +363,10 @@
             <End Role="Robots" EntitySet="Robots" />
             <End Role="ProgramRobots" EntitySet="ProgramRobots" />
           </AssociationSet>
+          <AssociationSet Name="FK_dbo_RobotCommands_dbo_Robots_RobotID" Association="Self.FK_dbo_RobotCommands_dbo_Robots_RobotID">
+            <End Role="Robots" EntitySet="Robots" />
+            <End Role="RobotCommands" EntitySet="RobotCommands" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_Robots_dbo_Users_UserID" Association="Self.FK_dbo_Robots_dbo_Users_UserID">
             <End Role="Users" EntitySet="Users" />
             <End Role="Robots" EntitySet="Robots" />
@@ -323,7 +377,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="RDBModelStoreContainer" CdmEntityContainer="RDBEntities2">
+        <EntityContainerMapping StorageEntityContainer="RDBModelStoreContainer" CdmEntityContainer="RDBEntities3">
           <EntitySetMapping Name="Configurations">
             <EntityTypeMapping TypeName="RDBModel.Configuration">
               <MappingFragment StoreEntitySet="Configurations">
@@ -362,6 +416,16 @@
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RobotCommands">
+            <EntityTypeMapping TypeName="RDBModel.RobotCommand">
+              <MappingFragment StoreEntitySet="RobotCommands">
+                <ScalarProperty Name="RobotCommandID" ColumnName="RobotCommandID" />
+                <ScalarProperty Name="RobotID" ColumnName="RobotID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Argument" ColumnName="Argument" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

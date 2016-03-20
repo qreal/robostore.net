@@ -53,6 +53,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\CommandManager.cs" />
+    <Compile Include="Command\RobotCommandTypes.cs" />
     <Compile Include="Configurations\ConfigurationImport.cs" />
     <Compile Include="Configurations\ConfigurationManager.cs" />
     <Compile Include="Content\ContentManager.cs" />
@@ -60,27 +62,16 @@
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Data\GenericRepository.cs" />
     <Compile Include="Data\IData.cs" />
+    <Compile Include="Entities\RobotCommand.cs" />
     <Compile Include="Entities\Configuration.cs" />
     <Compile Include="Entities\Image.cs" />
     <Compile Include="Entities\Program.cs" />
     <Compile Include="Entities\ProgramRobot.cs" />
     <Compile Include="Entities\Robot.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Migrations\201603131924320_DataUpdate.cs" />
-    <Compile Include="Migrations\201603131924320_DataUpdate.Designer.cs">
-      <DependentUpon>201603131924320_DataUpdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603131953438_NullableFK.cs" />
-    <Compile Include="Migrations\201603131953438_NullableFK.Designer.cs">
-      <DependentUpon>201603131953438_NullableFK.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603191510107_ActivationCodeAdded.cs" />
-    <Compile Include="Migrations\201603191510107_ActivationCodeAdded.Designer.cs">
-      <DependentUpon>201603191510107_ActivationCodeAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603191804429_ImageNotRequiredAnymore.cs" />
-    <Compile Include="Migrations\201603191804429_ImageNotRequiredAnymore.Designer.cs">
-      <DependentUpon>201603191804429_ImageNotRequiredAnymore.cs</DependentUpon>
+    <Compile Include="Migrations\201603201945056_RobotCommandAdded.cs" />
+    <Compile Include="Migrations\201603201945056_RobotCommandAdded.Designer.cs">
+      <DependentUpon>201603201945056_RobotCommandAdded.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MoqDataGenerator.cs" />
@@ -95,19 +86,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603131924320_DataUpdate.resx">
-      <DependentUpon>201603131924320_DataUpdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603131953438_NullableFK.resx">
-      <DependentUpon>201603131953438_NullableFK.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603191510107_ActivationCodeAdded.resx">
-      <DependentUpon>201603191510107_ActivationCodeAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603191804429_ImageNotRequiredAnymore.resx">
-      <DependentUpon>201603191804429_ImageNotRequiredAnymore.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603201945056_RobotCommandAdded.resx">
+      <DependentUpon>201603201945056_RobotCommandAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

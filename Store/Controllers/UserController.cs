@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Domain.Data;
 using Domain.Users;
@@ -42,7 +44,9 @@ namespace Store.Controllers
       //return View();
       var foundUser = userManager.TryEnter("Vlad", "11");
       FakeSession.User = foundUser;
-      return RedirectToAction("ShowPrograms", "Home");
+      FakeSession.RobotIds = new List<int>();
+      FakeSession.RobotIds.AddRange(foundUser.Robots.Select(x => x.RobotID));
+      return RedirectToAction("ShowPrograms", "Program");
     }
 
     [HttpPost]
@@ -52,7 +56,9 @@ namespace Store.Controllers
       if (ModelState.IsValid && foundUser != null)
       {
         FakeSession.User = foundUser;
-        return RedirectToAction("ShowPrograms", "Home");
+        FakeSession.RobotIds = new List<int>();
+        FakeSession.RobotIds.AddRange(foundUser.Robots.Select(x => x.RobotID));
+        return RedirectToAction("ShowPrograms", "Program");
       }
       return View();
     }

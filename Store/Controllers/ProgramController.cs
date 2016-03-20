@@ -1,40 +1,38 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Mvc;
+using Domain;
 using Domain.Data;
-using Domain.Programs;
-using Store.Models.Program;
+using Domain.Entities;
+using Domain.Pagination;
+using Store.Models.Home;
 
 namespace Store.Controllers
 {
-  public class ProgramController : ApiController
+  public class ProgramController : Controller
   {
-    private readonly ProgramManager _manager;
-    private const int TestRobotId = 4;
+    // сколько програм мы отображаем на одной странице
+    private int pageSize = 4;
+    private readonly PaginationManager _paginationManager;
+    private readonly ContentManager _contentManager;
 
     public ProgramController(IData data)
     {
-      _manager = new ProgramManager(data);
+      _contentManager = new ContentManager(data);
+      _paginationManager = new PaginationManager(data);
     }
 
-    [Route("api/program/getProgramById")]
-    [HttpGet]
-    public ProgramExport GetProgram(int id)
-    {
-      var program = _manager.GetProgramById(id);
-      return new ProgramExport
+    /*
+      Отображем список программ
+    */
+    public ViewResult ShowPrograms(int page = 1) =>
+      View(new PagedContentViewModel<Program>
       {
-        ActualVersion = program.ActualVersion,
-        Code = program.Code,
-        Name = program.Name
-      };
-    }
-
-    [Route("api/program/getLoadingProgramsIds")]
-    [HttpGet]
-    public IEnumerable<ProgramIdExport> GetLoadingProgramsIds() => 
-      _manager.GetProgramsIdsByRobotId(TestRobotId).
-      Select(x => new ProgramIdExport { Id = x.ProgramID });
-
+        PageContent = _paginationManager.FormProgramPage(pageSize, page),
+        PagingInfo = new PagingInfo
+        {
+          CurrentPage = page,
+          ItemsPerPage = pageSize,
+          TotalItems = _contentManager.AmountPrograms
+        }
+      });
   }
 }

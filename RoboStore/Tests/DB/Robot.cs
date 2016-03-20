@@ -19,6 +19,7 @@ namespace Tests.DB
         {
             this.Configurations = new HashSet<Configuration>();
             this.ProgramRobots = new HashSet<ProgramRobot>();
+            this.RobotCommands = new HashSet<RobotCommand>();
         }
     
         public int RobotID { get; set; }
@@ -29,6 +30,8 @@ namespace Tests.DB
         public virtual ICollection<Configuration> Configurations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProgramRobot> ProgramRobots { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RobotCommand> RobotCommands { get; set; }
         public virtual User User { get; set; }
     }
 }

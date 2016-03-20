@@ -91,6 +91,9 @@
     <Compile Include="DB\Robot.cs">
       <DependentUpon>RobotData.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\RobotCommand.cs">
+      <DependentUpon>RobotData.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\RobotData.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

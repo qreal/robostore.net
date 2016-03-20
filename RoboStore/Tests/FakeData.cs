@@ -17,7 +17,8 @@ namespace Tests
     private List<Program> _programs = new List<Program>();
     private List<Configuration> _configurations = new List<Configuration>();
     private List<ProgramRobot> _programRobots = new List<ProgramRobot>();
-    private List<User> _users = new List<User>(); 
+    private List<User> _users = new List<User>();
+    private List<RobotCommand> _robotCommands = new List<RobotCommand>(); 
 
     public FakeData()
     {
@@ -55,6 +56,12 @@ namespace Tests
         ImageID = 1
       };
 
+      var robotCommand = new RobotCommand
+      {
+        RobotCommandID = MoqDataGenerator.GetRandomNumber(10, 100),
+        Type = 0
+      };
+
       // добавили связи между сущностями
       robot.Configurations.Add(configuration);
       robot.ProgramRobots.Add(programRobot);
@@ -69,6 +76,9 @@ namespace Tests
       programRobot.Program = program;
       programRobot.RobotID = robot.RobotID;
       programRobot.ProgramID = program.ProgramID;
+      robotCommand.Argument = program.ProgramID;
+      robotCommand.Robot = robot;
+      robotCommand.RobotID = robot.RobotID;
 
       // добавили сущности в списки сущностей
       _robots.Add(robot);
@@ -76,6 +86,7 @@ namespace Tests
       _configurations.Add(configuration);
       _programRobots.Add(programRobot);
       _users.Add(user);
+      _robotCommands.Add(robotCommand);
 
       // добавили еще 4 программы для теста pagination
       for (var i = 0; i < 4; i++)
@@ -89,6 +100,7 @@ namespace Tests
     public IEnumerable<Configuration> Configurations => _configurations;
     public IEnumerable<ProgramRobot> ProgramRobots => _programRobots;
     public IEnumerable<User> Users => _users;
+    public IEnumerable<RobotCommand> RobotCommands => _robotCommands; 
 
     public Task<object> AddAsync(object o)
     {
@@ -114,6 +126,9 @@ namespace Tests
             break;
           case "User":
             _users.Add((User)o);
+            break;
+          case "RobotCommand":
+            _robotCommands.Add((RobotCommand)o);
             break;
         }
         return o;
@@ -151,6 +166,10 @@ namespace Tests
             _users = _users.FindAll(x => x.UserID != ((User)o).UserID);
             _users.Add((User)o);
             break;
+          case "RobotCommand":
+            _robotCommands = _robotCommands.FindAll(x => x.RobotCommandID != ((RobotCommand)o).RobotCommandID);
+            _robotCommands.Add((RobotCommand)o);
+            break;
         }
       });
     }
@@ -180,6 +199,9 @@ namespace Tests
             break;
           case "User":
             _users = _users.FindAll(x => x.UserID != ((User)o).UserID);
+            break;
+          case "RobotCommand":
+            _robotCommands = _robotCommands.FindAll(x => x.RobotCommandID != ((RobotCommand)o).RobotCommandID);
             break;
         }
       });

@@ -11,6 +11,7 @@ namespace Domain.Data
     IEnumerable<Program> Programs { get; }
     IEnumerable<ProgramRobot> ProgramRobots { get; }
     IEnumerable<User> Users { get; }
+    IEnumerable<RobotCommand> RobotCommands { get; }
     Task<object> AddAsync(object o);
     Task UpdateAsync(object o);
     Task RemoveAsync(object o);

@@ -1,4 +1,5 @@
-﻿@model Domain.Entities.Program
+﻿@using Store.Services
+@model Store.Models.Program.ProgramInfo
 
 <div class="well">
 
@@ -10,21 +11,28 @@
 
     <div class="pull-left" style="margin-right: 10px">
         <img class="img-thumbnail" width="75" height="75"
-             src="http://exchange.parchment.com/wp-content/uploads/request-75x75.jpg" />
+             src="http://exchange.parchment.com/wp-content/uploads/request-75x75.jpg"/>
     </div>
 
     <h3>
-        <strong>@Model.Name</strong>
-        <span class="pull-right label label-primary">Version: @Model.ActualVersion</span>
+        <strong>@Model.Program.Name</strong>
+        <span class="pull-right label label-primary">Version: @Model.Program.ActualVersion</span>
     </h3>
 
-    @using (Html.BeginForm("AddProgramToRobot", "Home"))
+    @using (Html.BeginForm("AddProgramToRobot", "Robot"))
     {
-    <div class="pull-right">
-        @Html.HiddenFor(x => x.ProgramID)
-        <input type="submit" class="btn btn-success" value="Send to robot" />
-    </div>
+        <div class="pull-right">
+            @{
+                Model.ProgramId = Model.Program.ProgramID;
+            }
+            @Html.HiddenFor(x => x.ProgramId)
+            <div class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                @Html.DropDownListFor(m => m.SelectedRobot, new SelectList(FakeSession.RobotIds))
+            </div>
+
+            <input type="submit" class="btn btn-success" value="Send to robot"/>
+        </div>
     }
 
-    <span class="lead"> @Model.Description</span>
+    <span class="lead"> @Model.Program.Description</span>
 </div>
