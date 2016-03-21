@@ -1,0 +1,37 @@
+﻿@model Domain.Entities.ProgramRobot
+
+@{
+}
+
+<div class="well">
+
+    @*<div class="pull-left" style="margin-right: 10px">
+            <img class="img-thumbnail" width="75" height="75"
+                 src="@Url.Action("GetImage", "Home",
+                    new { Model.ProgramID })" />
+        </div>*@
+
+    <div class="pull-left" style="margin-right: 10px">
+        <img class="img-thumbnail" width="75" height="75"
+             src="http://exchange.parchment.com/wp-content/uploads/request-75x75.jpg" />
+    </div>
+
+    <h3>
+        <strong>@Model.Program.Name</strong>
+        <span class="pull-right label label-primary">Robot's Version: @Model.CurrentVersion</span>
+    </h3>
+
+    @using (Html.BeginForm("AddProgramToRobot", "Robot"))
+    {
+        <div class="pull-right">
+            @if (Model.CurrentVersion < Model.Program.ActualVersion)
+            {
+                <input type="button" class="btn btn-success" value="Update" />
+            }
+            <input type="button" class="btn btn-danger" value="Remove"/>
+        </div>
+    }
+
+    <span class="lead"> @Model.Program.Description</span>
+</div>
+

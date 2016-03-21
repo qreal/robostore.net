@@ -3,6 +3,7 @@ using Domain;
 using Domain.Data;
 using Domain.Entities;
 using Domain.Pagination;
+using Domain.Programs;
 using Store.Models.Home;
 
 namespace Store.Controllers
@@ -13,11 +14,13 @@ namespace Store.Controllers
     private int pageSize = 4;
     private readonly PaginationManager _paginationManager;
     private readonly ContentManager _contentManager;
+    private readonly ProgramManager _programManager;
 
     public ProgramController(IData data)
     {
       _contentManager = new ContentManager(data);
       _paginationManager = new PaginationManager(data);
+      _programManager = new ProgramManager(data);
     }
 
     /*
@@ -35,9 +38,9 @@ namespace Store.Controllers
         }
       });
 
-    public string ShowRobotPrograms(int robotId)
+    public ViewResult ShowRobotPrograms(int robotId)
     {
-      return "there will be programs";
+      return View(_programManager.GetRobotProgramsByRobotId(robotId));
     }
   }
 }

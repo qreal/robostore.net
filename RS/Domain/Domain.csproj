@@ -73,6 +73,10 @@
     <Compile Include="Migrations\201603201945056_RobotCommandAdded.Designer.cs">
       <DependentUpon>201603201945056_RobotCommandAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603212133255_VirtualKeyWordIsForgotten.cs" />
+    <Compile Include="Migrations\201603212133255_VirtualKeyWordIsForgotten.Designer.cs">
+      <DependentUpon>201603212133255_VirtualKeyWordIsForgotten.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MoqDataGenerator.cs" />
     <Compile Include="Pagination\PaginationManager.cs" />
@@ -89,6 +93,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201603201945056_RobotCommandAdded.resx">
       <DependentUpon>201603201945056_RobotCommandAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603212133255_VirtualKeyWordIsForgotten.resx">
+      <DependentUpon>201603212133255_VirtualKeyWordIsForgotten.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

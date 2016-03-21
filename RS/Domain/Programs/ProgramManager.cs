@@ -26,6 +26,8 @@ namespace Domain.Programs
         Robot = robot,
         CurrentVersion = program.ActualVersion
       });
-    
+
+    public IEnumerable<ProgramRobot> GetRobotProgramsByRobotId(int id)
+      => data.ProgramRobots.Where(x => x.RobotID == id);
   }
 }

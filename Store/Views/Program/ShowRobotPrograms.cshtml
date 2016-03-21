@@ -1,0 +1,11 @@
+﻿@using Store.Models.Program
+@model IEnumerable<Domain.Entities.ProgramRobot>
+
+@{
+    ViewBag.Title = "Programs";
+}
+
+@foreach (var p in Model)
+{
+    @Html.Partial("RobotProgramSummary", p)
+}

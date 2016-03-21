@@ -35,5 +35,14 @@ namespace Tests.Logic
       Assert.AreSame(robot, result.Robot);
       Assert.AreEqual(result.CurrentVersion, program.ActualVersion);
     }
+
+    [TestMethod]
+    public void GetRobotProgramsByRobotIdTest()
+    {
+      var robot = data.Robots.First();
+      var result = _manager.GetRobotProgramsByRobotId(robot.RobotID);
+      Assert.AreEqual(1, result.Count());
+      Assert.AreSame(result.First(), data.ProgramRobots.First());
+    }
   }
 }

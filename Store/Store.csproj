@@ -213,6 +213,8 @@
     <Content Include="Views\User\Entrance.cshtml" />
     <Content Include="Views\Robot\AddRobotForm.cshtml" />
     <Content Include="Views\Robot\AddProgramToRobot.cshtml" />
+    <Content Include="Views\Shared\RobotProgramSummary.cshtml" />
+    <Content Include="Views\Program\ShowRobotPrograms.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
