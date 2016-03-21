@@ -5,11 +5,26 @@
   ViewBag.Title = "Robots";
 }
 
+<script src="~/Scripts/Robot/ShowMyRobots.js"></script>
+<script src="~/Scripts/jquery-2.1.4.js"></script>
+<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        @{
+            foreach (var id in Model.PageContent.Select(x => x.RobotID.ToString()))
+            {
+                @:openRobotProgramsById('@id');
+            }
+        }
+    });
+</script>
+
 @foreach (var p in Model.PageContent)
 {
-@Html.Partial("RobotSummary", p)
+    @Html.Partial("RobotSummary", p)
 }
 
 <div class="btn-group pull-right">
-    @Html.FormPageLinks(Model.PagingInfo, x => Url.Action("ShowMyRobots", new { page = x }))
+    @Html.FormPageLinks(Model.PagingInfo, x => Url.Action("ShowMyRobots", new {page = x}))
 </div>

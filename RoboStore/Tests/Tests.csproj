@@ -119,6 +119,7 @@
     <Compile Include="Logic\LogicTest.cs" />
     <Compile Include="Logic\ProgramLogicTest.cs" />
     <Compile Include="Logic\RobotLogicTest.cs" />
+    <Compile Include="Logic\CommandLogicTest.cs" />
     <Compile Include="Logic\UserLogicTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

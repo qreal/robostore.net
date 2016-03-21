@@ -1,4 +1,5 @@
-﻿using Domain.Data;
+﻿using System.Threading.Tasks;
+using Domain.Data;
 using Domain.Entities;
 
 namespace Domain.Command
@@ -12,9 +13,12 @@ namespace Domain.Command
       data = d;
     }
 
-    public void AskRobotInstallProgram(Robot robot, Program program)
-    {
-      
-    }
+    public async Task AskRobotInstallProgramAsync(Robot robot, Program program)
+      => await data.AddAsync(new RobotCommand
+      {
+        Argument = program.ProgramID,
+        Robot = robot,
+        Type = (int) RobotCommandTypes.Install
+      });
   }
 }

@@ -68,8 +68,12 @@ namespace Store.Controllers
       var robot = _robotManager.GetRobotById(programInfo.SelectedRobot);
       var program = _programManager.GetProgramById(programInfo.ProgramId);
       await _programManager.CreateProgramRobot(robot, program);
-      _commandManager.AskRobotInstallProgram(robot, program);
+      await _commandManager.AskRobotInstallProgramAsync(robot, program);
       return View();
     }
+
+    // Метод, чтобы перейти к другому методу ибо скрипту трудно с url
+    public ActionResult RedirectToProgramms(int robotId)
+      => RedirectToAction("ShowRobotPrograms", "Program", new { robotId});
   }
 }

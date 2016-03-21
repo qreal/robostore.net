@@ -1,6 +1,6 @@
 ﻿@model Domain.Entities.Robot
 
-<div class="well">
+<div class="well" >
 
     @*todo: переделать картинку*@
     @*<div class="pull-left" style="margin-right: 10px">
@@ -9,7 +9,7 @@
     </div>*@
     <div class="pull-left" style="margin-right: 10px">
         <img class="img-thumbnail" width="75" height="75"
-             src="http://exchange.parchment.com/wp-content/uploads/request-75x75.jpg" />
+             src="http://exchange.parchment.com/wp-content/uploads/request-75x75.jpg"/>
     </div>
 
     <h3>
@@ -18,4 +18,7 @@
     </h3>
 
     <span class="lead"> More information</span>
+    <div class="pull-right">
+        <input type="button" class="btn btn-success" value="Installed Programs" id='@("robot" + @Model.RobotID)' />
+    </div>
 </div>

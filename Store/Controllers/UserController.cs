@@ -46,7 +46,7 @@ namespace Store.Controllers
       FakeSession.User = foundUser;
       FakeSession.RobotIds = new List<int>();
       FakeSession.RobotIds.AddRange(foundUser.Robots.Select(x => x.RobotID));
-      return RedirectToAction("ShowPrograms", "Program");
+      return RedirectToAction("ShowAllPrograms", "Program");
     }
 
     [HttpPost]
@@ -58,7 +58,7 @@ namespace Store.Controllers
         FakeSession.User = foundUser;
         FakeSession.RobotIds = new List<int>();
         FakeSession.RobotIds.AddRange(foundUser.Robots.Select(x => x.RobotID));
-        return RedirectToAction("ShowPrograms", "Program");
+        return RedirectToAction("ShowAllPrograms", "Program");
       }
       return View();
     }

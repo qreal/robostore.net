@@ -23,7 +23,7 @@ namespace Store.Controllers
     /*
       Отображем список программ
     */
-    public ViewResult ShowPrograms(int page = 1) =>
+    public ViewResult ShowAllPrograms(int page = 1) =>
       View(new PagedContentViewModel<Program>
       {
         PageContent = _paginationManager.FormProgramPage(pageSize, page),
@@ -34,5 +34,10 @@ namespace Store.Controllers
           TotalItems = _contentManager.AmountPrograms
         }
       });
+
+    public string ShowRobotPrograms(int robotId)
+    {
+      return "there will be programs";
+    }
   }
 }
