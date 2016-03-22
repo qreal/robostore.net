@@ -3,6 +3,7 @@
 
 @{
   ViewBag.Title = "Robots";
+  
 }
 
 <script src="~/Scripts/Robot/ShowMyRobots.js"></script>
@@ -12,9 +13,10 @@
 <script>
     $(document).ready(function () {
         @{
-            foreach (var id in Model.PageContent.Select(x => x.RobotID.ToString()))
-            {
-                @:openRobotProgramsById('@id');
+          foreach (var id in Model.PageContent.Select(x => x.RobotID.ToString()))
+          {
+              var showRobotProgramUrl = Url.Action("ShowRobotPrograms", "Program", new { robotId = id }, Request.Url?.Scheme);
+                @:openRobotProgramsById('@id', '@showRobotProgramUrl');
             }
         }
     });

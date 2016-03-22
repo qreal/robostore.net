@@ -1,5 +1,9 @@
-﻿function openRobotProgramsById(id) {
+﻿/*
+Функция по клику для кнопки Installed Programs
+*/
+
+function openRobotProgramsById(id, url) {
     $("#robot" + id).click(function () {
-        window.location.href = 'RedirectToProgramms?robotId=' + id;
+        window.location.href = url;
     });
 }

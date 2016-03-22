@@ -72,8 +72,5 @@ namespace Store.Controllers
       return View();
     }
 
-    // Метод, чтобы перейти к другому методу ибо скрипту трудно с url
-    public ActionResult RedirectToProgramms(int robotId)
-      => RedirectToAction("ShowRobotPrograms", "Program", new { robotId});
   }
 }
