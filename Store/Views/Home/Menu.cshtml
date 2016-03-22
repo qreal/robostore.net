@@ -1,40 +1,20 @@
-﻿@model IEnumerable<string>
+﻿@model IEnumerable<Store.Models.Home.LeftMenuItem>
 
 @{
-  var categories = Model.ToArray();
+    int index = 0;
+    int amount = Model.Count();
 }
 
-<div>
-    @Html.RouteLink(categories[0], new
+@foreach (var item in Model)
 {
-    controller = "Robot",
-    action = "ShowMyRobots",
-    category = categories[0]
-}, new
-{
-    @class = "btn btn-block btn-default btn-lg" + (ViewBag.SelectedCategory == categories[0] ? " btn-primary" : "")
-})
+  <a href="@item.Url" class="btn btn-block btn-default btn-lg" id="leftMenuItem@(++index)">@item.Name</a>
+}
 
-    @Html.RouteLink(categories[1], new
-{
-    controller = "Robot",
-    action = "AddRobotForm",
-    category = categories[1]
-}, new
-{
-    @class = "btn btn-block btn-default btn-lg" + (ViewBag.SelectedCategory == categories[1] ? " btn-primary" : "")
-})
+<script src="~/Scripts/Menu/Menu.js"></script>
 
-    @Html.RouteLink(categories[2], new
-{
-    controller = "Program",
-    action = "ShowAllPrograms",
-    category = categories[2]
-}, new
-{
-    @class = "btn btn-block btn-default btn-lg" + 
-    (ViewBag.SelectedCategory == categories[2] || ViewBag.SelectedCategory == null ? " btn-primary" : "")
-})
-
-   
-</div>
+<script>
+    @for (int i = 1; i <= amount; i++)
+    {
+        @:onClickCategory(@i);
+    }
+</script>

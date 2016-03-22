@@ -1,6 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using Domain;
 using Domain.Data;
+using Store.Models.Home;
 
 namespace Store.Controllers
 {
@@ -15,14 +17,18 @@ namespace Store.Controllers
       _contentManager = new ContentManager(d);
     }
 
-
-    // меню с ссылками на 2 таблицы
-    public PartialViewResult Menu(string category = null)
+    public PartialViewResult Menu()
     {
-      ViewBag.SelectedCategory = category;
-      return PartialView("Menu", new[] { "My Robots", "Add Robot", "All Program" });
+      var names = new[] { "My Robots", "Add Robot", "All Program" };
+      var menuItems = names.Select(x => new LeftMenuItem
+      {
+        Name = x
+      }).ToArray();
+      menuItems[0].Url = Url.Action("ShowMyRobots", "Robot");
+      menuItems[1].Url = Url.Action("AddRobotForm", "Robot");
+      menuItems[2].Url = Url.Action("ShowAllPrograms", "Program");
+      return PartialView("Menu", menuItems);
     }
-
 
     public FileContentResult GetImage(int programId)
     {
