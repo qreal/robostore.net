@@ -2,6 +2,6 @@
 {
   public enum RobotCommandTypes
   {
-    Install
+    Install, Update, Remove
   }
 }

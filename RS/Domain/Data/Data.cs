@@ -91,7 +91,7 @@ namespace Domain.Data
 
     public async Task RemoveAsync(object o)
     {
-      var objectName = o.GetType().ToString().Split('.').Last();
+      var objectName = o.GetType().ToString().Split('.').Last().Split('_').First();
       switch (objectName)
       {
         case "Configuration":

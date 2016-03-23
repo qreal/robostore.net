@@ -18,7 +18,10 @@ namespace Domain.Programs
     public Program GetProgramById(int id)
       => data.Programs.FirstOrDefault(x => x.ProgramID == id);
 
-    public async Task CreateProgramRobot(Robot robot, Program program)
+    public Program GetProgramByProgramRobotId(int id)
+      => data.ProgramRobots.FirstOrDefault(x => x.ProgramRobotID == id)?.Program;
+
+    public async Task CreateProgramRobotAsync(Robot robot, Program program)
     => 
       await data.AddAsync(new ProgramRobot
       {
@@ -27,7 +30,26 @@ namespace Domain.Programs
         CurrentVersion = program.ActualVersion
       });
 
-    public IEnumerable<ProgramRobot> GetRobotProgramsByRobotId(int id)
+    public IEnumerable<ProgramRobot> GetRobotProgramsByRobotIdAsync(int id)
       => data.ProgramRobots.Where(x => x.RobotID == id);
+
+    public async Task UpdateProgramRobotAsync(int programRobotId)
+    {
+      var programRobot = data.ProgramRobots.FirstOrDefault(x => x.ProgramRobotID == programRobotId);
+      if (programRobot != null)
+      {
+        programRobot.CurrentVersion = programRobot.Program.ActualVersion;
+        await data.UpdateAsync(programRobot);
+      }
+    }
+
+    public async Task RemoveProgramRobotAsync(int programRobotId)
+    {
+      var programRobot = data.ProgramRobots.FirstOrDefault(x => x.ProgramRobotID == programRobotId);
+      if (programRobot != null)
+      {
+        await data.RemoveAsync(programRobot);
+      }
+    }
   }
 }

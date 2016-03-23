@@ -56,5 +56,14 @@ namespace Tests.Logic
       var robot = data.Robots.First();
       Assert.AreSame(robot, _manager.GetMyRobots(user).First());
     }
+
+    [TestMethod]
+    public void GetRobotByProgramRobotIdTest()
+    {
+      var robot = data.Robots.First();
+      var programRobot = data.ProgramRobots.First();
+      var result = _manager.GetRobotByProgramRobotId(programRobot.ProgramRobotID);
+      Assert.AreSame(robot, result);
+    }
   }
 }

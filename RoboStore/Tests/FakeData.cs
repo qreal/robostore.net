@@ -45,7 +45,6 @@ namespace Tests
       };
       var programRobot = new ProgramRobot
       {
-        CurrentVersion = MoqDataGenerator.GetRandomNumber(10, 100),
         ProgramRobotID = MoqDataGenerator.GetRandomNumber(10, 100)
       };
 
@@ -76,6 +75,7 @@ namespace Tests
       programRobot.Program = program;
       programRobot.RobotID = robot.RobotID;
       programRobot.ProgramID = program.ProgramID;
+      programRobot.CurrentVersion = program.ActualVersion - 1;
       robotCommand.Argument = program.ProgramID;
       robotCommand.Robot = robot;
       robotCommand.RobotID = robot.RobotID;
@@ -210,7 +210,7 @@ namespace Tests
     private Program CreateProgram(int id) =>
       new Program
     {
-      ActualVersion = MoqDataGenerator.GetRandomNumber(1, 10),
+      ActualVersion = MoqDataGenerator.GetRandomNumber(10, 100),
       Code = MoqDataGenerator.GetRandomString(100),
       Name = MoqDataGenerator.GetRandomString(10),
       ProgramID = id,

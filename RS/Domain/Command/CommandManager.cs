@@ -13,12 +13,12 @@ namespace Domain.Command
       data = d;
     }
 
-    public async Task AskRobotInstallProgramAsync(Robot robot, Program program)
+    public async Task AskRobotAboutProgram(Robot robot, Program program, RobotCommandTypes commandType)
       => await data.AddAsync(new RobotCommand
       {
         Argument = program.ProgramID,
         Robot = robot,
-        Type = (int) RobotCommandTypes.Install
+        Type = (int) commandType
       });
   }
 }

@@ -171,6 +171,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Menu\Menu.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Program\Program.js" />
     <Content Include="Scripts\Robot\ShowMyRobots.js" />
     <Content Include="Scripts\Services\Cookies.js" />
     <Content Include="Scripts\User\User.js" />

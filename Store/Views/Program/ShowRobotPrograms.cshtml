@@ -7,5 +7,14 @@
 
 @foreach (var p in Model)
 {
+    <div id=@("RobotProgram" + @p.ProgramRobotID)>
     @Html.Partial("RobotProgramSummary", p)
+    </div>
 }
+
+<script src="~/Scripts/Program/Program.js"></script>
+
+<script>
+    setActionsOnUpdates('@Url.Action("UpdateRobotProgram")');
+    setActionsOnRemoves('@Url.Action("RemoveRobotProgram")');
+</script>
