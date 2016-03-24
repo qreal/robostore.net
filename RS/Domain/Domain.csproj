@@ -60,8 +60,9 @@
     <Compile Include="Content\ContentManager.cs" />
     <Compile Include="Data\Data.cs" />
     <Compile Include="Data\DataContext.cs" />
-    <Compile Include="Data\GenericRepository.cs" />
+    <Compile Include="Data\EFRepository.cs" />
     <Compile Include="Data\IData.cs" />
+    <Compile Include="Data\IRepository.cs" />
     <Compile Include="Entities\RobotCommand.cs" />
     <Compile Include="Entities\Configuration.cs" />
     <Compile Include="Entities\Image.cs" />

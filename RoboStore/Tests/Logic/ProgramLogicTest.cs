@@ -18,19 +18,19 @@ namespace Tests.Logic
     [TestMethod]
     public void GetProgramByIdTest()
     {
-      var id = data.Programs.First().ProgramID;
-      Assert.AreSame(_manager.GetProgramById(id), data.Programs.First());
+      var id = data.Programs.Data.First().ProgramID;
+      Assert.AreSame(_manager.GetProgramById(id), data.Programs.Data.First());
     }
 
     [TestMethod]
     public async Task CreateProgramRobotTest()
     {
-      var amount = data.ProgramRobots.Count();
-      var program = data.Programs.First();
-      var robot = data.Robots.First();
+      var amount = data.ProgramRobots.Data.Count();
+      var program = data.Programs.Data.First();
+      var robot = data.Robots.Data.First();
       await _manager.CreateProgramRobotAsync(robot, program);
-      var result = data.ProgramRobots.Last();
-      Assert.AreEqual(amount + 1, data.ProgramRobots.Count());
+      var result = data.ProgramRobots.Data.Last();
+      Assert.AreEqual(amount + 1, data.ProgramRobots.Data.Count());
       Assert.AreSame(program, result.Program);
       Assert.AreSame(robot, result.Robot);
       Assert.AreEqual(result.CurrentVersion, program.ActualVersion);
@@ -39,17 +39,17 @@ namespace Tests.Logic
     [TestMethod]
     public void GetRobotProgramsByRobotIdTest()
     {
-      var robot = data.Robots.First();
+      var robot = data.Robots.Data.First();
       var result = _manager.GetRobotProgramsByRobotIdAsync(robot.RobotID);
       Assert.AreEqual(1, result.Count());
-      Assert.AreSame(result.First(), data.ProgramRobots.First());
+      Assert.AreSame(result.First(), data.ProgramRobots.Data.First());
     }
 
     [TestMethod]
     public async Task UpdateProgramRobotTest()
     {
-      var programRobot = data.ProgramRobots.First();
-      var program = data.Programs.First();
+      var programRobot = data.ProgramRobots.Data.First();
+      var program = data.Programs.Data.First();
       await _manager.UpdateProgramRobotAsync(programRobot.ProgramRobotID);
       Assert.AreEqual(program.ActualVersion, programRobot.CurrentVersion);
     }
@@ -57,17 +57,17 @@ namespace Tests.Logic
     [TestMethod]
     public async Task RemoveProgramRobotTest()
     {
-      var programRobot = data.ProgramRobots.First();
-      var amount = data.ProgramRobots.Count();
+      var programRobot = data.ProgramRobots.Data.First();
+      var amount = data.ProgramRobots.Data.Count();
       await _manager.RemoveProgramRobotAsync(programRobot.ProgramRobotID);
-      Assert.AreEqual(amount - 1, data.ProgramRobots.Count());
+      Assert.AreEqual(amount - 1, data.ProgramRobots.Data.Count());
     }
 
     [TestMethod]
     public void GetProgramByProgramRobotIdTest()
     {
-      var programRobot = data.ProgramRobots.First();
-      var program = data.Programs.First();
+      var programRobot = data.ProgramRobots.Data.First();
+      var program = data.Programs.Data.First();
       var result = _manager.GetProgramByProgramRobotId(programRobot.ProgramRobotID);
       Assert.AreSame(program, result);
     }

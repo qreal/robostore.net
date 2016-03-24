@@ -17,10 +17,10 @@ namespace Domain
       data = d;
     }
 
-    public int AmoutRobots => data.Robots.Count();
-    public int AmountPrograms => data.Programs.Count();
+    public int AmoutRobots => data.Robots.Data.Count();
+    public int AmountPrograms => data.Programs.Data.Count();
 
     public Image GetImageById(int programId) =>
-     data.Programs.First(x => x.ProgramID == programId).Image;
+     data.Programs.Data.First(x => x.ProgramID == programId).Image;
   }
 }

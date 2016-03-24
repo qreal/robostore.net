@@ -1,19 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Domain.Entities;
+﻿using Domain.Entities;
 
 namespace Domain.Data
 {
   public interface IData
   {
-    IEnumerable<Configuration> Configurations { get; }
-    IEnumerable<Robot> Robots { get; }
-    IEnumerable<Program> Programs { get; }
-    IEnumerable<ProgramRobot> ProgramRobots { get; }
-    IEnumerable<User> Users { get; }
-    IEnumerable<RobotCommand> RobotCommands { get; }
-    Task<object> AddAsync(object o);
-    Task UpdateAsync(object o);
-    Task RemoveAsync(object o);
+    IRepository<Configuration> Configurations { get; }
+    IRepository<Robot> Robots { get; }
+    IRepository<Program> Programs { get; }
+    IRepository<ProgramRobot> ProgramRobots { get; }
+    IRepository<User> Users { get; }
+    IRepository<RobotCommand> RobotCommands { get; }
   }
 }

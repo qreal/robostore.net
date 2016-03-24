@@ -18,31 +18,31 @@ namespace Tests.Logic
     [TestMethod]
     public async Task CreateRobotTest()
     {
-      var amount = data.Robots.Count();
+      var amount = data.Robots.Data.Count();
       var result = await _manager.CreateRobot();
-      Assert.AreEqual(amount + 1, data.Robots.Count());
+      Assert.AreEqual(amount + 1, data.Robots.Data.Count());
       Assert.AreEqual(result.RobotID + result.ActivationCode, 0);
     }
 
     [TestMethod]
     public void GetRobotByActivationCodeTest()
     {
-      var code = data.Robots.First().ActivationCode;
-      Assert.AreSame(data.Robots.First(), _manager.GetRobotByActivationCode(code));
+      var code = data.Robots.Data.First().ActivationCode;
+      Assert.AreSame(data.Robots.Data.First(), _manager.GetRobotByActivationCode(code));
     }
 
     [TestMethod]
     public void GetRobotByIdTest()
     {
-      var id = data.Robots.First().RobotID;
-      Assert.AreSame(data.Robots.First(), _manager.GetRobotById(id));
+      var id = data.Robots.Data.First().RobotID;
+      Assert.AreSame(data.Robots.Data.First(), _manager.GetRobotById(id));
     }
 
     [TestMethod]
     public async Task BindRobotToUserTest()
     {
-      var user = data.Users.First();
-      var robot = data.Robots.First();
+      var user = data.Users.Data.First();
+      var robot = data.Robots.Data.First();
       robot.UserID = 0;
       await _manager.BindRobotToUser(robot, user);
       Assert.AreNotEqual(0, robot.UserID);
@@ -52,16 +52,16 @@ namespace Tests.Logic
     [TestMethod]
     public void GetMyRobotsTest()
     {
-      var user = data.Users.First();
-      var robot = data.Robots.First();
+      var user = data.Users.Data.First();
+      var robot = data.Robots.Data.First();
       Assert.AreSame(robot, _manager.GetMyRobots(user).First());
     }
 
     [TestMethod]
     public void GetRobotByProgramRobotIdTest()
     {
-      var robot = data.Robots.First();
-      var programRobot = data.ProgramRobots.First();
+      var robot = data.Robots.Data.First();
+      var programRobot = data.ProgramRobots.Data.First();
       var result = _manager.GetRobotByProgramRobotId(programRobot.ProgramRobotID);
       Assert.AreSame(robot, result);
     }

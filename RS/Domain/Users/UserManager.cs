@@ -15,9 +15,9 @@ namespace Domain.Users
     }
 
     public User TryEnter(string login, string password)
-      => data.Users.FirstOrDefault(x => x.Login == login && x.Password == password);
+      => data.Users.Data.FirstOrDefault(x => x.Login == login && x.Password == password);
 
     public async Task CreateUser(string login, string password)
-      => await data.AddAsync(new User {Login = login, Password = password});
+      => await data.Users.AddAsync(new User {Login = login, Password = password});
   }
 }

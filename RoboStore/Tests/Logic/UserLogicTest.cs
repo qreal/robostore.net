@@ -20,9 +20,9 @@ namespace Tests.Logic
     [TestMethod]
     public void TryEnterTest()
     {
-      var user = data.Users.First();
-      Assert.AreEqual(true, manager.TryEnter(user.Login, user.Password));
-      Assert.AreEqual(false, manager.TryEnter(user.Login + MoqDataGenerator.GetRandomString(1), user.Password));
+      var user = data.Users.Data.First();
+      Assert.AreSame(user, manager.TryEnter(user.Login, user.Password));
+      Assert.AreEqual(null, manager.TryEnter(user.Login + MoqDataGenerator.GetRandomString(1), user.Password));
     }
 
     [TestMethod]
@@ -33,11 +33,11 @@ namespace Tests.Logic
         Login = MoqDataGenerator.GetRandomString(10),
         Password = MoqDataGenerator.GetRandomString(10)
       };
-      int amount = data.Users.Count();
+      int amount = data.Users.Data.Count();
       await manager.CreateUser(user.Login, user.Password);
-      Assert.AreEqual(amount + 1, data.Users.Count());
-      Assert.AreEqual(user.Login, data.Users.Last().Login);
-      Assert.AreEqual(user.Password, data.Users.Last().Password);
+      Assert.AreEqual(amount + 1, data.Users.Data.Count());
+      Assert.AreEqual(user.Login, data.Users.Data.Last().Login);
+      Assert.AreEqual(user.Password, data.Users.Data.Last().Password);
     }
   }
 }

@@ -12,13 +12,13 @@ namespace Tests.Logic
     {
       var _manager = new PaginationManager(data);
       var result = _manager.FormProgramPage(pageSize: 2, page: 1);
-      var programs = data.Programs.OrderBy(x => x.Name).Take(2);
+      var programs = data.Programs.Data.OrderBy(x => x.Name).Take(2);
       Assert.AreEqual(result.Count(), 2);
       Assert.AreEqual(result.First().Name, programs.First().Name);
       Assert.AreEqual(result.Last().Name, programs.Last().Name);
 
-      var result2 = _manager.FormMyRobotPage(robots:data.Robots, pageSize: 2, page: 1);
-      var robots = data.Robots.OrderBy(x => x.RobotID).Take(1);
+      var result2 = _manager.FormMyRobotPage(robots:data.Robots.Data, pageSize: 2, page: 1);
+      var robots = data.Robots.Data.OrderBy(x => x.RobotID).Take(1);
       Assert.AreEqual(result2.Count(), 1);
       Assert.AreEqual(result2.First().RobotID, robots.First().RobotID);
     }

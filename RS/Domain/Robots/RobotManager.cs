@@ -22,31 +22,32 @@ namespace Domain.Robots
 
     public async Task<Robot> CreateRobot()
     {
-      var robot = await data.AddAsync(new Robot
+      var robot = new Robot
       {
         ActivationCode = 0
-      }) as Robot;
+      };
+      await data.Robots.AddAsync(robot);
       robot.ActivationCode = robot.RobotID;
-      await data.UpdateAsync(robot);
+      await data.Robots.UpdateAsync(robot);
       return robot;
     }
 
     public Robot GetRobotById(int id)
-      => data.Robots.FirstOrDefault(x => x.RobotID == id);
+      => data.Robots.Data.FirstOrDefault(x => x.RobotID == id);
 
     public Robot GetRobotByProgramRobotId(int id)
-      => data.ProgramRobots.FirstOrDefault(x => x.ProgramRobotID == id)?.Robot;
+      => data.ProgramRobots.Data.FirstOrDefault(x => x.ProgramRobotID == id)?.Robot;
 
     public Robot GetRobotByActivationCode(int code)
-      => data.Robots.FirstOrDefault(x => x.ActivationCode == code);
+      => data.Robots.Data.FirstOrDefault(x => x.ActivationCode == code);
 
     public async Task BindRobotToUser(Robot robot, User user)
     {
       robot.UserID = user.UserID;
-      await data.UpdateAsync(robot);
+      await data.Robots.UpdateAsync(robot);
     }
 
     public IEnumerable<Robot> GetMyRobots(User user)
-      => data.Robots.Where(x => x.UserID == user.UserID);
+      => data.Robots.Data.Where(x => x.UserID == user.UserID);
   }
 }

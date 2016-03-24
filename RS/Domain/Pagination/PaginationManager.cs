@@ -15,7 +15,7 @@ namespace Domain.Pagination
     }
 
     public IEnumerable<Program> FormProgramPage(int pageSize, int page) =>
-      data.Programs.OrderBy(x => x.Name).
+      data.Programs.Data.OrderBy(x => x.Name).
       Skip((page - 1) * pageSize).
       Take(pageSize);
 

@@ -18,8 +18,8 @@ namespace Tests.Logic
     [TestMethod]
     public async Task AskRobotInstallProgramTest()
     {
-      var robot = data.Robots.First();
-      var program = data.Programs.First();
+      var robot = data.Robots.Data.First();
+      var program = data.Programs.Data.First();
 
       await CheckOneTypeCommand(robot, program, RobotCommandTypes.Install);
       await CheckOneTypeCommand(robot, program, RobotCommandTypes.Remove);
@@ -28,10 +28,10 @@ namespace Tests.Logic
 
     private async Task CheckOneTypeCommand(Robot robot, Program program,  RobotCommandTypes type)
     {
-      var amount = data.RobotCommands.Count();
+      var amount = data.RobotCommands.Data.Count();
       await _manager.AskRobotAboutProgram(robot, program, type);
-      var command = data.RobotCommands.Last();
-      Assert.AreEqual(amount + 1, data.RobotCommands.Count());
+      var command = data.RobotCommands.Data.Last();
+      Assert.AreEqual(amount + 1, data.RobotCommands.Data.Count());
       Assert.AreEqual(command.Argument, program.ProgramID);
       Assert.AreSame(command.Robot, robot);
       Assert.AreEqual(command.Type, (int) type);

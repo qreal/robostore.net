@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Domain;
 using Domain.Data;
@@ -8,19 +7,24 @@ using Domain.Entities;
 namespace Tests
 {
   /*
-  Класс реализует интерфейс данных из БД, чтобы проверить бизнесс логику
+  Класс реализует интерфейс данных, чтобы проверить бизнесс логику
   */
 
   public class FakeData: IData
   {
-    private List<Robot> _robots = new List<Robot>();
-    private List<Program> _programs = new List<Program>();
-    private List<Configuration> _configurations = new List<Configuration>();
-    private List<ProgramRobot> _programRobots = new List<ProgramRobot>();
-    private List<User> _users = new List<User>();
-    private List<RobotCommand> _robotCommands = new List<RobotCommand>(); 
+    public IRepository<Robot> Robots { get; } = new FakeRepository<Robot>();
+    public IRepository<Program> Programs { get; } = new FakeRepository<Program>();
+    public IRepository<Configuration> Configurations { get; } = new FakeRepository<Configuration>();
+    public IRepository<ProgramRobot> ProgramRobots { get; } = new FakeRepository<ProgramRobot>();
+    public IRepository<User> Users { get; } = new FakeRepository<User>();
+    public IRepository<RobotCommand> RobotCommands { get; } = new FakeRepository<RobotCommand>();
 
     public FakeData()
+    {
+      AsyncHelpers.RunSync(FillWithTestData);
+    }
+
+    private async Task FillWithTestData()
     {
       // создали по одной сущности в каждый из списков
       var user = new User
@@ -34,9 +38,9 @@ namespace Tests
         RobotID = MoqDataGenerator.GetRandomNumber(1, 100),
         Configurations = new List<Configuration>(),
         ProgramRobots = new List<ProgramRobot>(),
-        ActivationCode = MoqDataGenerator.GetRandomNumber(1,100)
+        ActivationCode = MoqDataGenerator.GetRandomNumber(1, 100)
       };
-      var program = CreateProgram(id:1);
+      var program = CreateProgram(id: 1);
 
       var configuration = new Configuration
       {
@@ -81,130 +85,18 @@ namespace Tests
       robotCommand.RobotID = robot.RobotID;
 
       // добавили сущности в списки сущностей
-      _robots.Add(robot);
-      _programs.Add(program);
-      _configurations.Add(configuration);
-      _programRobots.Add(programRobot);
-      _users.Add(user);
-      _robotCommands.Add(robotCommand);
+      await Robots.AddAsync(robot);
+      await Programs.AddAsync(program);
+      await Configurations.AddAsync(configuration);
+      await ProgramRobots.AddAsync(programRobot);
+      await Users.AddAsync(user);
+      await RobotCommands.AddAsync(robotCommand);
 
       // добавили еще 4 программы для теста pagination
       for (var i = 0; i < 4; i++)
       {
-        _programs.Add(CreateProgram(i + 2));
+        await Programs.AddAsync(CreateProgram(i + 2));
       }
-    }
-
-    public IEnumerable<Robot> Robots => _robots;
-    public IEnumerable<Program> Programs => _programs;
-    public IEnumerable<Configuration> Configurations => _configurations;
-    public IEnumerable<ProgramRobot> ProgramRobots => _programRobots;
-    public IEnumerable<User> Users => _users;
-    public IEnumerable<RobotCommand> RobotCommands => _robotCommands; 
-
-    public Task<object> AddAsync(object o)
-    {
-      return Task<object>.Factory.StartNew(() =>
-
-      {
-        // тут нужно получить тип объекта и далее его добавить/удалить в Репозиторий
-        var objectName = o.GetType().ToString().Split('.').Last();
-
-        switch (objectName)
-        {
-          case "Robot":
-            _robots.Add((Robot)o);
-            break;
-          case "Program":
-            _programs.Add((Program)o);
-            break;
-          case "Configuration":
-            _configurations.Add((Configuration)o);
-            break;
-          case "ProgramRobot":
-            _programRobots.Add((ProgramRobot)o);
-            break;
-          case "User":
-            _users.Add((User)o);
-            break;
-          case "RobotCommand":
-            _robotCommands.Add((RobotCommand)o);
-            break;
-        }
-        return o;
-      });
-    }
-
-    public Task UpdateAsync(object o)
-    {
-      return Task.Factory.StartNew(() =>
-      {
-        // тут нужно получить тип объекта и далее его добавить/удалить в Репозиторий
-        var objectName = o.GetType().ToString().Split('.').Last();
-
-        switch (objectName)
-        {
-          case "Robot":
-            _robots = _robots.FindAll(x => x.RobotID != ((Robot)o).RobotID);
-            _robots.Add((Robot)o);
-            break;
-          case "Program":
-            _programs = _programs.FindAll(x => x.ProgramID != ((Program)o).ProgramID);
-            _programs.Add((Program)o);
-            break;
-          case "Configuration":
-            _configurations = _configurations.FindAll(x => x.ConfigurationID != ((Configuration)o).ConfigurationID);
-            _configurations.Add((Configuration)o);
-            break;
-          case "ProgramRobot":
-            // выпилил элемент с таким ID
-            _programRobots = _programRobots.FindAll(x => x.ProgramRobotID != ((ProgramRobot)o).ProgramRobotID);
-            // и добавил измененный 
-            _programRobots.Add((ProgramRobot)o);
-            break;
-          case "User":
-            _users = _users.FindAll(x => x.UserID != ((User)o).UserID);
-            _users.Add((User)o);
-            break;
-          case "RobotCommand":
-            _robotCommands = _robotCommands.FindAll(x => x.RobotCommandID != ((RobotCommand)o).RobotCommandID);
-            _robotCommands.Add((RobotCommand)o);
-            break;
-        }
-      });
-    }
-
-    public Task RemoveAsync(object o)
-    {
-      return Task.Factory.StartNew(() =>
-      {
-        // тут нужно получить тип объекта и далее его добавить/удалить в Репозиторий
-        var objectName = o.GetType().ToString().Split('.').Last();
-
-        switch (objectName)
-        {
-          case "Robot":
-            _robots =
-              _robots.FindAll(x => x.RobotID != ((Robot)o).RobotID);
-            break;
-          case "Program":
-            _programs = _programs.FindAll(x => x.ProgramID != ((Program)o).ProgramID);
-            break;
-          case "Configuration":
-            _configurations = _configurations.FindAll(x => x.ConfigurationID != ((Configuration)o).ConfigurationID);
-            break;
-          case "ProgramRobot":
-            // выпилил элемент с таким ID
-            _programRobots = _programRobots.FindAll(x => x.ProgramRobotID != ((ProgramRobot)o).ProgramRobotID);
-            break;
-          case "User":
-            _users = _users.FindAll(x => x.UserID != ((User)o).UserID);
-            break;
-          case "RobotCommand":
-            _robotCommands = _robotCommands.FindAll(x => x.RobotCommandID != ((RobotCommand)o).RobotCommandID);
-            break;
-        }
-      });
     }
 
     private Program CreateProgram(int id) =>

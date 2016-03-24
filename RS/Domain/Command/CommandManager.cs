@@ -14,7 +14,7 @@ namespace Domain.Command
     }
 
     public async Task AskRobotAboutProgram(Robot robot, Program program, RobotCommandTypes commandType)
-      => await data.AddAsync(new RobotCommand
+      => await data.RobotCommands.AddAsync(new RobotCommand
       {
         Argument = program.ProgramID,
         Robot = robot,

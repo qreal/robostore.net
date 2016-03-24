@@ -15,10 +15,10 @@ namespace Domain.Configurations
     }
 
     public IEnumerable<Entities.Configuration> GetConfigurationsByRobotId(int robotId)
-      => data.Configurations.Where(x => x.RobotID == robotId);
+      => data.Configurations.Data.Where(x => x.RobotID == robotId);
 
     public async Task CreateConfiguration(ConfigurationImport configuration) =>
-      await data.AddAsync(new Entities.Configuration
+      await data.Configurations.AddAsync(new Entities.Configuration
       {
         Port = configuration.Port,
         RobotID = configuration.RobotID
