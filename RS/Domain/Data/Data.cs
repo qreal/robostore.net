@@ -12,6 +12,7 @@ namespace Domain.Data
     public IRepository<ProgramRobot> ProgramRobots { get; }
     public IRepository<User> Users { get; }
     public IRepository<RobotCommand> RobotCommands { get; }
+    public IRepository<Image> Images { get; } 
 
     public Data()
     {
@@ -21,6 +22,7 @@ namespace Domain.Data
       ProgramRobots = new EFRepository<ProgramRobot>(_context, _context.ProgramRobots);
       Users = new EFRepository<User>(_context, _context.Users);
       RobotCommands = new EFRepository<RobotCommand>(_context, _context.RobotCommands);
+      Images = new EFRepository<Image>(_context, _context.Images);
     }
   }
 }

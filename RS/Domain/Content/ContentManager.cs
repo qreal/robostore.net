@@ -20,7 +20,7 @@ namespace Domain
     public int AmoutRobots => data.Robots.Data.Count();
     public int AmountPrograms => data.Programs.Data.Count();
 
-    public Image GetImageById(int programId) =>
-     data.Programs.Data.First(x => x.ProgramID == programId).Image;
+    public Image GetImageById(int imageId) =>
+      data.Images.Data.FirstOrDefault(x => x.ImageID == imageId);
   }
 }

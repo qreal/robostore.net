@@ -10,7 +10,8 @@ namespace Domain.Data
     public DbSet<Configuration> Configurations { get; set; }
     public DbSet<ProgramRobot> ProgramRobots { get; set; }
     public DbSet<User> Users { get; set; }
-    public DbSet<RobotCommand> RobotCommands { get; set; } 
+    public DbSet<RobotCommand> RobotCommands { get; set; }
+    public DbSet<Image> Images { get; set; } 
 
   }
 }

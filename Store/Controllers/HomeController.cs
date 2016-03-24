@@ -30,9 +30,9 @@ namespace Store.Controllers
       return PartialView("Menu", menuItems);
     }
 
-    public FileContentResult GetImage(int programId)
+    public FileContentResult GetImage(int imageId)
     {
-      var image = _contentManager.GetImageById(programId);
+      var image = _contentManager.GetImageById(imageId);
       return File(image.ImageData, image.ImageMimeType);
     }
   }

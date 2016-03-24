@@ -10,5 +10,6 @@ namespace Domain.Data
     IRepository<ProgramRobot> ProgramRobots { get; }
     IRepository<User> Users { get; }
     IRepository<RobotCommand> RobotCommands { get; }
+    IRepository<Image> Images { get; }
   }
 }

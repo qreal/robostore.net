@@ -18,6 +18,7 @@ namespace Tests
     public IRepository<ProgramRobot> ProgramRobots { get; } = new FakeRepository<ProgramRobot>();
     public IRepository<User> Users { get; } = new FakeRepository<User>();
     public IRepository<RobotCommand> RobotCommands { get; } = new FakeRepository<RobotCommand>();
+    public IRepository<Image> Images { get; } = new FakeRepository<Image>(); 
 
     public FakeData()
     {
@@ -91,6 +92,7 @@ namespace Tests
       await ProgramRobots.AddAsync(programRobot);
       await Users.AddAsync(user);
       await RobotCommands.AddAsync(robotCommand);
+      await Images.AddAsync(image);
 
       // добавили еще 4 программы для теста pagination
       for (var i = 0; i < 4; i++)

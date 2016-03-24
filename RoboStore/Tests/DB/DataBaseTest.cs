@@ -1,5 +1,7 @@
 ﻿using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Web;
 using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -44,11 +46,13 @@ namespace Tests.DB
       CurrentVersion = MoqDataGenerator.GetRandomNumber(1, 11)
     };
 
-    private Image image = new Image
-    {
-      ImageData = MoqDataGenerator.GetSomeBytes(),
-      ImageMimeType = MoqDataGenerator.GetRandomString(6)
-    };
+    //private Image image = new Image
+    //{
+    //  ImageData = MoqDataGenerator.GetSomeBytes(),
+    //  ImageMimeType = MoqDataGenerator.GetRandomString(6)
+    //};
+
+    private Image image = null;
 
     private RobotCommand robotCommand = new RobotCommand
     {
@@ -88,13 +92,47 @@ namespace Tests.DB
           13. проверим, что таких сущностей теперь нету
       */
 
-      CreateData();
-      UpdateData();
-      RemoveData();
+      CheckCreateData();
+      CheckUpdateData();
+      CheckRemoveData();
     }
 
-    private void CreateData()
+    private Image LoadTestImageFromFile()
     {
+      Image img = new Image();
+      // загружаем в базу тестовую картинку
+      using (FileStream fsSource = new FileStream("test_image.jpg",
+        FileMode.Open, FileAccess.Read))
+      {
+        byte[] bytes = new byte[fsSource.Length];
+        int numBytesToRead = (int)fsSource.Length;
+        int numBytesRead = 0;
+        while (numBytesToRead > 0)
+        {
+          // Read may return anything from 0 to numBytesToRead.
+          int n = fsSource.Read(bytes, numBytesRead, numBytesToRead);
+
+          // Break when the end of the file is reached.
+          if (n == 0)
+            break;
+
+          numBytesRead += n;
+          numBytesToRead -= n;
+        }
+
+        // сохраняем картинку в БД
+        img.ImageData = bytes;
+        // получаем MimeType файла
+        img.ImageMimeType = MimeMapping.GetMimeMapping("test_image.jpg");
+      }
+      return img;
+    }
+
+    private void CheckCreateData()
+    {
+      // возьмем картинку из файла
+      image = LoadTestImageFromFile();
+
       // установим связи
       configuration.Robot = robot;
       program.Image = image;
@@ -135,7 +173,7 @@ namespace Tests.DB
       CheckEntitiesIsInDB();
     }
 
-    private void UpdateData()
+    private void CheckUpdateData()
     {
       // поменяем все кроме ImageRecipe, ибо такие нужно не менять, а удалять
       program.Name = MoqDataGenerator.GetRandomString(10);
@@ -160,7 +198,7 @@ namespace Tests.DB
       CheckEntitiesIsInDB();
     }
 
-    private void RemoveData()
+    private void CheckRemoveData()
     {
       // запомним Id сущностей
       int programId = program.ProgramID;
@@ -197,7 +235,6 @@ namespace Tests.DB
       Assert.AreEqual(null, _context.RobotCommands.FirstOrDefault(x => x.RobotCommandID == robotCommandId));
     }
 
-    // проверить, что наши экземпляры сущностей лежат в БД
     private void CheckEntitiesIsInDB()
     {
       Assert.AreSame(robot, _context.Robots.ToList().Last());

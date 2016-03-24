@@ -7,25 +7,24 @@ namespace Tests.Logic
   [TestClass]
   public class ContentLogicTest: LogicTest
   {
+    private ContentManager _manager;
+
+    public ContentLogicTest()
+    {
+      _manager = new ContentManager(data);
+    }
     [TestMethod]
     public void GetAmountTest()
     {
-      var manager = new ContentManager(data);
-      Assert.AreEqual(5, manager.AmountPrograms);
-      Assert.AreEqual(1, manager.AmoutRobots);
+      Assert.AreEqual(5, _manager.AmountPrograms);
+      Assert.AreEqual(1, _manager.AmoutRobots);
     }
 
     [TestMethod]
     public void GetImageByIdTest()
     {
-      var manager = new ContentManager(data);
-      var bytes = manager.GetImageById(1).ImageData;
-      var eBytes = MoqDataGenerator.GetSomeBytes().ToArray();
-      var i = 0;
-      foreach (var b in bytes)
-      {
-        Assert.AreEqual(b, eBytes[i++]);
-      }
+      var image = data.Images.Data.First();
+      Assert.AreSame(image, _manager.GetImageById(image.ImageID));
     }
   }
 }

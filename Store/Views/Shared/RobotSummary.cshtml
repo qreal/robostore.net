@@ -1,15 +1,9 @@
 ﻿@model Domain.Entities.Robot
 
 <div class="well" >
-
-    @*todo: переделать картинку*@
-    @*<div class="pull-left" style="margin-right: 10px">
-        <img class="img-thumbnail" width="75" height="75"
-             src="http://localhost:45534/Home/GetImage?programId=5"/>
-    </div>*@
     <div class="pull-left" style="margin-right: 10px">
-        <img class="img-thumbnail" width="75" height="75"
-             src="http://exchange.parchment.com/wp-content/uploads/request-75x75.jpg"/>
+        @*картинка для робота по умолчанию*@
+        <img class="img-thumbnail" width="75" height="75" src="@Url.Action("GetImage", "Home", new {imageId = 13})"/>
     </div>
 
     <h3>
