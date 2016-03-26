@@ -14,7 +14,7 @@ namespace Tests.DB
   [TestClass]
   public class DataBaseTest
   {
-    private readonly RDBEntities3 _context = new RDBEntities3();
+    private readonly RDBEntities4 _context = new RDBEntities4();
 
     // создадим тестовые данные
 
@@ -45,12 +45,6 @@ namespace Tests.DB
     {
       CurrentVersion = MoqDataGenerator.GetRandomNumber(1, 11)
     };
-
-    //private Image image = new Image
-    //{
-    //  ImageData = MoqDataGenerator.GetSomeBytes(),
-    //  ImageMimeType = MoqDataGenerator.GetRandomString(6)
-    //};
 
     private Image image = null;
 
@@ -95,11 +89,55 @@ namespace Tests.DB
       CheckCreateData();
       CheckUpdateData();
       CheckRemoveData();
+      //string[] filePaths = Directory.GetFiles(@"img\");
+      //foreach (var file in filePaths)
+      //{
+      //  loadImage(file.Split('.')[0], file);
+      //}
     }
+
+    // tmp
+    //public void loadImage(string name, string file)
+    //{
+    //  Image img = new Image
+    //  {
+    //    Name = name
+    //  };
+    //  // загружаем в базу тестовую картинку
+    //  using (FileStream fsSource = new FileStream(file,
+    //    FileMode.Open, FileAccess.Read))
+    //  {
+    //    byte[] bytes = new byte[fsSource.Length];
+    //    int numBytesToRead = (int)fsSource.Length;
+    //    int numBytesRead = 0;
+    //    while (numBytesToRead > 0)
+    //    {
+    //      // Read may return anything from 0 to numBytesToRead.
+    //      int n = fsSource.Read(bytes, numBytesRead, numBytesToRead);
+
+    //      // Break when the end of the file is reached.
+    //      if (n == 0)
+    //        break;
+
+    //      numBytesRead += n;
+    //      numBytesToRead -= n;
+    //    }
+
+    //    // сохраняем картинку в БД
+    //    img.ImageData = bytes;
+    //    // получаем MimeType файла
+    //    img.ImageMimeType = MimeMapping.GetMimeMapping(file);
+    //  }
+    //  _context.Images.Add(img);
+    //  _context.SaveChanges();
+    //}
 
     private Image LoadTestImageFromFile()
     {
-      Image img = new Image();
+      Image img = new Image
+      {
+        Name = "test_imageForDBTest"
+      };
       // загружаем в базу тестовую картинку
       using (FileStream fsSource = new FileStream("test_image.jpg",
         FileMode.Open, FileAccess.Read))
@@ -170,7 +208,7 @@ namespace Tests.DB
       Assert.AreEqual(_amountRobotCommandsWas + 1, _context.RobotCommands.Count());
 
       // проверить, что наши экземпляры сущностей лежат в БД
-      CheckEntitiesIsInDB();
+      CheckEntitiesIsInDb();
     }
 
     private void CheckUpdateData()
@@ -195,7 +233,7 @@ namespace Tests.DB
       _context.SaveChanges();
 
       // проверить, что наши экземпляры сущностей по-прежнему лежат в БД
-      CheckEntitiesIsInDB();
+      CheckEntitiesIsInDb();
     }
 
     private void CheckRemoveData()
@@ -235,7 +273,7 @@ namespace Tests.DB
       Assert.AreEqual(null, _context.RobotCommands.FirstOrDefault(x => x.RobotCommandID == robotCommandId));
     }
 
-    private void CheckEntitiesIsInDB()
+    private void CheckEntitiesIsInDb()
     {
       Assert.AreSame(robot, _context.Robots.ToList().Last());
       Assert.AreSame(program, _context.Programs.ToList().Last());

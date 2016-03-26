@@ -13,10 +13,10 @@ namespace Tests.DB
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class RDBEntities3 : DbContext
+    public partial class RDBEntities4 : DbContext
     {
-        public RDBEntities3()
-            : base("name=RDBEntities3")
+        public RDBEntities4()
+            : base("name=RDBEntities4")
         {
         }
     

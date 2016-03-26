@@ -57,7 +57,8 @@ namespace Tests
       {
         ImageMimeType = MoqDataGenerator.GetRandomString(10),
         ImageData = MoqDataGenerator.GetSomeBytes(),
-        ImageID = 1
+        ImageID = 1,
+        Name = MoqDataGenerator.GetRandomString(10)
       };
 
       var robotCommand = new RobotCommand

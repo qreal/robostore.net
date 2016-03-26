@@ -78,6 +78,10 @@
     <Compile Include="Migrations\201603212133255_VirtualKeyWordIsForgotten.Designer.cs">
       <DependentUpon>201603212133255_VirtualKeyWordIsForgotten.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603261453418_ImageNameAdded.cs" />
+    <Compile Include="Migrations\201603261453418_ImageNameAdded.Designer.cs">
+      <DependentUpon>201603261453418_ImageNameAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MoqDataGenerator.cs" />
     <Compile Include="Pagination\PaginationManager.cs" />
@@ -97,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603212133255_VirtualKeyWordIsForgotten.resx">
       <DependentUpon>201603212133255_VirtualKeyWordIsForgotten.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603261453418_ImageNameAdded.resx">
+      <DependentUpon>201603261453418_ImageNameAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

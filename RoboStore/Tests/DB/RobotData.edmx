@@ -20,6 +20,7 @@
           <Property Name="ImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ImageData" Type="varbinary(max)" />
           <Property Name="ImageMimeType" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="ProgramRobots">
           <Key>
@@ -201,6 +202,7 @@
           <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ImageData" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="ImageMimeType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Programs" Relationship="Self.FK_dbo_Programs_dbo_Images_ImageID" FromRole="Images" ToRole="Programs" />
         </EntityType>
         <EntityType Name="ProgramRobot">
@@ -339,7 +341,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="RDBEntities3" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="RDBEntities4" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Configurations" EntityType="Self.Configuration" />
           <EntitySet Name="Images" EntityType="Self.Image" />
           <EntitySet Name="ProgramRobots" EntityType="Self.ProgramRobot" />
@@ -377,7 +379,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="RDBModelStoreContainer" CdmEntityContainer="RDBEntities3">
+        <EntityContainerMapping StorageEntityContainer="RDBModelStoreContainer" CdmEntityContainer="RDBEntities4">
           <EntitySetMapping Name="Configurations">
             <EntityTypeMapping TypeName="RDBModel.Configuration">
               <MappingFragment StoreEntitySet="Configurations">
@@ -393,6 +395,7 @@
                 <ScalarProperty Name="ImageID" ColumnName="ImageID" />
                 <ScalarProperty Name="ImageData" ColumnName="ImageData" />
                 <ScalarProperty Name="ImageMimeType" ColumnName="ImageMimeType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

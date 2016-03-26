@@ -23,6 +23,7 @@ namespace Tests.DB
         public int ImageID { get; set; }
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
+        public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Program> Programs { get; set; }

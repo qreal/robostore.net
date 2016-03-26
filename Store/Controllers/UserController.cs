@@ -42,7 +42,7 @@ namespace Store.Controllers
      /// todo убрать комменты потом
      /// 
       //return View();
-      var foundUser = userManager.TryEnter("Vlad", "11");
+      var foundUser = userManager.TryEnter("Philip J. Fry", "11");
       FakeSession.User = foundUser;
       FakeSession.RobotIds = new List<int>();
       FakeSession.RobotIds.AddRange(foundUser.Robots.Select(x => x.RobotID));
