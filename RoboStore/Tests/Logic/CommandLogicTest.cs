@@ -26,10 +26,20 @@ namespace Tests.Logic
       await CheckOneTypeCommand(robot, program, RobotCommandTypes.Update);
     }
 
+    [TestMethod]
+    public void GetRobotCommandsByRobotIdTest()
+    {
+      var robot = data.Robots.Data.First();
+      var command = data.RobotCommands.Data.First();
+      var result = _manager.GetRobotCommandsByRobotId(robot.RobotID);
+      Assert.AreSame(command, result.First());
+      Assert.AreEqual(1, result.Count());
+    }
+
     private async Task CheckOneTypeCommand(Robot robot, Program program,  RobotCommandTypes type)
     {
       var amount = data.RobotCommands.Data.Count();
-      await _manager.AskRobotAboutProgram(robot, program, type);
+      await _manager.AskRobotAboutProgramAsync(robot, program, type);
       var command = data.RobotCommands.Data.Last();
       Assert.AreEqual(amount + 1, data.RobotCommands.Data.Count());
       Assert.AreEqual(command.Argument, program.ProgramID);

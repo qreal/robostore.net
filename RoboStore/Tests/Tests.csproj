@@ -71,8 +71,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="API\APITest.cs" />
-    <Compile Include="API\ConfigurationAPITest.cs" />
-    <Compile Include="API\ProgramAPITest.cs" />
     <Compile Include="API\GetImageAPITest.cs" />
     <Compile Include="API\APIControllerTest.cs" />
     <Compile Include="DB\Configuration.cs">

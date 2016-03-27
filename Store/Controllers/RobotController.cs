@@ -68,7 +68,7 @@ namespace Store.Controllers
       var robot = _robotManager.GetRobotById(programInfo.SelectedRobot);
       var program = _programManager.GetProgramById(programInfo.ProgramId);
       await _programManager.CreateProgramRobotAsync(robot, program);
-      await _commandManager.AskRobotAboutProgram(robot, program, RobotCommandTypes.Install);
+      await _commandManager.AskRobotAboutProgramAsync(robot, program, RobotCommandTypes.Install);
       return View();
     }
 

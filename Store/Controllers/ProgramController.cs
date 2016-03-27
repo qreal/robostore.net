@@ -55,7 +55,7 @@ namespace Store.Controllers
     {
       var robot = _robotManager.GetRobotByProgramRobotId(programRobotId);
       var program = _programManager.GetProgramByProgramRobotId(programRobotId);
-      await _commandManager.AskRobotAboutProgram(robot, program, RobotCommandTypes.Update);
+      await _commandManager.AskRobotAboutProgramAsync(robot, program, RobotCommandTypes.Update);
       await _programManager.UpdateProgramRobotAsync(programRobotId);
       return new HttpStatusCodeResult(HttpStatusCode.OK);
     }
@@ -64,7 +64,7 @@ namespace Store.Controllers
     {
       var robot = _robotManager.GetRobotByProgramRobotId(programRobotId);
       var program = _programManager.GetProgramByProgramRobotId(programRobotId);
-      await _commandManager.AskRobotAboutProgram(robot, program, RobotCommandTypes.Remove);
+      await _commandManager.AskRobotAboutProgramAsync(robot, program, RobotCommandTypes.Remove);
       await _programManager.RemoveProgramRobotAsync(programRobotId);
       return new HttpStatusCodeResult(HttpStatusCode.OK);
     }

@@ -190,6 +190,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\API\RobotRegistrationOutput.cs" />
+    <Compile Include="Models\Command\GetCommandsOutput.cs" />
     <Compile Include="Models\Home\LeftMenuItem.cs" />
     <Compile Include="Models\Program\ProgramInfo.cs" />
     <Compile Include="Models\Robot\RobotActivationCode.cs" />
@@ -202,7 +203,6 @@
     <Compile Include="Models\Configuration\ConfigurationExport.cs" />
     <Compile Include="Models\Home\PagedContentViewModel.cs" />
     <Compile Include="Models\Program\ProgramExport.cs" />
-    <Compile Include="Models\Program\ProgramIdExport.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

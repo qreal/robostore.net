@@ -1,9 +1,4 @@
-﻿/*
-Этот класс используется для передачи программы во View()
-И пересылки данных о программе - id Робота и Программы обработчику View() 
-*/
-
-namespace Store.Models.Program
+﻿namespace Store.Models.Program
 {
   public class ProgramInfo
   {
