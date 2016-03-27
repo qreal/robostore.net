@@ -89,6 +89,7 @@
     <Compile Include="Programs\ProgramManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Robots\RobotManager.cs" />
+    <Compile Include="Services\Singleton.cs" />
     <Compile Include="Users\UserManager.cs" />
   </ItemGroup>
   <ItemGroup>

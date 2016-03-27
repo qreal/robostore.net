@@ -14,8 +14,8 @@ namespace Store
                 url: "",
                 defaults: new
                 {
-                  controller = "Home",
-                  action = "ShowPrograms",
+                  controller = "Program",
+                  action = "ShowAllPrograms",
                   category = (string)null,
                   page = 1
                 }

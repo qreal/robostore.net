@@ -20,9 +20,8 @@ namespace Store
         );
 
       var container = new UnityContainer();
-      container.RegisterType<IData, Data>(new HierarchicalLifetimeManager());
+      container.RegisterType<IData, Data>(new InjectionFactory(x => Data.Instance));
       config.DependencyResolver = new UnityResolver(container);
-
       config.Formatters.Remove(config.Formatters.XmlFormatter);
     }
   }

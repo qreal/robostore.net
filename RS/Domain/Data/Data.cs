@@ -1,8 +1,13 @@
 ﻿using Domain.Entities;
+using Domain.Services;
+
+/*
+Используется паттерн singeton
+*/
 
 namespace Domain.Data
 {
-  public class Data : IData
+  public class Data : Singleton<Data>, IData
   {
     private readonly DataContext _context = new DataContext();
 
@@ -12,9 +17,9 @@ namespace Domain.Data
     public IRepository<ProgramRobot> ProgramRobots { get; }
     public IRepository<User> Users { get; }
     public IRepository<RobotCommand> RobotCommands { get; }
-    public IRepository<Image> Images { get; } 
+    public IRepository<Image> Images { get; }
 
-    public Data()
+    private Data()
     {
       Configurations = new EFRepository<Configuration>(_context, _context.Configurations);
       Robots = new EFRepository<Robot>(_context, _context.Robots);

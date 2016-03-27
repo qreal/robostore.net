@@ -41,12 +41,12 @@ namespace Store.Controllers
      /// Ниже рабочий код, просто не для дебага
      /// todo убрать комменты потом
      /// 
-      //return View();
-      var foundUser = userManager.TryEnter("Philip J. Fry", "11");
-      FakeSession.User = foundUser;
-      FakeSession.RobotIds = new List<int>();
-      FakeSession.RobotIds.AddRange(foundUser.Robots.Select(x => x.RobotID));
-      return RedirectToAction("ShowAllPrograms", "Program");
+      return View();
+      //var foundUser = userManager.TryEnter("Philip J. Fry", "11");
+      //FakeSession.User = foundUser;
+      //FakeSession.RobotIds = new List<int>();
+      //FakeSession.RobotIds.AddRange(foundUser.Robots.Select(x => x.RobotID));
+      //return RedirectToAction("ShowAllPrograms", "Program");
     }
 
     [HttpPost]
