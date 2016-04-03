@@ -41,12 +41,16 @@ namespace Store.Controllers
      /// Ниже рабочий код, просто не для дебага
      /// todo убрать комменты потом
      /// 
-      return View();
-      //var foundUser = userManager.TryEnter("Philip J. Fry", "11");
-      //FakeSession.User = foundUser;
-      //FakeSession.RobotIds = new List<int>();
-      //FakeSession.RobotIds.AddRange(foundUser.Robots.Select(x => x.RobotID));
-      //return RedirectToAction("ShowAllPrograms", "Program");
+      //return View();
+      var foundUser = userManager.TryEnter("Philip J. Fry", "11");
+      FakeSession.User = foundUser;
+      FakeSession.RobotIds = new List<int>();
+      var userRobots = foundUser.Robots.Select(x => x.User == foundUser);
+      if (userRobots != null)
+      {
+        FakeSession.RobotIds.AddRange(foundUser.Robots.Select(x => x.RobotID));
+      }
+      return RedirectToAction("ShowAllPrograms", "Program");
     }
 
     [HttpPost]
@@ -57,7 +61,12 @@ namespace Store.Controllers
       {
         FakeSession.User = foundUser;
         FakeSession.RobotIds = new List<int>();
-        FakeSession.RobotIds.AddRange(foundUser.Robots.Select(x => x.RobotID));
+        var userRobots = foundUser.Robots.Select(x => x.User == foundUser);
+        if (userRobots != null)
+        {
+          FakeSession.RobotIds.AddRange(foundUser.Robots.Select(x => x.RobotID));
+        }
+        
         return RedirectToAction("ShowAllPrograms", "Program");
       }
       return View();

@@ -7,6 +7,7 @@ using Domain.Entities;
 using Domain.Pagination;
 using Domain.Programs;
 using Domain.Robots;
+using Domain.Users;
 using Store.Models.Home;
 using Store.Models.Program;
 using Store.Models.Robot;
@@ -22,6 +23,7 @@ namespace Store.Controllers
     private RobotManager _robotManager;
     private ProgramManager _programManager;
     private CommandManager _commandManager;
+    private UserManager _userManager;
 
     public RobotController(IData d)
     {
@@ -63,12 +65,15 @@ namespace Store.Controllers
       return RedirectToAction("ShowMyRobots", "Robot", new {category = "My Robots"});
     }
 
-    public async Task<ViewResult> AddProgramToRobot(ProgramInfo programInfo)
+    public async Task<ViewResult> AddProgramToRobot(ProgramSummary programSummary)
     {
-      var robot = _robotManager.GetRobotById(programInfo.SelectedRobot);
-      var program = _programManager.GetProgramById(programInfo.ProgramId);
-      await _programManager.CreateProgramRobotAsync(robot, program);
-      await _commandManager.AskRobotAboutProgramAsync(robot, program, RobotCommandTypes.Install);
+      foreach (var robotId in programSummary.RobotIds)
+      {
+        var robot = _robotManager.GetRobotById(robotId);
+        var program = _programManager.GetProgramById(programSummary.ProgramId);
+        await _programManager.CreateProgramRobotAsync(robot, program);
+        await _commandManager.AskRobotAboutProgramAsync(robot, program, RobotCommandTypes.Install);
+      }
       return View();
     }
 

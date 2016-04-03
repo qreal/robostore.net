@@ -1,9 +1,11 @@
-﻿namespace Store.Models.Program
+﻿using System.Collections.Generic;
+
+namespace Store.Models.Program
 {
-  public class ProgramInfo
+  public class ProgramSummary
   {
     public Domain.Entities.Program Program { get; set; }
-    public int  SelectedRobot { get; set; }
     public int ProgramId { get; set; }
+    public List<int> RobotIds { get; set; }
   }
 }

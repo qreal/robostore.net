@@ -9,14 +9,21 @@ namespace Domain.Data
     private DataContext context;
     private DbSet<TEntity> dbSet;
 
-    public EFRepository(DataContext c, IEnumerable<TEntity> d)
+    public EFRepository(DataContext c)
     {
       context = c;
       dbSet = context.Set<TEntity>();
-      Data = d;
     }
 
-    public IEnumerable<TEntity> Data { get; }
+    public IEnumerable<TEntity> Data
+    {
+
+      get
+      {
+        context.RefreshModified();
+        return dbSet;
+      }
+    }
 
     public async Task AddAsync(TEntity entity)
     {

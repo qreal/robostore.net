@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Domain;
@@ -9,6 +11,7 @@ using Domain.Pagination;
 using Domain.Programs;
 using Domain.Robots;
 using Store.Models.Home;
+using Store.Services;
 
 namespace Store.Controllers
 {
@@ -34,8 +37,22 @@ namespace Store.Controllers
     /*
       Отображем список программ
     */
-    public ViewResult ShowAllPrograms(int page = 1) =>
-      View(new PagedContentViewModel<Program>
+
+    public ViewResult ShowAllPrograms(int page = 1)
+    {
+      var robotSelectListContent = 
+        _robotManager.GetMyRobots(FakeSession.User).
+        Select(robot => new
+        {
+          RobotID = robot.RobotID + "",
+          RobotName = "Robot №" + robot.RobotID
+        }).ToList();
+
+      var contenList = new MultiSelectList(robotSelectListContent, "RobotID", "RobotName");
+      ViewBag.robotSelectListContent = new MultiSelectList(robotSelectListContent, "RobotID", "RobotName");
+      ViewBag.robotSelectListContentLength = _robotManager.GetMyRobots(FakeSession.User).Count();
+
+      return View(new PagedContentViewModel<Program>
       {
         PageContent = _paginationManager.FormProgramPage(pageSize, page),
         PagingInfo = new PagingInfo
@@ -45,6 +62,8 @@ namespace Store.Controllers
           TotalItems = _contentManager.AmountPrograms
         }
       });
+    }
+      
 
     public ViewResult ShowRobotPrograms(int robotId)
     {

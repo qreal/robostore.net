@@ -1,5 +1,6 @@
 ﻿@using Store.Models.Program
 @using Store.Services
+
 @model Store.Models.Home.PagedContentViewModel<Domain.Entities.Program>
 
 @{
@@ -8,9 +9,20 @@
 
 @foreach (var p in Model.PageContent)
 {
-    @Html.Partial("ProgramSummary", new ProgramInfo {Program = p})
+    @Html.Partial("ProgramSummary", new ProgramSummary
+    {
+        Program = p
+    })
 }
 
 <div class="btn-group pull-right">
-    @Html.FormPageLinks(Model.PagingInfo, x => Url.Action("ShowAllPrograms", new { page = x}))
+    @Html.FormPageLinks(Model.PagingInfo, x => Url.Action("ShowAllPrograms", new {page = x}))
 </div>
+
+<script>
+    $(function () {
+        $("select").each(function () {
+            $(this).find("option").first().attr('selected','selected');
+        });
+    })
+</script>

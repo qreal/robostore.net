@@ -1,14 +1,6 @@
-﻿@using Store.Services
-@model Store.Models.Program.ProgramInfo
+﻿@model Store.Models.Program.ProgramSummary
 
 <div class="well">
-
-    @*<div class="pull-left" style="margin-right: 10px">
-        <img class="img-thumbnail" width="75" height="75"
-             src="@Url.Action("GetImage", "Home",
-                new { Model.ProgramID })" />
-    </div>*@
-
     <div class="pull-left" style="margin-right: 10px">
         <img width="75" height="75"
              src="@Url.Action("GetImage", "Home", new {imageId = 15})"/>
@@ -19,20 +11,21 @@
         <span class="pull-right label label-primary">Version: @Model.Program.ActualVersion</span>
     </h3>
 
-    @using (Html.BeginForm("AddProgramToRobot", "Robot"))
+    @if ((int) ViewBag.robotSelectListContentLength > 0)
     {
-        <div class="pull-right">
-            @{
-                Model.ProgramId = Model.Program.ProgramID;
-            }
-            @Html.HiddenFor(x => x.ProgramId)
-            <div class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                @Html.DropDownListFor(m => m.SelectedRobot, new SelectList(FakeSession.RobotIds))
+        using (Html.BeginForm("AddProgramToRobot", "Robot"))
+        {
+            <div class="pull-right">
+                @{
+                    Model.ProgramId = Model.Program.ProgramID;
+                }
+                @Html.HiddenFor(x => x.ProgramId)
+                <div class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    @Html.ListBox("RobotIds", (MultiSelectList) ViewBag.robotSelectListContent, new {size = ViewBag.robotSelectListContentLength})
+                </div>
+                <input type="submit" class="btn btn-success" value="Send to robot"/>
             </div>
-
-            <input type="submit" class="btn btn-success" value="Send to robot"/>
-        </div>
+        }
     }
-
     <span class="lead"> @Model.Program.Description</span>
 </div>

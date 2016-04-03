@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Domain.Robots;
+using Domain.Users;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.Logic

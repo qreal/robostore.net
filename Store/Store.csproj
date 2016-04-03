@@ -174,7 +174,6 @@
     <Content Include="Scripts\Program\Program.js" />
     <Content Include="Scripts\Robot\ShowMyRobots.js" />
     <Content Include="Scripts\Services\Cookies.js" />
-    <Content Include="Scripts\User\User.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
