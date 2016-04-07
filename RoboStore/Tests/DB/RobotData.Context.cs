@@ -7,30 +7,48 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Data.Entity.Core.Objects;
+using System.Linq;
+
 namespace Tests.DB
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
-    
-    public partial class RDBEntities4 : DbContext
+  using System;
+  using System.Data.Entity;
+  using System.Data.Entity.Infrastructure;
+
+  public partial class RDBEntities6 : DbContext
+  {
+    public RDBEntities6()
+      : base("name=RDBEntities6")
     {
-        public RDBEntities4()
-            : base("name=RDBEntities4")
-        {
-        }
-    
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            throw new UnintentionalCodeFirstException();
-        }
-    
-        public virtual DbSet<Configuration> Configurations { get; set; }
-        public virtual DbSet<Image> Images { get; set; }
-        public virtual DbSet<ProgramRobot> ProgramRobots { get; set; }
-        public virtual DbSet<Program> Programs { get; set; }
-        public virtual DbSet<RobotCommand> RobotCommands { get; set; }
-        public virtual DbSet<Robot> Robots { get; set; }
-        public virtual DbSet<User> Users { get; set; }
     }
+
+    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    {
+      throw new UnintentionalCodeFirstException();
+    }
+
+    public virtual DbSet<Configuration> Configurations { get; set; }
+    public virtual DbSet<Image> Images { get; set; }
+    public virtual DbSet<ProgramRobot> ProgramRobots { get; set; }
+    public virtual DbSet<Program> Programs { get; set; }
+    public virtual DbSet<RobotCommand> RobotCommands { get; set; }
+    public virtual DbSet<Robot> Robots { get; set; }
+    public virtual DbSet<User> Users { get; set; }
+
+    public void RefreshModified()
+    {
+      var ctx = ((IObjectContextAdapter) this).ObjectContext;
+      // Get all objects in statemanager with entityKey 
+      // (context.Refresh will throw an exception otherwise) 
+      var objects = (from entry in ctx.ObjectStateManager.GetObjectStateEntries(
+        EntityState.Added
+        | EntityState.Deleted
+        | EntityState.Modified
+        | EntityState.Unchanged)
+        where entry.EntityKey != null
+        select entry.Entity);
+      ctx.Refresh(RefreshMode.StoreWins, objects);
+    }
+  }
 }

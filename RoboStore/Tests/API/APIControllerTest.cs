@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Domain;
@@ -82,6 +83,96 @@ namespace Tests.API
         Assert.AreEqual(amount, context.Programs.Count());
       }
     }
+
+    [TestMethod]
+    public async Task ReportCommandExecutedTest()
+    {
+      /*
+      - создать комманду и робота
+      - проверить функцию
+      - удалить робота, команда уйдет каскадно
+      */
+      var amountRobots = context.Robots.Count();
+      var amountCommands = context.RobotCommands.Count();
+      var robot = new Robot();
+      var command = new RobotCommand
+      {
+        Robot = robot,
+        Received = false
+      };
+      context.Robots.Add(robot);
+      context.RobotCommands.Add(command);
+      context.SaveChanges();
+      var commandId = command.RobotCommandID;
+      try
+      {
+        using (var client = new HttpClient())
+        {
+          var values = new Dictionary<string, string>
+          {
+            {"CommandId", "" + command.RobotCommandID}
+          };
+          var content = new FormUrlEncodedContent(values);
+          await client.PostAsync(serverUrl + "/api/ReportCommandExecuted", content);
+
+          context.RefreshModified();
+
+          Assert.AreEqual(amountCommands, context.RobotCommands.Count());
+          Assert.AreEqual(null, context.RobotCommands.FirstOrDefault(x => x.RobotCommandID == commandId));
+        }
+      }
+      finally
+      {
+        context.Robots.Remove(robot);
+        context.SaveChanges();
+        Assert.AreEqual(amountRobots, context.Robots.Count());
+        Assert.AreEqual(amountCommands, context.RobotCommands.Count());
+      }
+    }
+
+    [TestMethod]
+    public async Task ReportCommandGotTest()
+    {
+      /*
+      - создать комманду и робота
+      - проверить функцию
+      - удалить робота, команда уйдет каскадно
+      */
+
+      var amountRobots = context.Robots.Count();
+      var amountCommands = context.RobotCommands.Count();
+      var robot = new Robot();
+      var command = new RobotCommand
+      {
+        Robot = robot,
+        Received = false
+      };
+      context.Robots.Add(robot);
+      context.RobotCommands.Add(command);
+      context.SaveChanges();
+      try
+      {
+        using (var client = new HttpClient())
+        {
+          var values = new Dictionary<string, string>
+          {
+            {"CommandId", "" + command.RobotCommandID}
+          };
+          var content = new FormUrlEncodedContent(values);
+          await client.PostAsync(serverUrl + "/api/ReportCommandGot", content);
+          var result = (bool)context.Entry(command).GetDatabaseValues()["Received"];
+          Assert.AreEqual(result, true);
+        }
+      }
+      finally
+      {
+        context.Robots.Remove(robot);
+        context.SaveChanges();
+        Assert.AreEqual(amountRobots, context.Robots.Count());
+        Assert.AreEqual(amountCommands, context.RobotCommands.Count());
+      }
+
+  }
 
     [TestMethod]
     public async Task GetCommandsTest()

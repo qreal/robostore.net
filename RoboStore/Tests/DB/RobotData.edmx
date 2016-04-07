@@ -30,7 +30,6 @@
           <Property Name="ProgramID" Type="int" Nullable="false" />
           <Property Name="RobotID" Type="int" Nullable="false" />
           <Property Name="CurrentVersion" Type="int" Nullable="false" />
-          <Property Name="Received" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Programs">
           <Key>
@@ -51,6 +50,7 @@
           <Property Name="RobotID" Type="int" Nullable="false" />
           <Property Name="Type" Type="int" Nullable="false" />
           <Property Name="Argument" Type="int" Nullable="false" />
+          <Property Name="Received" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Robots">
           <Key>
@@ -213,7 +213,6 @@
           <Property Name="ProgramID" Type="Int32" Nullable="false" />
           <Property Name="RobotID" Type="Int32" Nullable="false" />
           <Property Name="CurrentVersion" Type="Int32" Nullable="false" />
-          <Property Name="Received" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Program" Relationship="Self.FK_dbo_ProgramRobots_dbo_Programs_ProgramID" FromRole="ProgramRobots" ToRole="Programs" />
           <NavigationProperty Name="Robot" Relationship="Self.FK_dbo_ProgramRobots_dbo_Robots_RobotID" FromRole="ProgramRobots" ToRole="Robots" />
         </EntityType>
@@ -238,6 +237,7 @@
           <Property Name="RobotID" Type="Int32" Nullable="false" />
           <Property Name="Type" Type="Int32" Nullable="false" />
           <Property Name="Argument" Type="Int32" Nullable="false" />
+          <Property Name="Received" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Robot" Relationship="Self.FK_dbo_RobotCommands_dbo_Robots_RobotID" FromRole="RobotCommands" ToRole="Robots" />
         </EntityType>
         <EntityType Name="Robot">
@@ -341,7 +341,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="RDBEntities4" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="RDBEntities6" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Configurations" EntityType="Self.Configuration" />
           <EntitySet Name="Images" EntityType="Self.Image" />
           <EntitySet Name="ProgramRobots" EntityType="Self.ProgramRobot" />
@@ -379,7 +379,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="RDBModelStoreContainer" CdmEntityContainer="RDBEntities4">
+        <EntityContainerMapping StorageEntityContainer="RDBModelStoreContainer" CdmEntityContainer="RDBEntities6">
           <EntitySetMapping Name="Configurations">
             <EntityTypeMapping TypeName="RDBModel.Configuration">
               <MappingFragment StoreEntitySet="Configurations">
@@ -406,7 +406,6 @@
                 <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
                 <ScalarProperty Name="RobotID" ColumnName="RobotID" />
                 <ScalarProperty Name="CurrentVersion" ColumnName="CurrentVersion" />
-                <ScalarProperty Name="Received" ColumnName="Received" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -429,6 +428,7 @@
                 <ScalarProperty Name="RobotID" ColumnName="RobotID" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Argument" ColumnName="Argument" />
+                <ScalarProperty Name="Received" ColumnName="Received" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

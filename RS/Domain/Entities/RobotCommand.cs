@@ -15,5 +15,6 @@ namespace Domain.Entities
     public virtual Robot Robot { get; set; }
     public int Type { get; set; }
     public int Argument { get; set; }
+    public bool Received { get; set; }
   }
 }

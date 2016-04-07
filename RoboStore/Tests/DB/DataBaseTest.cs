@@ -14,7 +14,7 @@ namespace Tests.DB
   [TestClass]
   public class DataBaseTest
   {
-    private readonly RDBEntities4 _context = new RDBEntities4();
+    private readonly RDBEntities6 _context = new RDBEntities6();
 
     // создадим тестовые данные
 

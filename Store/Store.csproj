@@ -188,6 +188,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\API\ReportCommandExecutedInput.cs" />
+    <Compile Include="Models\API\ReportCommandGotInput.cs" />
     <Compile Include="Models\API\RobotRegistrationOutput.cs" />
     <Compile Include="Models\Command\GetCommandsOutput.cs" />
     <Compile Include="Models\Home\LeftMenuItem.cs" />

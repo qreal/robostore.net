@@ -59,7 +59,16 @@ namespace Store.Controllers
         ProgramId = programId
       };
     }
-      
-    
+
+    [Route("api/ReportCommandGot")]
+    [HttpPost]
+    public async Task ReportCommandGot(ReportCommandGotInput model)
+      => await commandManager.SetCommandGotAsync(model.CommandId);
+
+    [Route("api/ReportCommandExecuted")]
+    [HttpPost]
+    public Task ReportCommandExecuted(ReportCommandExecutedInput model)
+      => commandManager.RemoveExecutedProgramAsync(model.CommandId);
+
   }
 }

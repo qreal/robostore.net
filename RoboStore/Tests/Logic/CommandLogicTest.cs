@@ -46,5 +46,24 @@ namespace Tests.Logic
       Assert.AreSame(command.Robot, robot);
       Assert.AreEqual(command.Type, (int) type);
     }
+
+    [TestMethod]
+    public async Task SetCommandGotTest()
+    {
+      var command = data.RobotCommands.Data.First();
+      await _manager.SetCommandGotAsync(command.RobotCommandID);
+      Assert.AreEqual(true, command.Received);
+    }
+
+    [TestMethod]
+    public async Task RemoveExecutedProgramAsyncTest()
+    {
+      var amount = data.RobotCommands.Data.Count();
+      var command = data.RobotCommands.Data.First();
+      var id = command.RobotCommandID;
+      await _manager.RemoveExecutedProgramAsync(command.RobotCommandID);
+      Assert.AreEqual(amount - 1, data.RobotCommands.Data.Count());
+      Assert.AreEqual(null, data.RobotCommands.Data.FirstOrDefault(x => x.RobotCommandID == id));
+    }
   }
 }

@@ -82,6 +82,14 @@
     <Compile Include="Migrations\201603261453418_ImageNameAdded.Designer.cs">
       <DependentUpon>201603261453418_ImageNameAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604040939055_AdditionalInfoAddedToCommands.cs" />
+    <Compile Include="Migrations\201604040939055_AdditionalInfoAddedToCommands.Designer.cs">
+      <DependentUpon>201604040939055_AdditionalInfoAddedToCommands.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604071816324_PropertyExecutedRemovedFromCommand.cs" />
+    <Compile Include="Migrations\201604071816324_PropertyExecutedRemovedFromCommand.Designer.cs">
+      <DependentUpon>201604071816324_PropertyExecutedRemovedFromCommand.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MoqDataGenerator.cs" />
     <Compile Include="Pagination\PaginationManager.cs" />
@@ -105,6 +113,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603261453418_ImageNameAdded.resx">
       <DependentUpon>201603261453418_ImageNameAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604040939055_AdditionalInfoAddedToCommands.resx">
+      <DependentUpon>201604040939055_AdditionalInfoAddedToCommands.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604071816324_PropertyExecutedRemovedFromCommand.resx">
+      <DependentUpon>201604071816324_PropertyExecutedRemovedFromCommand.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
