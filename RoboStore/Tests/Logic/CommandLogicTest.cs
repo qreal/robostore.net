@@ -29,11 +29,17 @@ namespace Tests.Logic
     [TestMethod]
     public void GetRobotCommandsByRobotIdTest()
     {
+      // case 1 : program is NOT currenty reveived by robot
       var robot = data.Robots.Data.First();
       var command = data.RobotCommands.Data.First();
       var result = _manager.GetRobotCommandsByRobotId(robot.RobotID);
       Assert.AreSame(command, result.First());
       Assert.AreEqual(1, result.Count());
+
+      // case 2 : program is currenty reveived by robot
+      command.Received = true;
+      result = _manager.GetRobotCommandsByRobotId(robot.RobotID);
+      Assert.AreEqual(0, result.Count());
     }
 
     private async Task CheckOneTypeCommand(Robot robot, Program program,  RobotCommandTypes type)

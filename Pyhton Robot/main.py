@@ -1,23 +1,20 @@
 # -*- coding: utf-8 -*-
 import threading
 import json
-from enum import Enum
+import time
 
-from getCommands import GetCommands
-from registration import RegisterRobot
+from enum import Enum
+from api import registerRobot, getCommands
+from executeCommands import executeServerCommands
 
 
 class State(Enum):
-    # ожидание входной комманды
-    default = 1
-    # зарегистрировать Робота в системе
-    registered = 2
-    # включить запрос комманд с сервера по таймеру и их выполнение
-    started = 3
-    # завершить работу программы
-    finished = 4
+    waitCommand = 1
+    robotRegistered = 2
+    programStarted = 3
+    programFinished = 4
 
-currentState = State.default
+currentState = State.waitCommand
 
 commandDescription = '\start - start application getting commands for Robot from Server' \
                      + '\n' +\
@@ -25,54 +22,88 @@ commandDescription = '\start - start application getting commands for Robot from
                      + '\n' +\
                      '\\register - registered robot in system'
 
+class Command(Enum):
+    start = 1
+    register = 2
+    quit = 3
+    help = 4
+    error = 5
 
-# начинаем или прекращаем получать комманды от сервера
-# в зависимости от текущего состояния
-def checkNewCommands():
-    global timer
-    GetCommands()
-    if currentState == State.started:
-        timer.start()
-    elif currentState == State.finished:
-        timer.cancel()
-        
-timer = threading.Timer(60, checkNewCommands)
+def parseCommand(x):
+    return {
+        '\start': Command.start,
+        '\\register': Command.register,
+        '\quit': Command.quit,
+        '\help' : Command.help
+    }.get(x, Command.error)
 
-def parseCommand(command):
+
+class BackgroundCommandExecuter(object):
+    def __init__(self, interval=5):
+        self.interval = interval
+        thread = threading.Thread(target=self.getCommandsFromServer, args=())
+        thread.daemon = True
+        thread.start()
+    def getCommandsFromServer(self):
+        while currentState == State.programStarted:
+            getCommands()
+            executeServerCommands()
+            time.sleep(self.interval)
+
+def onStart():
     global currentState
-    if command == "\start":
-        if currentState == State.default:
-            print "Error!\nPlease register robot first!"
-        elif currentState == State.registered:
-            currentState = State.started
-            checkNewCommands()
-        else:
-            print 'unexpected error!\bplease report administrator!'
-    elif command == "\\register":
-        RegisterRobot()
-        if (currentState == State.default):
-            currentState = State.registered
-        elif currentState == State.registered:
-            print 'Error!\nRobot is already registered!'
-        else:
-            print 'unexpected error!\bplease report administrator!'
-    elif command == "\quit":
-        currentState = State.finished
-        checkNewCommands()
-    elif command == "\help":
-        print 'List of console commands:'
-        print commandDescription
+    if currentState == State.waitCommand:
+        print "Error!\nPlease register robot first!"
+    elif currentState == State.robotRegistered:
+        currentState = State.programStarted
+        BackgroundCommandExecuter()
     else:
-        print "wrong command!\nPlease type '\help' to get help"
+        print 'unexpected error!\bplease report administrator!'
 
-# попробовать считать код активации и перейти в нужное состояние
-try:
-    with open('configuration.txt') as data_file:
-        configuration = json.load(data_file)
-    id = configuration["RobotId"]
-    currentState = State.registered
-except IOError:
-    currentState = State.default
+def onRegister():
+    global currentState
+    if (currentState == State.waitCommand):
+        registerRobot()
+        currentState = State.robotRegistered
+    elif currentState == State.robotRegistered:
+        print 'Error!\nRobot is already registered!'
+    else:
+        print 'unexpected error!\bplease report administrator!'
 
-while (currentState != State.finished):
-    parseCommand(raw_input())
+def onQuit():
+    global currentState
+    currentState = State.programFinished
+
+def onHelp():
+    print 'List of console commands:'
+    print commandDescription
+
+def onError():
+    print "wrong command!\nPlease type '\help' to get help"
+
+commandActions = {
+    Command.start : onStart,
+    Command.register : onRegister,
+    Command.help : onHelp,
+    Command.quit : onQuit,
+    Command.error : onError()
+}
+
+def executeUserCommand(commandTxt):
+    command = parseCommand(commandTxt)
+    commandActions[command]()
+
+def checkIfRobotRegistered():
+    global currentState
+    try:
+        with open('configuration.txt') as data_file:
+            configuration = json.load(data_file)
+        configuration["RobotId"]
+        currentState = State.robotRegistered
+    except IOError:
+        currentState = State.waitCommand
+
+
+checkIfRobotRegistered()
+while (currentState != State.programFinished):
+    executeUserCommand(raw_input())

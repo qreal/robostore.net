@@ -24,7 +24,7 @@ namespace Domain.Command
       });
 
     public IEnumerable<RobotCommand> GetRobotCommandsByRobotId(int robotId)
-      => data.RobotCommands.Data.Where(x => x.RobotID == robotId);
+      => data.RobotCommands.Data.Where(x => x.RobotID == robotId && x.Received == false);
 
     public async Task SetCommandGotAsync(int commandId)
     {
