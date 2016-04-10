@@ -28,10 +28,10 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public async Task CreateConfigurationTest()
+    public void CreateConfigurationTest()
     {
       var config = data.Configurations.Data.First();
-      await _manager.CreateConfiguration(new ConfigurationImport {Port = config.Port, RobotID = config.RobotID});
+      _manager.CreateConfiguration(new ConfigurationImport {Port = config.Port, RobotID = config.RobotID});
       Assert.AreEqual(2, data.Configurations.Data.Count());
       Assert.AreEqual(config.Port, data.Configurations.Data.Last().Port);
       Assert.AreEqual(config.RobotID, data.Configurations.Data.Last().RobotID);

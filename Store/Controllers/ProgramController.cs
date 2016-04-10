@@ -70,21 +70,21 @@ namespace Store.Controllers
       return View(_programManager.GetRobotProgramsByRobotIdAsync(robotId));
     }
 
-    public async Task<ActionResult> UpdateRobotProgram(int programRobotId)
+    public ActionResult UpdateRobotProgram(int programRobotId)
     {
       var robot = _robotManager.GetRobotByProgramRobotId(programRobotId);
       var program = _programManager.GetProgramByProgramRobotId(programRobotId);
-      await _commandManager.AskRobotAboutProgramAsync(robot, program, RobotCommandTypes.Update);
-      await _programManager.UpdateProgramRobotAsync(programRobotId);
+      _commandManager.AskRobotAboutProgram(robot, program, RobotCommandTypes.Update);
+      _programManager.UpdateProgramRobotAsync(programRobotId);
       return new HttpStatusCodeResult(HttpStatusCode.OK);
     }
 
-    public async Task<ActionResult> RemoveRobotProgram(int programRobotId)
+    public ActionResult RemoveRobotProgram(int programRobotId)
     {
       var robot = _robotManager.GetRobotByProgramRobotId(programRobotId);
       var program = _programManager.GetProgramByProgramRobotId(programRobotId);
-      await _commandManager.AskRobotAboutProgramAsync(robot, program, RobotCommandTypes.Remove);
-      await _programManager.RemoveProgramRobotAsync(programRobotId);
+      _commandManager.AskRobotAboutProgram(robot, program, RobotCommandTypes.Remove);
+      _programManager.RemoveProgramRobotAsync(programRobotId);
       return new HttpStatusCodeResult(HttpStatusCode.OK);
     }
   }

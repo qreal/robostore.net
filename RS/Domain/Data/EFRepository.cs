@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Domain.Data
@@ -20,28 +21,32 @@ namespace Domain.Data
 
       get
       {
-        context.RefreshModified();
-        return dbSet;
+        var list = dbSet.ToList();
+        foreach (var data in list)
+        {
+          context.Entry(data).Reload();
+        }
+        return list;
       }
     }
 
-    public async Task AddAsync(TEntity entity)
+    public void Add(TEntity entity)
     {
       dbSet.Add(entity);
-      await context.SaveChangesAsync();
+      context.SaveChanges();
     }
 
-    public async Task UpdateAsync(TEntity entity)
+    public void Update(TEntity entity)
     {
       dbSet.Attach(entity);
       context.Entry(entity).State = EntityState.Modified;
-      await context.SaveChangesAsync();
+      context.SaveChanges();
     }
 
-    public async Task RemoveAsync(TEntity entity)
+    public void Remove(TEntity entity)
     {
       dbSet.Remove(entity);
-      await context.SaveChangesAsync();
+      context.SaveChanges();
     }
   }
 }

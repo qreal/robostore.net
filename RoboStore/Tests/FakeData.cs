@@ -22,10 +22,10 @@ namespace Tests
 
     public FakeData()
     {
-      AsyncHelpers.RunSync(FillWithTestData);
+      FillWithTestData();
     }
 
-    private async Task FillWithTestData()
+    private void FillWithTestData()
     {
       // создали по одной сущности в каждый из списков
       var user = new User
@@ -87,18 +87,18 @@ namespace Tests
       robotCommand.RobotID = robot.RobotID;
 
       // добавили сущности в списки сущностей
-      await Robots.AddAsync(robot);
-      await Programs.AddAsync(program);
-      await Configurations.AddAsync(configuration);
-      await ProgramRobots.AddAsync(programRobot);
-      await Users.AddAsync(user);
-      await RobotCommands.AddAsync(robotCommand);
-      await Images.AddAsync(image);
+      Robots.Add(robot);
+      Programs.Add(program);
+      Configurations.Add(configuration);
+      ProgramRobots.Add(programRobot);
+      Users.Add(user);
+      RobotCommands.Add(robotCommand);
+      Images.Add(image);
 
       // добавили еще 4 программы для теста pagination
       for (var i = 0; i < 4; i++)
       {
-        await Programs.AddAsync(CreateProgram(i + 2));
+        Programs.Add(CreateProgram(i + 2));
       }
     }
 

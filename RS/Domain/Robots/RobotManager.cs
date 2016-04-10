@@ -20,15 +20,15 @@ namespace Domain.Robots
       Потом можно придумать что-то умнее
     */
 
-    public async Task<Robot> CreateRobot()
+    public Robot CreateRobot()
     {
       var robot = new Robot
       {
         ActivationCode = 0
       };
-      await data.Robots.AddAsync(robot);
+      data.Robots.Add(robot);
       robot.ActivationCode = robot.RobotID;
-      await data.Robots.UpdateAsync(robot);
+      data.Robots.Update(robot);
       return robot;
     }
 
@@ -41,10 +41,10 @@ namespace Domain.Robots
     public Robot GetRobotByActivationCode(int code)
       => data.Robots.Data.FirstOrDefault(x => x.ActivationCode == code);
 
-    public async Task BindRobotToUser(Robot robot, User user)
+    public void BindRobotToUser(Robot robot, User user)
     {
       robot.UserID = user.UserID;
-      await data.Robots.UpdateAsync(robot);
+      data.Robots.Update(robot);
     }
 
     public IEnumerable<Robot> GetMyRobots(User user)

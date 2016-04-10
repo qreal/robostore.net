@@ -25,6 +25,6 @@ namespace Store.Controllers
 
     [Route("api/configuration/post")]
     [HttpPost]
-    public async Task CreateConfiguration(ConfigurationImport conf) => await _manager.CreateConfiguration(conf);
+    public void CreateConfiguration(ConfigurationImport conf) => _manager.CreateConfiguration(conf);
   }
 }

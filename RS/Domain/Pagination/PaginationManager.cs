@@ -14,24 +14,15 @@ namespace Domain.Pagination
       data = d;
     }
 
-    //public IEnumerable<Program> FormProgramPage(int pageSize, int page) =>
-    //  data.Programs.Data.OrderBy(x => x.Name).
-    //  Skip((page - 1) * pageSize).
-    //  Take(pageSize);
-
-    public IEnumerable<Program> FormProgramPage(int pageSize, int page)
-    {
-      var xx = data.Programs.Data.Where(x => x.ProgramID > 0);
-
-      return data.Programs.Data.OrderBy(x => x.Name).
+    public IEnumerable<Program> FormProgramPage(int pageSize, int page) => 
+      data.Programs.Data.OrderBy(x => x.Name).
         Skip((page - 1)*pageSize).
         Take(pageSize);
-    }
-   
 
+  
     public IEnumerable<Robot> FormMyRobotPage(IEnumerable<Robot> robots, int pageSize, int page) =>
       robots.OrderBy(x => x.RobotID).
-      Skip((page - 1)*pageSize).
-      Take(pageSize);
+        Skip((page - 1)*pageSize).
+        Take(pageSize);
   }
 }

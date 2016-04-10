@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Domain.Command;
 using Domain.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -16,14 +15,14 @@ namespace Tests.Logic
       _manager = new CommandManager(data);
     }
     [TestMethod]
-    public async Task AskRobotInstallProgramTest()
+    public void AskRobotInstallProgramTest()
     {
       var robot = data.Robots.Data.First();
       var program = data.Programs.Data.First();
 
-      await CheckOneTypeCommand(robot, program, RobotCommandTypes.Install);
-      await CheckOneTypeCommand(robot, program, RobotCommandTypes.Remove);
-      await CheckOneTypeCommand(robot, program, RobotCommandTypes.Update);
+      CheckOneTypeCommand(robot, program, RobotCommandTypes.Install);
+      CheckOneTypeCommand(robot, program, RobotCommandTypes.Remove);
+      CheckOneTypeCommand(robot, program, RobotCommandTypes.Update);
     }
 
     [TestMethod]
@@ -42,10 +41,10 @@ namespace Tests.Logic
       Assert.AreEqual(0, result.Count());
     }
 
-    private async Task CheckOneTypeCommand(Robot robot, Program program,  RobotCommandTypes type)
+    private void CheckOneTypeCommand(Robot robot, Program program,  RobotCommandTypes type)
     {
       var amount = data.RobotCommands.Data.Count();
-      await _manager.AskRobotAboutProgramAsync(robot, program, type);
+      _manager.AskRobotAboutProgram(robot, program, type);
       var command = data.RobotCommands.Data.Last();
       Assert.AreEqual(amount + 1, data.RobotCommands.Data.Count());
       Assert.AreEqual(command.Argument, program.ProgramID);
@@ -54,20 +53,20 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public async Task SetCommandGotTest()
+    public void SetCommandGotTest()
     {
       var command = data.RobotCommands.Data.First();
-      await _manager.SetCommandGotAsync(command.RobotCommandID);
+      _manager.SetCommandGot(command.RobotCommandID);
       Assert.AreEqual(true, command.Received);
     }
 
     [TestMethod]
-    public async Task RemoveExecutedProgramAsyncTest()
+    public void RemoveExecutedProgramAsyncTest()
     {
       var amount = data.RobotCommands.Data.Count();
       var command = data.RobotCommands.Data.First();
       var id = command.RobotCommandID;
-      await _manager.RemoveExecutedProgramAsync(command.RobotCommandID);
+      _manager.RemoveExecutedProgram(command.RobotCommandID);
       Assert.AreEqual(amount - 1, data.RobotCommands.Data.Count());
       Assert.AreEqual(null, data.RobotCommands.Data.FirstOrDefault(x => x.RobotCommandID == id));
     }

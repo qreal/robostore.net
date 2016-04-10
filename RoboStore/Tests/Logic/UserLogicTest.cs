@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Domain;
 using Domain.Entities;
 using Domain.Users;
@@ -26,7 +25,7 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public async Task CreateUserTest()
+    public void CreateUserTest()
     {
       var user = new User
       {
@@ -34,7 +33,7 @@ namespace Tests.Logic
         Password = MoqDataGenerator.GetRandomString(10)
       };
       int amount = data.Users.Data.Count();
-      await manager.CreateUser(user.Login, user.Password);
+      manager.CreateUser(user.Login, user.Password);
       Assert.AreEqual(amount + 1, data.Users.Data.Count());
       Assert.AreEqual(user.Login, data.Users.Data.Last().Login);
       Assert.AreEqual(user.Password, data.Users.Data.Last().Password);

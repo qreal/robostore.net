@@ -18,7 +18,7 @@ namespace Tests.API
   public class APIControllerTest : APITest
   {
     [TestMethod]
-    public async Task RegistraterRobotTest()
+    public void RegistraterRobotTest()
     {
       Robot last = null;
       var amount = context.Robots.Count();
@@ -39,13 +39,13 @@ namespace Tests.API
       finally
       {
         context.Robots.Remove(last);
-        await context.SaveChangesAsync();
+        context.SaveChanges();
         Assert.AreEqual(amount, context.Robots.Count());
       }
     }
 
     [TestMethod]
-    public async Task GetProgramTest()
+    public void GetProgramTest()
     {
       /*
       . создать программу
@@ -60,7 +60,7 @@ namespace Tests.API
       };
       context.Programs.Add(program);
       var amount = context.Programs.Count();
-      await context.SaveChangesAsync();
+      context.SaveChanges();
       Assert.AreEqual(amount, context.Programs.Count() - 1);
 
       try
@@ -78,7 +78,7 @@ namespace Tests.API
       finally
       {
         context.Programs.Remove(program);
-        await context.SaveChangesAsync();
+        context.SaveChanges();
         Assert.AreEqual(amount, context.Programs.Count());
       }
     }
@@ -174,7 +174,7 @@ namespace Tests.API
   }
 
     [TestMethod]
-    public async Task GetCommandsTest()
+    public void GetCommandsTest()
     {
      
       /*
@@ -194,7 +194,7 @@ namespace Tests.API
       };
       context.Robots.Add(robot);
       context.RobotCommands.Add(command);
-      await context.SaveChangesAsync();
+      context.SaveChanges();
       Assert.AreEqual(amountCommands, context.RobotCommands.Count() - 1);
       Assert.AreEqual(amountRobots, context.Robots.Count() - 1);
 
@@ -216,7 +216,7 @@ namespace Tests.API
       {
         context.Robots.Remove(robot);
         context.RobotCommands.Remove(command);
-        await context.SaveChangesAsync();
+        context.SaveChanges();
         Assert.AreEqual(amountCommands, context.RobotCommands.Count());
         Assert.AreEqual(amountRobots, context.Robots.Count());
       }

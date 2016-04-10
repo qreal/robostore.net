@@ -1,7 +1,5 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Domain.Robots;
-using Domain.Users;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.Logic
@@ -17,10 +15,10 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public async Task CreateRobotTest()
+    public void CreateRobotTest()
     {
       var amount = data.Robots.Data.Count();
-      var result = await _manager.CreateRobot();
+      var result = _manager.CreateRobot();
       Assert.AreEqual(amount + 1, data.Robots.Data.Count());
       Assert.AreEqual(result.RobotID + result.ActivationCode, 0);
     }
@@ -40,12 +38,12 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public async Task BindRobotToUserTest()
+    public void BindRobotToUserTest()
     {
       var user = data.Users.Data.First();
       var robot = data.Robots.Data.First();
       robot.UserID = 0;
-      await _manager.BindRobotToUser(robot, user);
+      _manager.BindRobotToUser(robot, user);
       Assert.AreNotEqual(0, robot.UserID);
       Assert.AreEqual(robot.UserID, user.UserID);
     }

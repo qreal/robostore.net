@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Domain;
 using Domain.Command;
 using Domain.Data;
@@ -57,22 +56,22 @@ namespace Store.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult> AddRobotForm(RobotActivationCode activationCode)
+    public ActionResult AddRobotForm(RobotActivationCode activationCode)
     {
       var robot = _robotManager.GetRobotByActivationCode(activationCode.Code);
-      await _robotManager.BindRobotToUser(robot, FakeSession.User);
+      _robotManager.BindRobotToUser(robot, FakeSession.User);
       FakeSession.RobotIds.Add(robot.RobotID);
       return RedirectToAction("ShowMyRobots", "Robot", new {category = "My Robots"});
     }
 
-    public async Task<ViewResult> AddProgramToRobot(ProgramSummary programSummary)
+    public ViewResult AddProgramToRobot(ProgramSummary programSummary)
     {
       foreach (var robotId in programSummary.RobotIds)
       {
         var robot = _robotManager.GetRobotById(robotId);
         var program = _programManager.GetProgramById(programSummary.ProgramId);
-        await _programManager.CreateProgramRobotAsync(robot, program);
-        await _commandManager.AskRobotAboutProgramAsync(robot, program, RobotCommandTypes.Install);
+        _programManager.CreateProgramRobot(robot, program);
+        _commandManager.AskRobotAboutProgram(robot, program, RobotCommandTypes.Install);
       }
       return View();
     }

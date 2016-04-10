@@ -25,12 +25,12 @@ namespace Store.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult> Registration(UserProfile profile)
+    public ActionResult Registration(UserProfile profile)
     {
       // если пароль и логин введены
       if (ModelState.IsValid && userManager.TryEnter(profile.Login, profile.Password) == null)
       {
-        await userManager.CreateUser(profile.Login, profile.Password);
+        userManager.CreateUser(profile.Login, profile.Password);
         return View("Welcome", (object)profile.Login);
       }
       return View();

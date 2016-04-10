@@ -15,8 +15,8 @@ namespace Domain.Command
       data = d;
     }
 
-    public async Task AskRobotAboutProgramAsync(Robot robot, Program program, RobotCommandTypes commandType)
-      => await data.RobotCommands.AddAsync(new RobotCommand
+    public void AskRobotAboutProgram(Robot robot, Program program, RobotCommandTypes commandType)
+      => data.RobotCommands.Add(new RobotCommand
       {
         Argument = program.ProgramID,
         Robot = robot,
@@ -26,15 +26,18 @@ namespace Domain.Command
     public IEnumerable<RobotCommand> GetRobotCommandsByRobotId(int robotId)
       => data.RobotCommands.Data.Where(x => x.RobotID == robotId && x.Received == false);
 
-    public async Task SetCommandGotAsync(int commandId)
+    public void SetCommandGot(int commandId)
     {
       var command = data.RobotCommands.Data.First(x => x.RobotCommandID == commandId);
       command.Received = true;
-      await data.RobotCommands.UpdateAsync(command);
+      data.RobotCommands.Update(command);
     }
 
-    public async Task RemoveExecutedProgramAsync(int commandId)
-      => await data.RobotCommands.RemoveAsync(data.RobotCommands.Data.First(x => x.RobotCommandID == commandId));
+    public void RemoveExecutedProgram(int commandId)
+    {
+      var command = data.RobotCommands.Data.First(x => x.RobotCommandID == commandId);
+      data.RobotCommands.Remove(command);
+    }
 
   }
 }

@@ -27,9 +27,9 @@ namespace Store.Controllers
 
     [Route("api/robotRegistration")]
     [HttpGet]
-    public async Task<RobotRegistrationOutput> RegisterRobot()
+    public RobotRegistrationOutput RegisterRobot()
     {
-      var robot = await robotManager.CreateRobot();
+      var robot = robotManager.CreateRobot();
       return new RobotRegistrationOutput
       {
         RobotId = robot.RobotID,
@@ -40,12 +40,15 @@ namespace Store.Controllers
     [Route("api/GetCommands")]
     [HttpGet]
     public IEnumerable<GetCommandsOutput> GetCommands(int robotId)
-      => commandManager.GetRobotCommandsByRobotId(robotId).Select(x => new GetCommandsOutput
+    {
+      return commandManager.GetRobotCommandsByRobotId(robotId).Select(x => new GetCommandsOutput
       {
         Argument = x.Argument,
         RobotCommandID = x.RobotCommandID,
         Type = x.Type
       });
+    }
+
 
     [Route("api/GetProgram")]
     [HttpGet]
@@ -62,13 +65,13 @@ namespace Store.Controllers
 
     [Route("api/ReportCommandGot")]
     [HttpPost]
-    public async Task ReportCommandGot(ReportCommandGotInput model)
-      => await commandManager.SetCommandGotAsync(model.CommandId);
+    public void ReportCommandGot(ReportCommandGotInput model)
+      => commandManager.SetCommandGot(model.CommandId);
 
     [Route("api/ReportCommandExecuted")]
     [HttpPost]
-    public Task ReportCommandExecuted(ReportCommandExecutedInput model)
-      => commandManager.RemoveExecutedProgramAsync(model.CommandId);
+    public void ReportCommandExecuted(ReportCommandExecutedInput model)
+      => commandManager.RemoveExecutedProgram(model.CommandId);
 
   }
 }

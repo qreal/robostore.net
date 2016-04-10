@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Domain.Programs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -23,12 +22,12 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public async Task CreateProgramRobotTest()
+    public void CreateProgramRobotTest()
     {
       var amount = data.ProgramRobots.Data.Count();
       var program = data.Programs.Data.First();
       var robot = data.Robots.Data.First();
-      await _manager.CreateProgramRobotAsync(robot, program);
+      _manager.CreateProgramRobot(robot, program);
       var result = data.ProgramRobots.Data.Last();
       Assert.AreEqual(amount + 1, data.ProgramRobots.Data.Count());
       Assert.AreSame(program, result.Program);
@@ -46,20 +45,20 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public async Task UpdateProgramRobotTest()
+    public void UpdateProgramRobotTest()
     {
       var programRobot = data.ProgramRobots.Data.First();
       var program = data.Programs.Data.First();
-      await _manager.UpdateProgramRobotAsync(programRobot.ProgramRobotID);
+      _manager.UpdateProgramRobotAsync(programRobot.ProgramRobotID);
       Assert.AreEqual(program.ActualVersion, programRobot.CurrentVersion);
     }
 
     [TestMethod]
-    public async Task RemoveProgramRobotTest()
+    public void RemoveProgramRobotTest()
     {
       var programRobot = data.ProgramRobots.Data.First();
       var amount = data.ProgramRobots.Data.Count();
-      await _manager.RemoveProgramRobotAsync(programRobot.ProgramRobotID);
+      _manager.RemoveProgramRobotAsync(programRobot.ProgramRobotID);
       Assert.AreEqual(amount - 1, data.ProgramRobots.Data.Count());
     }
 
