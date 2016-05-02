@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Domain.Data
 {
@@ -16,21 +15,9 @@ namespace Domain.Data
       dbSet = context.Set<TEntity>();
     }
 
-    public IEnumerable<TEntity> Data
-    {
+    public IEnumerable<TEntity> Data => dbSet;
 
-      get
-      {
-        var list = dbSet.ToList();
-        foreach (var data in list)
-        {
-          context.Entry(data).Reload();
-        }
-        return list;
-      }
-    }
-
-    public void Add(TEntity entity)
+      public void Add(TEntity entity)
     {
       dbSet.Add(entity);
       context.SaveChanges();

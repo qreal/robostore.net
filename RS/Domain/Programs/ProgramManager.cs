@@ -29,8 +29,14 @@ namespace Domain.Programs
         CurrentVersion = program.ActualVersion
       });
 
-    public IEnumerable<ProgramRobot> GetRobotProgramsByRobotIdAsync(int id)
-      => data.ProgramRobots.Data.Where(x => x.RobotID == id);
+      public IEnumerable<ProgramRobot> GetRobotProgramsByRobotIdAsync(int id)
+      { 
+            /*
+             * Админ БД может поменять программу
+             * */
+            data.Reload();
+            return  data.ProgramRobots.Data.Where(x => x.RobotID == id);
+      }
 
     public void UpdateProgramRobotAsync(int programRobotId)
     {
@@ -42,7 +48,7 @@ namespace Domain.Programs
       }
     }
 
-    public void RemoveProgramRobotAsync(int programRobotId)
+    public void RemoveProgramRobot(int programRobotId)
     {
       var programRobot = data.ProgramRobots.Data.FirstOrDefault(x => x.ProgramRobotID == programRobotId);
       if (programRobot != null)

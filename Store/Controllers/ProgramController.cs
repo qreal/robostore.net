@@ -48,7 +48,6 @@ namespace Store.Controllers
           RobotName = "Robot №" + robot.RobotID
         }).ToList();
 
-      var contenList = new MultiSelectList(robotSelectListContent, "RobotID", "RobotName");
       ViewBag.robotSelectListContent = new MultiSelectList(robotSelectListContent, "RobotID", "RobotName");
       ViewBag.robotSelectListContentLength = _robotManager.GetMyRobots(FakeSession.User).Count();
 
@@ -84,7 +83,7 @@ namespace Store.Controllers
       var robot = _robotManager.GetRobotByProgramRobotId(programRobotId);
       var program = _programManager.GetProgramByProgramRobotId(programRobotId);
       _commandManager.AskRobotAboutProgram(robot, program, RobotCommandTypes.Remove);
-      _programManager.RemoveProgramRobotAsync(programRobotId);
+      _programManager.RemoveProgramRobot(programRobotId);
       return new HttpStatusCodeResult(HttpStatusCode.OK);
     }
   }

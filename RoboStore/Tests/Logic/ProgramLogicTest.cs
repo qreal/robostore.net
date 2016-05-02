@@ -58,7 +58,7 @@ namespace Tests.Logic
     {
       var programRobot = data.ProgramRobots.Data.First();
       var amount = data.ProgramRobots.Data.Count();
-      _manager.RemoveProgramRobotAsync(programRobot.ProgramRobotID);
+      _manager.RemoveProgramRobot(programRobot.ProgramRobotID);
       Assert.AreEqual(amount - 1, data.ProgramRobots.Data.Count());
     }
 

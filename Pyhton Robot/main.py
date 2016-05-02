@@ -4,17 +4,17 @@ import json
 import time
 
 from enum import Enum
-from api import registerRobot, getCommands
+from api  import registerRobot, getCommands
 from executeCommands import executeServerCommands
 
 
 class State(Enum):
-    waitCommand = 1
+    wait = 1
     robotRegistered = 2
-    programStarted = 3
-    programFinished = 4
+    started = 3
+    finished = 4
 
-currentState = State.waitCommand
+currentState = State.wait
 
 commandDescription = '\start - start application getting commands for Robot from Server' \
                      + '\n' +\
@@ -45,24 +45,24 @@ class BackgroundCommandExecuter(object):
         thread.daemon = True
         thread.start()
     def getCommandsFromServer(self):
-        while currentState == State.programStarted:
+        while currentState == State.started:
             getCommands()
             executeServerCommands()
             time.sleep(self.interval)
 
 def onStart():
     global currentState
-    if currentState == State.waitCommand:
+    if currentState == State.wait:
         print "Error!\nPlease register robot first!"
     elif currentState == State.robotRegistered:
-        currentState = State.programStarted
+        currentState = State.started
         BackgroundCommandExecuter()
     else:
         print 'unexpected error!\bplease report administrator!'
 
 def onRegister():
     global currentState
-    if (currentState == State.waitCommand):
+    if (currentState == State.wait):
         registerRobot()
         currentState = State.robotRegistered
     elif currentState == State.robotRegistered:
@@ -72,7 +72,7 @@ def onRegister():
 
 def onQuit():
     global currentState
-    currentState = State.programFinished
+    currentState = State.finished
 
 def onHelp():
     print 'List of console commands:'
@@ -101,9 +101,10 @@ def checkIfRobotRegistered():
         configuration["RobotId"]
         currentState = State.robotRegistered
     except IOError:
-        currentState = State.waitCommand
+        currentState = State.wait
 
 
 checkIfRobotRegistered()
-while (currentState != State.programFinished):
+
+while (currentState != State.finished):
     executeUserCommand(raw_input())

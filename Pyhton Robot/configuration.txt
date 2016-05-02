@@ -1,1 +1,1 @@
-{"RobotId":34,"ActivateCode":34}
+{"RobotId":73,"ActivateCode":73}

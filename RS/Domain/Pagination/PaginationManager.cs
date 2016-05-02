@@ -14,10 +14,17 @@ namespace Domain.Pagination
       data = d;
     }
 
-    public IEnumerable<Program> FormProgramPage(int pageSize, int page) => 
-      data.Programs.Data.OrderBy(x => x.Name).
-        Skip((page - 1)*pageSize).
-        Take(pageSize);
+      public IEnumerable<Program> FormProgramPage(int pageSize, int page)
+      {
+            /*
+             * Админ может обновить программы, так что нужно получать акутальные
+             */
+          data.Reload();
+          return  data.Programs.Data.OrderBy(x => x.Name).
+                  Skip((page - 1) * pageSize).
+                  Take(pageSize);
+        }
+      
 
   
     public IEnumerable<Robot> FormMyRobotPage(IEnumerable<Robot> robots, int pageSize, int page) =>
