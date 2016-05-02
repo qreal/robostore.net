@@ -8,7 +8,7 @@
 @foreach (var p in Model)
 {
     <div id=@("RobotProgram" + @p.ProgramRobotID)>
-    @Html.Partial("RobotProgramSummary", p)
+        @Html.Partial("RobotProgramSummary", p)
     </div>
 }
 

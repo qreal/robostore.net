@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using Domain.Command;
 using Domain.Data;
-using Domain.Programs;
-using Domain.Robots;
+using Domain.Managers;
+using Domain.Managers.RobotCommand;
 using Store.Models.API;
 using Store.Models.Command;
 using Store.Models.Program;
@@ -40,7 +39,7 @@ namespace Store.Controllers
     [HttpGet]
     public IEnumerable<GetCommandsOutput> GetCommands(int robotId)
     {
-      return commandManager.GetRobotCommandsByRobotId(robotId).Select(x => new GetCommandsOutput
+      return commandManager.GetNotReceivedCommandsByRobotId(robotId).Select(x => new GetCommandsOutput
       {
         Argument = x.Argument,
         RobotCommandID = x.RobotCommandID,
@@ -65,7 +64,7 @@ namespace Store.Controllers
     [Route("api/ReportCommandGot")]
     [HttpPost]
     public void ReportCommandGot(ReportCommandGotInput model)
-      => commandManager.SetCommandGot(model.CommandId);
+      => commandManager.SetCommandReceived(model.CommandId);
 
     [Route("api/ReportCommandExecuted")]
     [HttpPost]

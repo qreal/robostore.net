@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Domain.Programs;
+using Domain.Managers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.Logic
@@ -15,14 +15,14 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public void GetProgramByIdTest()
+    public void GetProgramByIdLogicTest()
     {
       var id = data.Programs.Data.First().ProgramID;
       Assert.AreSame(_manager.GetProgramById(id), data.Programs.Data.First());
     }
 
     [TestMethod]
-    public void CreateProgramRobotTest()
+    public void CreateProgramRobotLogicTest()
     {
       var amount = data.ProgramRobots.Data.Count();
       var program = data.Programs.Data.First();
@@ -36,25 +36,25 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public void GetRobotProgramsByRobotIdTest()
+    public void GetRobotProgramsByRobotIdLogicTest()
     {
       var robot = data.Robots.Data.First();
-      var result = _manager.GetRobotProgramsByRobotIdAsync(robot.RobotID);
+      var result = _manager.GetRobotProgramsByRobotId(robot.RobotID);
       Assert.AreEqual(1, result.Count());
       Assert.AreSame(result.First(), data.ProgramRobots.Data.First());
     }
 
     [TestMethod]
-    public void UpdateProgramRobotTest()
+    public void UpdateProgramRobotLogicTest()
     {
       var programRobot = data.ProgramRobots.Data.First();
       var program = data.Programs.Data.First();
-      _manager.UpdateProgramRobotAsync(programRobot.ProgramRobotID);
+      _manager.UpdateVersionProgramRobot(programRobot.ProgramRobotID);
       Assert.AreEqual(program.ActualVersion, programRobot.CurrentVersion);
     }
 
     [TestMethod]
-    public void RemoveProgramRobotTest()
+    public void RemoveProgramRobotLogicTest()
     {
       var programRobot = data.ProgramRobots.Data.First();
       var amount = data.ProgramRobots.Data.Count();
@@ -63,7 +63,7 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public void GetProgramByProgramRobotIdTest()
+    public void GetProgramByProgramRobotIdLogicTest()
     {
       var programRobot = data.ProgramRobots.Data.First();
       var program = data.Programs.Data.First();

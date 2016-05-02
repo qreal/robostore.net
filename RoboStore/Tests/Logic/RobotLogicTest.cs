@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Domain.Robots;
+using Domain.Managers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.Logic
@@ -15,7 +15,7 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public void CreateRobotTest()
+    public void CreateRobotLogicTest()
     {
       var amount = data.Robots.Data.Count();
       var result = _manager.CreateRobot();
@@ -24,21 +24,21 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public void GetRobotByActivationCodeTest()
+    public void GetRobotByActivationCodeLogicTest()
     {
       var code = data.Robots.Data.First().ActivationCode;
       Assert.AreSame(data.Robots.Data.First(), _manager.GetRobotByActivationCode(code));
     }
 
     [TestMethod]
-    public void GetRobotByIdTest()
+    public void GetRobotByIdLogicTest()
     {
       var id = data.Robots.Data.First().RobotID;
       Assert.AreSame(data.Robots.Data.First(), _manager.GetRobotById(id));
     }
 
     [TestMethod]
-    public void BindRobotToUserTest()
+    public void BindRobotToUserLogicTest()
     {
       var user = data.Users.Data.First();
       var robot = data.Robots.Data.First();
@@ -49,15 +49,15 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public void GetMyRobotsTest()
+    public void GetMyRobotsLogicTest()
     {
       var user = data.Users.Data.First();
       var robot = data.Robots.Data.First();
-      Assert.AreSame(robot, _manager.GetMyRobots(user).First());
+      Assert.AreSame(robot, _manager.GetRobotsByUser(user).First());
     }
 
     [TestMethod]
-    public void GetRobotByProgramRobotIdTest()
+    public void GetRobotByProgramRobotIdLogicTest()
     {
       var robot = data.Robots.Data.First();
       var programRobot = data.ProgramRobots.Data.First();

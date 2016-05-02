@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Domain.Configurations;
+using Domain.Managers.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.Logic
@@ -20,7 +20,7 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public void GetConfigurationsByRobotIdTest()
+    public void GetConfigurationsByRobotIdLogicTest()
     {
       var result = _manager.GetConfigurationsByRobotId(data.Robots.Data.First().RobotID);
       Assert.AreEqual(1, result.Count());
@@ -28,7 +28,7 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public void CreateConfigurationTest()
+    public void CreateConfigurationLogicTest()
     {
       var config = data.Configurations.Data.First();
       _manager.CreateConfiguration(new ConfigurationImport {Port = config.Port, RobotID = config.RobotID});

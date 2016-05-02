@@ -18,7 +18,7 @@ namespace Tests.API
   public class APIControllerTest : APITest
   {
     [TestMethod]
-    public void RegistraterRobotTest()
+    public void RegistraterRobotApiTest()
     {
       Robot last = null;
       var amount = context.Robots.Count();
@@ -45,7 +45,7 @@ namespace Tests.API
     }
 
     [TestMethod]
-    public void GetProgramTest()
+    public void GetProgramApiTest()
     {
       /*
       . создать программу
@@ -84,7 +84,7 @@ namespace Tests.API
     }
 
     [TestMethod]
-    public async Task ReportCommandExecutedTest()
+    public async Task ReportCommandExecutedApiTest()
     {
       /*
       - создать комманду и робота
@@ -130,7 +130,7 @@ namespace Tests.API
     }
 
     [TestMethod]
-    public async Task ReportCommandGotTest()
+    public async Task ReportCommandGotApiTest()
     {
       /*
       - создать комманду и робота
@@ -174,7 +174,7 @@ namespace Tests.API
   }
 
     [TestMethod]
-    public void GetCommandsTest()
+    public void GetCommandsApiTest()
     {
      
       /*

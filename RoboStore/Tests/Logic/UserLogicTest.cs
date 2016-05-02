@@ -17,15 +17,15 @@ namespace Tests.Logic
     }
 
     [TestMethod]
-    public void TryEnterTest()
+    public void TryEnterLogicTest()
     {
       var user = data.Users.Data.First();
-      Assert.AreSame(user, manager.TryEnter(user.Login, user.Password));
-      Assert.AreEqual(null, manager.TryEnter(user.Login + MoqDataGenerator.GetRandomString(1), user.Password));
+      Assert.AreSame(user, manager.FindUserByLoginPassword(user.Login, user.Password));
+      Assert.AreEqual(null, manager.FindUserByLoginPassword(user.Login + MoqDataGenerator.GetRandomString(1), user.Password));
     }
 
     [TestMethod]
-    public void CreateUserTest()
+    public void CreateUserLogicTest()
     {
       var user = new User
       {

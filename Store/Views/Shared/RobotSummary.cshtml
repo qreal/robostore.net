@@ -1,10 +1,10 @@
 ﻿@using Domain
 @model Domain.Entities.Robot
 
-<div class="well" >
+<div class="well">
     <div class="pull-left" style="margin-right: 10px">
         @*картинка для робота по умолчанию*@
-        <img width="75" height="75" src="@Url.Action("GetImage", "Home", new {imageId = 16 + MoqDataGenerator.GetRandomNumber(0,8)})"/>
+        <img width="75" height="75" src="@Url.Action("GetImage", "Home", new {imageId = 16 + MoqDataGenerator.GetRandomNumber(0, 8)})"/>
     </div>
 
     <h3>
@@ -14,6 +14,6 @@
 
     <span class="lead"> More information</span>
     <div class="pull-right">
-        <input type="button" class="btn btn-success" value="Installed Programs" id='@("robot" + @Model.RobotID)' />
+        <input type="button" class="btn btn-success" value="Installed Programs" id='@("robot" + @Model.RobotID)'/>
     </div>
 </div>

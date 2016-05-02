@@ -28,12 +28,13 @@
     @*<div class="pull-left" style="margin-top: 1px; margin-bottom: 1px">
         <img width="75" height="75"
              @*src="@Url.Action("GetImage", "Home", new {imageId = 26 + MoqDataGenerator.GetRandomNumber(0,9)})"/>*@
-             @*src="@Url.Action("GetImage", "Home", new {imageId = 27})"/>*@
+    @*src="@Url.Action("GetImage", "Home", new {imageId = 27})"/>*@
     @*</div>*@
     @if (FakeSession.User != null)
     {
         <div align="right" style="margin-top: 10px">
-            <p class="navbar-text">Signed in as <b>@FakeSession.User.Login</b>
+            <p class="navbar-text">
+                Signed in as <b>@FakeSession.User.Login</b>
             </p>
         </div>
     }

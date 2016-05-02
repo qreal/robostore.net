@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Web.Mvc;
-using Domain.Pagination;
+using Domain.Managers.Pagination;
 
 /*
 Класс генерирует строку из номеров страниц с выделением текущей страницы

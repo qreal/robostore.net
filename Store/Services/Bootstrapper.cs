@@ -22,8 +22,6 @@ namespace Store.Services
 
       // register all your components with the container here  
       //This is the important line to edit  
-      //container.RegisterType<IData, Data>();
-
       container.RegisterType<IData, Data>(new InjectionFactory(c => Data.Instance));
 
       RegisterTypes(container);

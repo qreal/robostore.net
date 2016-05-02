@@ -2,23 +2,23 @@
 @model Store.Models.Home.PagedContentViewModel<Domain.Entities.Robot>
 
 @{
-  ViewBag.Title = "Robots";
-  
+    ViewBag.Title = "Robots";
 }
 
 <script src="~/Scripts/Robot/ShowMyRobots.js"></script>
 
 <script>
-    // задаем ссылки на от робота на список программ для робота
-    $(document).ready(function () {
-        @{
-          foreach (var id in Model.PageContent.Select(x => x.RobotID.ToString()))
-          {
-              var showRobotProgramUrl = Url.Action("ShowRobotPrograms", "Program", new { robotId = id }, Request.Url?.Scheme);
-                @:openRobotProgramsById('@id', '@showRobotProgramUrl');
+    // задаем ссылки от робота на список программ для робота
+    $(document)
+        .ready(function() {
+            @{
+                foreach (var id in Model.PageContent.Select(x => x.RobotID.ToString()))
+                {
+                    var showRobotProgramUrl = Url.Action("ShowRobotPrograms", "Program", new {robotId = id}, Request.Url?.Scheme);
+                    @:openRobotProgramsById('@id', '@showRobotProgramUrl');
+                }
             }
-        }
-    });
+        });
 </script>
 
 @foreach (var p in Model.PageContent)

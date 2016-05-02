@@ -13,7 +13,7 @@ namespace Domain.Users
       data = d;
     }
 
-    public User TryEnter(string login, string password)
+    public User FindUserByLoginPassword(string login, string password)
       => data.Users.Data.FirstOrDefault(x => x.Login == login && x.Password == password);
 
     public void CreateUser(string login, string password)
