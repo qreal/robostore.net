@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 
 namespace Domain.Data
 {
@@ -14,7 +15,7 @@ namespace Domain.Data
       dbSet = context.Set<TEntity>();
     }
 
-    public IEnumerable<TEntity> Data => dbSet;
+    public IEnumerable<TEntity> Data => dbSet.ToList();
 
       public void Add(TEntity entity)
     {
